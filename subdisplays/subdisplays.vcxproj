@@ -96,6 +96,7 @@
     <ClInclude Include="..\TestMap.h" />
     <ClInclude Include="..\TestIoHandler.h" />
     <ClInclude Include="..\TestPfd.h" />
+    <ClInclude Include="..\UpdateMoveCallback.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
