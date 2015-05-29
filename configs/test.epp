@@ -1,0 +1,49 @@
+// this will tell our instruments to use specific materials
+#define SHOW_MATERIALS
+
+#define REF_LATITUDE      37.0 
+#define REF_LONGITUDE   -116.0
+#define OTW_LATITUDE   REF_LATITUDE
+#define OTW_LONGITUDE  REF_LONGITUDE
+
+( SimStation
+	tcPriority: 1
+	 
+  #include "ioHandler.epp"
+  #include "scenario.epp"
+	
+	display:
+	( TestDisplay
+		idleSleepTime: 50
+
+		left:       -5.0
+		right:       5.0
+		bottom:     -3.0
+		top:         3.0
+		near:       -2.0
+		far:         2.0
+
+		vpWidth:    1000
+		vpHeight:   1000
+		
+		components: 
+		{
+			( Line
+				segment: true
+				color: red
+				vertices: {
+					[  0.0 10.0 ]  [   0.0 -10.0 ]
+					[ 10.0  0.0 ]  [ -10.0   0.0 ] 
+				}
+			)
+		}
+		displays: 
+		{
+			#include "display1.epp"
+			#include "display2.epp"
+			#include "display3.epp"
+		}
+	)
+)
+
+

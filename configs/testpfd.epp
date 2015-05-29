@@ -1,0 +1,8 @@
+testpfd:
+( TestPfd 
+	components: 
+	{
+		#include "pfd.epp"
+	}
+)
+
