@@ -22,16 +22,17 @@ namespace Eaagles {
 		ref_ptr<Node> map = osgDB::readNodeFile("c:/Terrain/out.osgb");
 		rootnode->addChild( map.get() );
 
-		mtMove->setUpdateCallback( new UpdateCallbackCessna );
-		
 		osgUtil::Optimizer optimzer;
 		optimzer.optimize(rootnode);
-
+		
 		viewer = new osgViewer::Viewer;
 		window = viewer->setUpViewerAsEmbeddedInWindow(0,0,1000,500);
 		viewer->setSceneData(rootnode.get());
-		viewer->setCameraManipulator(new osgGA::TrackballManipulator);
+		//viewer->setCameraManipulator(new osgGA::TrackballManipulator);
 		viewer->addEventHandler(new osgViewer::StatsHandler);
+
+		mtMove->setUpdateCallback( new UpdateCallbackCessna(viewer.get()) );
+
 		viewer->realize();
 	}
 		
