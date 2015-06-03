@@ -1,38 +1,61 @@
 #include "TestMap.h"
 #include "UpdateMoveCallback.h"
-#include <osgUtil/Optimizer>
 
 namespace Eaagles {
 
+	class FollowUpdater : public osgGA::GUIEventHandler {
+	public:
+		FollowUpdater( Node* node ) : _target(node) {}
+		virtual bool handle( const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& aa ) {
+			osgViewer::View* view = static_cast<osgViewer::View*>(&aa);
+			if ( !view || !_target || ea.getEventType()!=osgGA::GUIEventAdapter::FRAME ) 
+				return false;
+			osgGA::OrbitManipulator* orbit = dynamic_cast<osgGA::OrbitManipulator*>( view->getCameraManipulator() );
+			if ( orbit ) {
+				Matrix matrix = computeTargetToWorldMatrix( _target.get() );
+				Vec3d targetCenter = _target->getBound().center() * matrix;
+				orbit->setCenter( targetCenter );
+			}
+			return false;
+		}
+		Matrix computeTargetToWorldMatrix( Node* node ) const {
+			Matrix l2w;
+			if ( node && node->getNumParents() > 0 ) {
+				Group* parent = node->getParent(0);
+				l2w = computeLocalToWorld( parent-> getParentalNodePaths()[0] );
+			}
+			return l2w;
+		}
+	protected:
+		observer_ptr<Node> _target;
+	};
+	
 	IMPLEMENT_EMPTY_SLOTTABLE_SUBCLASS(TestMap,"TestMap")
 	EMPTY_SERIALIZER(TestMap)
 	
 	TestMap::TestMap() {
 		STANDARD_CONSTRUCTOR()
 		
-		ref_ptr<Group> rootnode = new Group;
+		rootnode = new Group;
 
-		ref_ptr<Node> cessna = osgDB::readNodeFile("c:/OpenSceneGraph/data/cessnafire.osg");
+		cessna = osgDB::readNodeFile("c:/OpenSceneGraph/data/cessnafire.osg");
 		cessna->setDataVariance( ::osg::Object::STATIC );
-		ref_ptr<MatrixTransform> mtMove = new MatrixTransform;
+		mtMove = new MatrixTransform;
 		mtMove->setDataVariance( ::osg::Object::STATIC );
 		mtMove->addChild( cessna.get() );
+		mtMove->setUpdateCallback( new UpdateCallbackCessna );
 		rootnode->addChild( mtMove.get() );
 
-		ref_ptr<Node> map = osgDB::readNodeFile("c:/Terrain/out.osgb");
+		map = osgDB::readNodeFile("c:/Terrain/out.osgb");
 		rootnode->addChild( map.get() );
-
-		osgUtil::Optimizer optimzer;
-		optimzer.optimize(rootnode);
 		
 		viewer = new osgViewer::Viewer;
-		window = viewer->setUpViewerAsEmbeddedInWindow(0,0,1000,500);
-		viewer->setSceneData(rootnode.get());
-		//viewer->setCameraManipulator(new osgGA::TrackballManipulator);
+		window = viewer->setUpViewerAsEmbeddedInWindow(0,0,1000,1000);
+		//viewer->addEventHandler(new FollowUpdater(cessna.get()) );
+		viewer->setCameraManipulator(new osgGA::TrackballManipulator);
 		viewer->addEventHandler(new osgViewer::StatsHandler);
-
-		mtMove->setUpdateCallback( new UpdateCallbackCessna(viewer.get()) );
-
+		viewer->setSceneData(rootnode.get());
+		
 		viewer->realize();
 	}
 		
@@ -54,14 +77,6 @@ namespace Eaagles {
 	  glutSwapBuffers();
 	  glutPostRedisplay();
 		BaseClass::draw();
-	}
-	
-	void TestMap::reshapeIt(int w, int h) {
-		// update the window dimensions, in case the window has been resized.
-		if (window.valid())  {
-			window->resized(window->getTraits()->x, window->getTraits()->y, w, h);
-			window->getEventQueue()->windowResize(window->getTraits()->x, window->getTraits()->y, w, h );
-	  }
 	}
 } // end of Eaagles namespace
 

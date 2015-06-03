@@ -6,7 +6,7 @@
   top:     10.5
   near:    -2.0
   far:     2.0
-  vpX: 0
+	vpX: 0
   vpY: 500
   vpWidth: 500
   vpHeight: 500
@@ -40,6 +40,29 @@
     gray8:      ( rgb 0.8 0.8 0.8 )
   }
   
+	colorTable: 
+	{
+		black: ( rgba 0 0 0 )
+		red: ( rgb 1 0 0 )
+		green: ( rgb 0 1 0 )
+		yellow: ( rgb 1 1 0 )
+		blue: ( rgb 0 0 1 )
+		magenta: ( rgb 1 0 1 )
+		brown: ( rgb 0.392 0.271 0.1568 )
+		white: ( rgb 1 1 1 )
+		gray: ( rgb 0.4 0.4 0.4 )
+		
+		adiCyan: ( rgb 0.792 0.835 0.8117 )
+		cyan: ( rgb 0 1 1 )
+		gray2: ( rgb 0.2 0.2 0.2 )
+		amber: ( rgb 1 0.5 0 )
+		sky: ( rgb 0 0.407 0.545 )
+		adibrown: ( rgb 0.3961 0.1725 0.2235 )
+		adiblue: ( rgb 0.0235 0.01176 0.988 )
+		gray1: ( rgb 0.1 0.1 0.1 )
+		gray8: ( rgb 0.8 0.8 0.8 )
+	}
+	
   // Again, an example of an PairStream, this time setting up our fonts. 
   fonts: 
 	{
@@ -102,16 +125,55 @@
       path: FONT_PATH
       file: "arialn.ttf"
     )
+		font1: 
+		(
+			FTGLPolygonFonts
+			fontPosition: [ -2.7 2.0 ]
+			path:  "c:/OpenEaaglesExamples/shared/data/fonts/"
+			file: "arialn.ttf"
+			fontWidth: 0.2
+			fontHeight: 0.2
+			faceSize: 1
+			characterSpacing: 0.1
+			lineSpacing: 0.16
+		)
+		pfdnormfont:
+		( 
+			FTGLPolygonFonts
+			fontPosition: [ -3.1 4.15 ]
+			path:  "c:/OpenEaaglesExamples/shared/data/fonts/"
+			file: "arialn.ttf"
+			fontWidth: 0.189
+			fontHeight: 0.189
+			faceSize: 1
+			characterSpacing: 0.0945
+			lineSpacing: 0.15
+		)
+		pfdspecfont:
+		( 
+			FTGLPolygonFonts
+			path:  "c:/OpenEaaglesExamples/shared/data/fonts/"
+			file: "arialn.ttf"
+			fontWidth: 0.189
+			fontHeight: 0.189
+			faceSize: 1
+			characterSpacing: 0.0945
+			lineSpacing: 0.15
+		)
   } // end of font list
 	
+	clearColor: ( hsv 240.0 0.6 0.1 )
+	clearDepth: 1.0
+	
+	normalFont: font1
+	linewidth: 2.0
+			
   normalFont: default
 	
-  page: testmap
+  page: testpfd
 	
 	pages: 
 	{
 		#include "testpfd.epp"
-    #include "testhsi.epp"
-    #include "testmap.epp"
-  }
+	}
 )

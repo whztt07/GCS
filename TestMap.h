@@ -40,12 +40,13 @@ namespace Eaagles {
 		// Graphic Interface
 		virtual void draw();
 
-		// Display Interface
-		virtual void reshapeIt(int w, int h);
-
 	private:
 		ref_ptr<osgViewer::Viewer> viewer;
 		observer_ptr<osgViewer::GraphicsWindow> window;
+		ref_ptr<Group> rootnode;
+		ref_ptr<Node> cessna;
+		ref_ptr<MatrixTransform> mtMove;
+		ref_ptr<Node> map;
 	};
 } // end of Eaagles namespace
 

@@ -6,7 +6,7 @@
 #include <osg/Transform>
 #include <string>
 #include <vector>
-
+#include <osgGA/OrbitManipulator>
 #include <openeaagles/basic/Component.h>
 
 using namespace osg;
@@ -14,19 +14,19 @@ using namespace osg;
 namespace Eaagles {
 	class UpdateCallbackCessna : public NodeCallback {
 		public:
-			UpdateCallbackCessna( osgViewer::Viewer* Viewer ) :
+			UpdateCallbackCessna() :
 				NodeCallback(), 
 				i(0), 
 				translate(), 
-				rotate(),
-				sceneViewer(Viewer) {}
+				rotate() {}
 			
 			UpdateCallbackCessna( const UpdateCallbackCessna& copy, const CopyOp& copyop=CopyOp::SHALLOW_COPY ) : 
 				NodeCallback(copy, copyop), 
 				i(copy.i), 
 				translate(copy.translate),
-				rotate(copy.translate),
-			  sceneViewer(copy.sceneViewer)	{}
+				rotate(copy.translate) {}
+
+			virtual ~UpdateCallbackCessna() {}
 
 		private:
 			virtual void operator()(Node* node, NodeVisitor* nv) { 
@@ -36,28 +36,14 @@ namespace Eaagles {
 					float acPitch = 0.0f;
 					float acRoll = 0.0f;
 
-					float xi = 2000.0f;//-20.0f * Basic::Distance::KM2M;
-					float yi = 1000.0f;//-20.0f * Basic::Distance::KM2M;
-					float zi = 0.0f;
+					float xi = 0.0;//-20.0f * Basic::Distance::KM2M;
+					float yi = 0.0;//-20.0f * Basic::Distance::KM2M;
+					float zi = i;
 				
-					Matrix viewMatrix(
-						1, 0, 0, 0,
-						0, 0,-1, 0,
-						0, 1, 0, 0,
-						0, 0, 0, 1);
 					rotate = Matrix::rotate(acRoll, X_AXIS, acPitch, Y_AXIS, acYaw, Z_AXIS);
 					translate = Matrix::translate(xi, yi, zi);
-					
-					Matrixd viewPosMatrix = rotate * translate;
-
-					// Invert Model View Matrix!!
-					viewPosMatrix.invert(viewPosMatrix);
-					// Create New EYE Matrix!!
-					Matrix mat = viewPosMatrix * viewMatrix;
-					
-					sceneViewer->getCamera()->setViewMatrix(mat);
-					
 					mt->setMatrix( rotate * translate );
+					i++;
 				}
 				traverse(node,nv);
 				return;
@@ -66,7 +52,6 @@ namespace Eaagles {
 		unsigned int i;
 		Matrix translate;
 		Matrix rotate;
-		ref_ptr<osgViewer::Viewer> sceneViewer;
 	};
 }
 #endif

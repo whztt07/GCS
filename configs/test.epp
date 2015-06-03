@@ -23,7 +23,7 @@
 		far:         2.0
 		vpX: 					 0
 		vpY: 					 0
-		vpWidth:    1000
+		vpWidth:    1500
 		vpHeight:   1000
 		
 		components: 

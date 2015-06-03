@@ -111,10 +111,8 @@
   
 	page: testhsi
 	
-  pages: 
+	pages: 
 	{
-		#include "testpfd.epp"
-    #include "testhsi.epp"
-    #include "testmap.epp"
-  }
+		#include "testhsi.epp"
+	}
 )
