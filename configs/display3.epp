@@ -1,5 +1,6 @@
 ( GlutDisplay
-
+	
+	idleSleepTime: 0.01
   left:   -10.5
   right:   10.5
   bottom: -10.5

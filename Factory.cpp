@@ -32,10 +32,10 @@
 
 namespace Eaagles {
 
-Factory::Factory(){}
+	Factory::Factory(){}
 
-Basic::Object* Factory::createObj(const char* name) {
-    Basic::Object* obj = 0;
+	Basic::Object* Factory::createObj(const char* name) {
+		Basic::Object* obj = 0;
 		// speed brake page
 		if ( std::strcmp(name, TestPfd::getFactoryName()) == 0 ) {
 			obj = new TestPfd;
@@ -47,33 +47,32 @@ Basic::Object* Factory::createObj(const char* name) {
 		else if (std::strcmp(name, TestHsi::getFactoryName()) == 0 ) {
 			obj = new TestHsi;
 		}
-    if ( std::strcmp(name, SimStation::getFactoryName()) == 0 ) {
-        obj = new SimStation();
-    }
-    else if ( std::strcmp(name, TestDisplay::getFactoryName()) == 0 ) {
-        obj = new TestDisplay();
-    }
-    else if ( std::strcmp(name, TestIoHandler::getFactoryName()) == 0 ) {
-        obj = new TestIoHandler();
-    }
-    // Example libraries
-    if (obj == 0) obj = xPanel::Factory::createObj(name);
-    if (obj == 0) obj = xZeroMQHandlers::Factory::createObj(name);
-    // Framework libraries
-    if (obj == 0) obj = Eaagles::Simulation::Factory::createObj(name);
-    if (obj == 0) obj = Instruments::Factory::createObj(name);
-    if (obj == 0) obj = IoDevice::Factory::createObj(name);
-    if (obj == 0) obj = Instruments::Factory::createObj(name);
-    if (obj == 0) obj = Vehicle::Factory::createObj(name);
-    if (obj == 0) obj = Sensor::Factory::createObj(name);
-    if (obj == 0) obj = Otw::Factory::createObj(name);
-    if (obj == 0) obj = Network::Dis::Factory::createObj(name);
-    if (obj == 0) obj = BasicGL::Factory::createObj(name);
-    if (obj == 0) obj = Glut::Factory::createObj(name);
-    if (obj == 0) obj = Basic::Factory::createObj(name);
+		if ( std::strcmp(name, SimStation::getFactoryName()) == 0 ) {
+			obj = new SimStation();
+		}
+		else if ( std::strcmp(name, TestDisplay::getFactoryName()) == 0 ) {
+			obj = new TestDisplay();
+		}
+		else if ( std::strcmp(name, TestIoHandler::getFactoryName()) == 0 ) {
+			obj = new TestIoHandler();
+		}
+		// Example libraries
+		if (obj == 0) obj = xPanel::Factory::createObj(name);
+		if (obj == 0) obj = xZeroMQHandlers::Factory::createObj(name);
+		// Framework libraries
+		if (obj == 0) obj = Eaagles::Simulation::Factory::createObj(name);
+		if (obj == 0) obj = Instruments::Factory::createObj(name);
+		if (obj == 0) obj = IoDevice::Factory::createObj(name);
+		if (obj == 0) obj = Instruments::Factory::createObj(name);
+		if (obj == 0) obj = Vehicle::Factory::createObj(name);
+		if (obj == 0) obj = Sensor::Factory::createObj(name);
+		if (obj == 0) obj = Otw::Factory::createObj(name);
+		if (obj == 0) obj = Network::Dis::Factory::createObj(name);
+		if (obj == 0) obj = BasicGL::Factory::createObj(name);
+		if (obj == 0) obj = Glut::Factory::createObj(name);
+		if (obj == 0) obj = Basic::Factory::createObj(name);
 
-    return obj;
-}
-
+		return obj;
+	}
 }  // end namespace Eaagles
 

@@ -328,7 +328,7 @@ gainPattern:
 
 	display:
 	( TestDisplay
-		idleSleepTime: 50
+		idleSleepTime: 1
 		left: -5.0
 		right: 5.0
 		bottom: -3.0
@@ -723,7 +723,7 @@ testmap:
 #line 44 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display3.epp"
 ( GlutDisplay
-
+	idleSleepTime: 0.01
   left: -10.5
   right: 10.5
   bottom: -10.5

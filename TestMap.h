@@ -7,9 +7,12 @@
 #define TEST_MAP
 
 #include <osgViewer/Viewer>
+#include <osgGA/NodeTrackerManipulator>
 #include <osgViewer/ViewerEventHandlers>
-#include <osgGA/TrackballManipulator>
 #include <osgDB/ReadFile>
+#include <osgGA/TrackballManipulator>
+#include <osgGA/FlightManipulator>
+#include <osg/Camera>
 #include <osg/MatrixTransform>
 
 #include "openeaagles/basic/Pair.h"
@@ -38,15 +41,15 @@ namespace Eaagles {
     virtual void updateData(const LCreal dt = 0);
 		
 		// Graphic Interface
-		virtual void draw();
+		virtual void drawFunc(void);
 
 	private:
 		ref_ptr<osgViewer::Viewer> viewer;
-		observer_ptr<osgViewer::GraphicsWindow> window;
 		ref_ptr<Group> rootnode;
 		ref_ptr<Node> cessna;
 		ref_ptr<MatrixTransform> mtMove;
-		ref_ptr<Node> map;
+		ref_ptr<MatrixTransform> terrain;
+		ref_ptr<osgGA::NodeTrackerManipulator> nodeTracker;
 	};
 } // end of Eaagles namespace
 

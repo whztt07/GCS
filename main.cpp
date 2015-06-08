@@ -28,15 +28,12 @@
 #include "Factory.h"
 #include "SimStation.h"
 
-#include <cstring>
-#include <cstdlib>
-
 namespace Eaagles {
 	
 	// Description (input) File -- After being processed by the C preprocessor
 	const char* testFileName = "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/test.edl";
 	// Frame Rate
-	const int frameRate = 60;
+	const int frameRate = 120;
 	// Top level Station
 	static Eaagles::Simulation::Station* station = 0;
 
@@ -61,9 +58,8 @@ namespace Eaagles {
 		}
 		return p;
 	}
-
+		
 	static void updateDataCB(int msecs) {
-		glutTimerFunc(msecs, updateDataCB, msecs);
 		// Current time
 		double time = Eaagles::getComputerTime();
 		// Compute delta time
@@ -72,10 +68,10 @@ namespace Eaagles {
 		time0 = time;
 		station->updateData(dt);
 	}
-
+	
 	int main(int argc, char* argv[]) {
 		glutInit(&argc, argv);
-	
+	  
 		station = builder(testFileName);
 		if (station == 0) {
 			std::cerr << "Invalid configuration file!" << std::endl;
@@ -91,7 +87,7 @@ namespace Eaagles {
 		station->updateTC(dt);
 		station->event(Eaagles::Basic::Component::RESET_EVENT);
 
-		glutTimerFunc(msecs, updateDataCB, msecs);
+		glutTimerFunc(msecs, updateDataCB, 1);
 
 		station->createTimeCriticalProcess();
 

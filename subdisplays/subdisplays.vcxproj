@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Factory.h" />
+    <ClInclude Include="..\FollowMoveUpdater.h" />
     <ClInclude Include="..\SimStation.h" />
     <ClInclude Include="..\TestDisplay.h" />
     <ClInclude Include="..\TestHsi.h" />
