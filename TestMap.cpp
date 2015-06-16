@@ -19,7 +19,7 @@ namespace Eaagles {
 		mtMove->addChild( cessna.get() );
 		
 		terrain = new MatrixTransform;
-		terrain->addChild( osgDB::readNodeFile("c:/Terrain/out.osgb") );
+		terrain->addChild( osgDB::readNodeFile("c:/Terrain/FromUSGS/output/out.osgb") );
 		terrain->setMatrix( Matrix::translate(0.0f, 0.0f, 0.0f) );
 
 		rootnode = new Group;
@@ -47,15 +47,10 @@ namespace Eaagles {
 	void TestMap::updateData(const LCreal dt) {
 		BaseClass::updateData(dt);
 	}
-	
-	void TestMap::drawFunc(void) {
-		// update and render the scene graph
+
+	void TestMap::draw() {
 		if (viewer->isRealized()) 
 			viewer->frame();
-	  // Swap Buffers
-	  glutSwapBuffers();
-	  glutPostRedisplay();
-		BaseClass::drawFunc();
 	}
 } // end of Eaagles namespace
 

@@ -40,8 +40,7 @@ namespace Eaagles {
     // Basic::Component interface
     virtual void updateData(const LCreal dt = 0);
 		
-		// Graphic Interface
-		virtual void drawFunc(void);
+		virtual void draw();
 
 	private:
 		ref_ptr<osgViewer::Viewer> viewer;

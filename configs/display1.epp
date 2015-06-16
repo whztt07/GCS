@@ -10,7 +10,6 @@
   vpY: 0
   vpWidth: 500
   vpHeight: 500
-  clearDepth: 1.0
   clearColor: (rgb 0 0 0)
   fullScreen: 0
   

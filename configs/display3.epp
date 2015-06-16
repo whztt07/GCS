@@ -1,6 +1,5 @@
 ( GlutDisplay
 	
-	idleSleepTime: 0.01
   left:   -10.5
   right:   10.5
   bottom: -10.5
@@ -11,7 +10,6 @@
   vpY: 500
   vpWidth: 500
   vpHeight: 500
-  clearDepth: 1.0
   clearColor: (rgb 0 0 0)
   fullScreen: 0
   

@@ -328,7 +328,6 @@ gainPattern:
 
 	display:
 	( TestDisplay
-		idleSleepTime: 1
 		left: -5.0
 		right: 5.0
 		bottom: -3.0
@@ -353,7 +352,7 @@ gainPattern:
 		}
 		displays:
 		{
-#line 42 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 41 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display1.epp"
 ( GlutDisplay
 
@@ -367,7 +366,6 @@ gainPattern:
   vpY: 0
   vpWidth: 500
   vpHeight: 500
-  clearDepth: 1.0
   clearColor: (rgb 0 0 0)
   fullScreen: 0
 
@@ -470,7 +468,7 @@ gainPattern:
 
 	pages:
 	{
-#line 116 "display1.epp"
+#line 115 "display1.epp"
 #line 1 "testhsi.epp"
 testhsi:
 ( TestHsi
@@ -594,10 +592,10 @@ testhsi:
 		)
   }
 )
-#line 117 "display1.epp"
+#line 116 "display1.epp"
 	}
 )
-#line 43 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 42 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display2.epp"
 ( GlutDisplay
 
@@ -611,7 +609,6 @@ testhsi:
   vpY: 0
   vpWidth: 1000
   vpHeight: 1000
-  clearDepth: 1.0
   clearColor: (rgb 0 0 0)
   fullScreen: 0
 
@@ -711,19 +708,19 @@ testhsi:
 
 	pages:
 	{
-#line 113 "display2.epp"
+#line 112 "display2.epp"
 #line 1 "testmap.epp"
 testmap:
 ( TestMap
 	components: {}
 )
-#line 114 "display2.epp"
+#line 113 "display2.epp"
 	}
 )
-#line 44 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 43 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display3.epp"
 ( GlutDisplay
-	idleSleepTime: 0.01
+
   left: -10.5
   right: 10.5
   bottom: -10.5
@@ -734,7 +731,6 @@ testmap:
   vpY: 500
   vpWidth: 500
   vpHeight: 500
-  clearDepth: 1.0
   clearColor: (rgb 0 0 0)
   fullScreen: 0
 
@@ -898,7 +894,7 @@ testmap:
 
 	pages:
 	{
-#line 177 "display3.epp"
+#line 176 "display3.epp"
 #line 1 "testpfd.epp"
 testpfd:
 ( TestPfd
@@ -3394,10 +3390,10 @@ testpfd:
 #line 6 "testpfd.epp"
 	}
 )
-#line 178 "display3.epp"
+#line 177 "display3.epp"
 	}
 )
-#line 45 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 44 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 		}
 	)
 )

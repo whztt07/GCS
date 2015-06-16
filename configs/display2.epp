@@ -1,5 +1,5 @@
 ( GlutDisplay
-
+	
   left:   -10.5
   right:   10.5
   bottom: -10.5
@@ -10,10 +10,9 @@
   vpY: 0
   vpWidth: 1000
   vpHeight: 1000
-  clearDepth: 1.0
   clearColor: (rgb 0 0 0)
   fullScreen: 0
-  
+  	
   #if defined (SHOW_MATERIALS)
   materials: {
 		m1: ( Material diffuseColor: { 0.5 0.5 0.8 } specularColor: { 0.8 0.8 0.8 } shininess: 100 )
