@@ -50,18 +50,18 @@ namespace Eaagles {
 		attitude *= localToWorld;
 		Quat quat = attitude.getRotate();
 		moveCessna->setAttitude(quat);
-		//moveCessna->setUpdateCallback( new UpdateCallbackCessna );
+		moveCessna->setUpdateCallback( new UpdateCallbackCessna );
 		moveCessna->addChild(cessna.get());
 				
 		// Create camera as shallow copy of theo ne of the view
 		camera = dynamic_cast<Camera*>(viewer->getCamera()->clone(CopyOp::SHALLOW_COPY));
-		//camera->setProjectionMatrixAsPerspective(500.0,1.33,0.1,10000.0);
-		//camera->setCullingActive(false);
+		camera->setProjectionMatrixAsPerspective(500.0,1.33,0.1,10000.0);
+		camera->setCullingActive(false);
 
 		//Getting XYZ position for camera
 		//Lat Lon are the same, height is 500.0
 		// The eye : position of the camera
-		ellipsoid.convertLatLongHeightToXYZ(DegreesToRadians(centerLat+0.000056), DegreesToRadians(centerLon-0.000056), 220.0, x, y, z);
+		ellipsoid.convertLatLongHeightToXYZ(DegreesToRadians(centerLat+0.000056), DegreesToRadians(centerLon-0.000056), 320.0, x, y, z);
 		eye = Vec3d(x,y,z);
 		// The center : position where you look at same position a little bit underneath...
 		//ellipsoid.convertLatLongHeightToXYZ(osg::DegreesToRadians(centerLat), osg::DegreesToRadians(centerLon), 299.9, x, y, z);
@@ -79,18 +79,18 @@ namespace Eaagles {
 		camera->setViewMatrixAsLookAt(eye,center,up);
 		viewer->setCamera( camera.get() );
 
-		//nodeTracker = new osgGA::NodeTrackerManipulator;
-		//nodeTracker->setHomePosition( Vec3(-50, -100.0, 150), Vec3(), Z_AXIS );
-		//nodeTracker->setTrackerMode( osgGA::NodeTrackerManipulator::NODE_CENTER_AND_ROTATION );
-		//nodeTracker->setTrackNode( moveCessna.get() );
+		nodeTracker = new osgGA::NodeTrackerManipulator;
+		nodeTracker->setHomePosition( Vec3(-50, 50.0, 150), Vec3(), Z_AXIS );
+		nodeTracker->setTrackerMode( osgGA::NodeTrackerManipulator::NODE_CENTER_AND_ROTATION );
+		nodeTracker->setTrackNode( cessna.get() );
 		
 		rootnode->addChild( map.get() );
 		rootnode->addChild( moveCessna.get() );
 
 		viewer->setUpViewerAsEmbeddedInWindow(0,0,1000,1000);
 		
-		///viewer->setCameraManipulator( nodeTracker.get() );
-		viewer->setSceneData(rootnode.get());
+		viewer->setCameraManipulator( nodeTracker.get() );
+		viewer->setSceneData( rootnode.get() );
 		viewer->realize();
 	}
 	

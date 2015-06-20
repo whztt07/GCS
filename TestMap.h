@@ -49,8 +49,6 @@ namespace Eaagles {
 		ref_ptr<Node> cessna;
 		ref_ptr<Node> map;
 		ref_ptr<Camera> camera;
-		ref_ptr<MatrixTransform> mtMove;
-		ref_ptr<MatrixTransform> terrain;
 		ref_ptr<PositionAttitudeTransform> moveCessna;
 		ref_ptr<osgGA::NodeTrackerManipulator> nodeTracker;
 	};
