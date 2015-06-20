@@ -14,6 +14,7 @@
 #include <osgGA/FlightManipulator>
 #include <osg/Camera>
 #include <osg/MatrixTransform>
+#include <osg/PositionAttitudeTransform>
 
 #include "openeaagles/basic/Pair.h"
 #include "openeaagles/basic/Timers.h"
@@ -46,8 +47,11 @@ namespace Eaagles {
 		ref_ptr<osgViewer::Viewer> viewer;
 		ref_ptr<Group> rootnode;
 		ref_ptr<Node> cessna;
+		ref_ptr<Node> map;
+		ref_ptr<Camera> camera;
 		ref_ptr<MatrixTransform> mtMove;
 		ref_ptr<MatrixTransform> terrain;
+		ref_ptr<PositionAttitudeTransform> moveCessna;
 		ref_ptr<osgGA::NodeTrackerManipulator> nodeTracker;
 	};
 } // end of Eaagles namespace
