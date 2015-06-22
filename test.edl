@@ -126,12 +126,11 @@ p01:
 		type: "F-16"
 		signature: ( SigSphere radius: 2.0 )
 
-		initLatitude: ( LatLon direction: "n" degrees: 36 minutes: 50.0 )
-		initLongitude: ( LatLon direction: "w" degrees: 116 minutes: 0.0 )
-
-		initAlt: ( Feet 15000 )
+		initLatitude: ( LatLon direction: "n" degrees: 30 minutes: 31.0 seconds: 45.50 )
+		initLongitude: ( LatLon direction: "w" degrees: 85 minutes: 29.5 seconds: 16.50 )
+		initAlt: ( Feet 300 )
 		initHeading: ( Degrees 0.0 )
-		initVelocity: 300
+		initVelocity: 150
 
 		positionFreeze: false
 
@@ -164,7 +163,7 @@ p01:
 						{ "air" "weapon" }
 						polarization: horizontal
 						gain: ( dB 42 )
-#line 46 "player01.epp"
+#line 45 "player01.epp"
 #line 1 "gainPattern.epp"
 
 
@@ -178,7 +177,7 @@ gainPattern:
        data: [ 0.0 -3.0 -10.0 -30.0 -20.0 -14.0 -25.0 -80.0 ]
    )
 )
-#line 47 "player01.epp"
+#line 46 "player01.epp"
 						initPosition: [ 0 0 ]
 						maxRates: [ 0.8727 0.8727 ]
 						commandRates: [ 0.43633 0.6981 ]
@@ -336,7 +335,7 @@ gainPattern:
 		far: 2.0
 		vpX: 0
 		vpY: 0
-		vpWidth: 1500
+		vpWidth: 1900
 		vpHeight: 1000
 
 		components:
@@ -607,7 +606,7 @@ testhsi:
   far: 2.0
   vpX: 500
   vpY: 0
-  vpWidth: 1000
+  vpWidth: 1400
   vpHeight: 1000
   clearColor: (rgb 0 0 0)
   fullScreen: 0

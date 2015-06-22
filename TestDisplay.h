@@ -4,7 +4,7 @@
 #ifndef TEST_DISPLAY
 #define TEST_DISPLAY
 
-#include "openeaagles/gui/glut/GlutDisplay.h"
+#include <openeaagles/gui/glut/GlutDisplay.h>
 
 namespace Eaagles {
 	namespace Simulation { class Missile; class Player; class Simulation; class Station; }

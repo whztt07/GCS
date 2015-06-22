@@ -30,7 +30,7 @@ EMPTY_SERIALIZER(TestIoHandler)
 TestIoHandler::TestIoHandler()
 {
    STANDARD_CONSTRUCTOR()
-   initData();
+	 initData();
 }
 
 //------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 #ifndef TEST_HSI
 #define TEST_HSI
 
-#include "openeaagles/basicGL/Page.h"
+#include <openeaagles/basicGL/Page.h>
 
 namespace Eaagles {
 	class TestHsi : public BasicGL::Page {

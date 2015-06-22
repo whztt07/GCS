@@ -1,6 +1,7 @@
 #include "TestMap.h"
 #include "UpdateMoveCallback.h"
-#include <osg/PositionAttitudeTransform>
+
+using namespace osg;
 
 namespace Eaagles {
 
@@ -15,13 +16,11 @@ namespace Eaagles {
 		const double cessnaHeight = 200.0;
 
 		rootnode = new Group;
-		cessna = osgDB::readNodeFile("c:/OpenSceneGraph/data/cessnafire.osg");
-		map = osgDB::readNodeFile("c:/Terrain/FromUSGS/output/out.osgb");
 		camera = new Camera;
 		viewer = new osgViewer::Viewer;
 		Vec3d center, eye, up;
 		
-		cessna = osgDB::readNodeFile("c:/OpenSceneGraph/data/cessnafire.osg");
+		cessna = osgDB::readNodeFile("c:/OpenSceneGraph/data/cessna.osg");
 		if ( !cessna )
 			return;
 
@@ -46,22 +45,21 @@ namespace Eaagles {
 		Matrixd localToWorld;
 		Matrixd attitude;
 		ellipsoid.computeLocalToWorldTransformFromXYZ(DegreesToRadians(centerLat), DegreesToRadians(centerLon), cessnaHeight, localToWorld);
-		attitude.makeRotate(DegreesToRadians(phi), Y_AXIS, DegreesToRadians(theta), X_AXIS, DegreesToRadians(-psi), Z_AXIS);
+		attitude.makeRotate(DegreesToRadians(phi), X_AXIS, DegreesToRadians(theta), Y_AXIS, DegreesToRadians(psi), Z_AXIS);
 		attitude *= localToWorld;
 		Quat quat = attitude.getRotate();
 		moveCessna->setAttitude(quat);
-		moveCessna->setUpdateCallback( new UpdateCallbackCessna );
 		moveCessna->addChild(cessna.get());
 				
 		// Create camera as shallow copy of theo ne of the view
 		camera = dynamic_cast<Camera*>(viewer->getCamera()->clone(CopyOp::SHALLOW_COPY));
-		camera->setProjectionMatrixAsPerspective(500.0,1.33,0.1,10000.0);
-		camera->setCullingActive(false);
+		//camera->setProjectionMatrixAsPerspective(50.0,1.33,0.1,1000.0);
+		//camera->setCullingActive(false);
 
 		//Getting XYZ position for camera
 		//Lat Lon are the same, height is 500.0
 		// The eye : position of the camera
-		ellipsoid.convertLatLongHeightToXYZ(DegreesToRadians(centerLat+0.000056), DegreesToRadians(centerLon-0.000056), 320.0, x, y, z);
+		ellipsoid.convertLatLongHeightToXYZ(DegreesToRadians(centerLat+0.000056), DegreesToRadians(centerLon-0.000056), 200.0, x, y, z);
 		eye = Vec3d(x,y,z);
 		// The center : position where you look at same position a little bit underneath...
 		//ellipsoid.convertLatLongHeightToXYZ(osg::DegreesToRadians(centerLat), osg::DegreesToRadians(centerLon), 299.9, x, y, z);
@@ -69,31 +67,42 @@ namespace Eaagles {
 		// The up : a little more tricky...
 		// It is the up vector of your screen (ie what is the bottom top axis of your screen)
 		// If you want it to be north up
-		up = Vec3d ( -std::cos(DegreesToRadians(centerLat)) * std::sin( DegreesToRadians(centerLon)), 
+		up = Vec3d ( -std::cos(DegreesToRadians(centerLat)) * std::sin(DegreesToRadians(centerLon)), 
 			           -std::sin(DegreesToRadians(centerLat)) * std::sin(DegreesToRadians(centerLon)), 
 			            std::cos(DegreesToRadians(centerLon)));
 		// If you want it to be east up
-		//up = osg::Vec3d ( -std::cos(osg::DegreesToRadians(centerLat)), std::cos(osg::DegreesToRadians(centerLon)), 0.0);
+		//up = Vec3d ( -std::cos(DegreesToRadians(centerLat)), std::cos(DegreesToRadians(centerLon)), 0.0);
 		//up = osg::Vec3d ( 0.0, 0.1, 0.0);
 		// Now you can set your view matrix
 		camera->setViewMatrixAsLookAt(eye,center,up);
 		viewer->setCamera( camera.get() );
 
 		nodeTracker = new osgGA::NodeTrackerManipulator;
-		nodeTracker->setHomePosition( Vec3(-50, 50.0, 150), Vec3(), Z_AXIS );
+		nodeTracker->setHomePosition( Vec3(0, -50.0, 0), Vec3(), Z_AXIS );
 		nodeTracker->setTrackerMode( osgGA::NodeTrackerManipulator::NODE_CENTER_AND_ROTATION );
 		nodeTracker->setTrackNode( cessna.get() );
 		
 		rootnode->addChild( map.get() );
 		rootnode->addChild( moveCessna.get() );
 
-		viewer->setUpViewerAsEmbeddedInWindow(0,0,1000,1000);
+		viewer->setUpViewerAsEmbeddedInWindow(0,0,1400,1000);
 		
 		viewer->setCameraManipulator( nodeTracker.get() );
 		viewer->setSceneData( rootnode.get() );
 		viewer->realize();
 	}
 	
+	bool TestMap::onEntry() {
+		SimStation* const sta = static_cast<SimStation*>( findContainerByType(typeid(SimStation)) );
+		if (sta != 0) {
+      sim = sta->getSimulation();
+      av = dynamic_cast<Simulation::AirVehicle*>(sta->getOwnship());
+			moveCessna->setUpdateCallback( new UpdateCallbackCessna (av) );
+			return true;
+		}
+		return false;
+	}
+
 	void TestMap::copyData(const TestMap& org, const bool) {
 		BaseClass::copyData(org);
 	}

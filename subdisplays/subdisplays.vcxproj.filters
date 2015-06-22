@@ -39,6 +39,9 @@
     <ClCompile Include="..\TestPfd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\UpdateMoveCallback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\SimStation.h">
@@ -63,9 +66,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\UpdateMoveCallback.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\FollowMoveUpdater.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

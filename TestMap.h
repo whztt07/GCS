@@ -16,21 +16,23 @@
 #include <osg/MatrixTransform>
 #include <osg/PositionAttitudeTransform>
 
-#include "openeaagles/basic/Pair.h"
-#include "openeaagles/basic/Timers.h"
-#include "openeaagles/basic/Parser.h"
-#include "openeaagles/basicGL/Graphic.h"
-#include "openeaagles/basicGL/Page.h"
+#include "SimStation.h"
 
-#include "openeaagles/gui/glut/GlutDisplay.h"
+#include <openeaagles/basic/Pair.h>
+#include <openeaagles/basic/Timers.h>
+#include <openeaagles/basic/Parser.h>
+#include <openeaagles/basicGL/Graphic.h>
+#include <openeaagles/basicGL/Page.h>
+#include <openeaagles/simulation/AirVehicle.h>
+#include <openeaagles/simulation/Simulation.h>
+
+#include <openeaagles/gui/glut/GlutDisplay.h>
 #include <GL/glut.h>
 
-#include "openeaagles/gui/glut/Factory.h"
-#include "openeaagles/basic/Factory.h"
-#include "openeaagles/basicGL/Factory.h"
-#include "openeaagles/instruments/Factory.h"
-
-using namespace osg;
+#include <openeaagles/gui/glut/Factory.h>
+#include <openeaagles/basic/Factory.h>
+#include <openeaagles/basicGL/Factory.h>
+#include <openeaagles/instruments/Factory.h>
 
 namespace Eaagles {
 	class TestMap : public BasicGL::Page {
@@ -43,14 +45,18 @@ namespace Eaagles {
 		
 		virtual void draw();
 
+		virtual bool onEntry();
+
 	private:
-		ref_ptr<osgViewer::Viewer> viewer;
-		ref_ptr<Group> rootnode;
-		ref_ptr<Node> cessna;
-		ref_ptr<Node> map;
-		ref_ptr<Camera> camera;
-		ref_ptr<PositionAttitudeTransform> moveCessna;
-		ref_ptr<osgGA::NodeTrackerManipulator> nodeTracker;
+		::osg::ref_ptr<osgViewer::Viewer> viewer;
+		::osg::ref_ptr<::osg::Group> rootnode;
+		::osg::ref_ptr<::osg::Node> cessna;
+		::osg::ref_ptr<::osg::Node> map;
+		::osg::ref_ptr<::osg::Camera> camera;
+		::osg::ref_ptr<::osg::PositionAttitudeTransform> moveCessna;
+		::osg::ref_ptr<osgGA::NodeTrackerManipulator> nodeTracker;
+		Simulation::AirVehicle* av;
+		Simulation::Simulation* sim;
 	};
 } // end of Eaagles namespace
 

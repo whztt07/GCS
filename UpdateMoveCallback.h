@@ -3,44 +3,25 @@
 
 #include <osg/Node>
 #include <osg/MatrixTransform>
+#include <osg/PositionAttitudeTransform>
 #include <osg/Transform>
-#include <openeaagles/basic/Component.h>
+#include <osg/Quat>
+#include <osg/Vec3d>
 
-using namespace osg;
+#include <openeaagles/basic/Component.h>
+#include <openeaagles/simulation/AirVehicle.h>
+#include <openeaagles/simulation/Simulation.h>
 
 namespace Eaagles {
-	class UpdateCallbackCessna : public NodeCallback {
-		public:
-			UpdateCallbackCessna() : NodeCallback(), translate(), rotate() {}
-			UpdateCallbackCessna( const UpdateCallbackCessna& copy, const CopyOp& copyop=CopyOp::SHALLOW_COPY ) : NodeCallback(copy, copyop), translate(copy.translate),	rotate(copy.translate) {}
-			virtual ~UpdateCallbackCessna() {}
-		private:
-			virtual void operator()(Node* node, NodeVisitor* nv) { 
-				PositionAttitudeTransform* mt = dynamic_cast<PositionAttitudeTransform*>( node );
-				if ( mt != NULL ) {
-					float acYaw = 0.0;
-					float acPitch = 0.0;
-					float acRoll = 0.0;
-
-					Vec3d vec3dPos = mt->getPosition();
-
-					float xi, yi, zi;
-					xi = vec3dPos.x();
-					yi = vec3dPos.y();
-					zi = vec3dPos.z();
-
-					zi = zi + 1;
-
-					rotate = Matrix::rotate(acRoll, X_AXIS, acPitch, Y_AXIS, acYaw, Z_AXIS);
-					translate = Matrix::translate(xi, yi, zi);
-					mt->setPosition( translate.getTrans() );
-					mt->setAttitude( rotate.getRotate() );
-				}
-				traverse(node,nv);
-				return;
-		}
-		Matrix translate;
-		Matrix rotate;
+	class UpdateCallbackCessna : public ::osg::NodeCallback {
+	public:
+		UpdateCallbackCessna( Simulation::AirVehicle* av );
+		//UpdateCallbackCessna( const UpdateCallbackCessna& copy, const ::osg::CopyOp& copyop=::osg::CopyOp::SHALLOW_COPY );
+	private:
+		virtual void operator()(::osg::Node* node, ::osg::NodeVisitor* nv);
+		::osg::Matrix translate;
+		::osg::Matrix rotate;
+		Simulation::AirVehicle* Aircraft;
 	};
 }
 #endif

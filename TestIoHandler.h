@@ -4,7 +4,7 @@
 #ifndef __Eaagles_Example_TestIoHandler_H__
 #define __Eaagles_Example_TestIoHandler_H__
 
-#include "openeaagles/basic/IoHandler.h"
+#include <openeaagles/basic/IoHandler.h>
 
 namespace Eaagles {
    namespace Simulation { class AirVehicle; }

@@ -5,12 +5,11 @@ p01:
 		type: "F-16"
 		signature: ( SigSphere radius: 2.0 )
 		
-		initLatitude:  ( LatLon direction: "n" degrees: 36   minutes: 50.0 )
-		initLongitude: ( LatLon direction: "w" degrees: 116  minutes:  0.0 )
-		
-		initAlt: ( Feet 15000 )
+		initLatitude:  ( LatLon direction: "n" degrees: 30  minutes: 31.0  seconds: 45.50 )
+		initLongitude: ( LatLon direction: "w" degrees: 85  minutes: 29.5  seconds: 16.50 )
+		initAlt: ( Feet 300 )
 		initHeading: ( Degrees 0.0 )      // Initial heading
-		initVelocity: 300
+		initVelocity: 150
 		
 		positionFreeze: false
 		

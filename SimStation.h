@@ -4,7 +4,7 @@
 #ifndef SIM_STATION
 #define SIM_STATION
 
-#include "openeaagles/simulation/Station.h"
+#include <openeaagles/simulation/Station.h>
 
 namespace Eaagles {
    namespace Basic { class Table1; }

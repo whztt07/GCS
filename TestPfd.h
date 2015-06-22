@@ -1,7 +1,7 @@
 #ifndef TEST_PFD
 #define TEST_PFD
 
-#include "openeaagles/basicGL/Page.h"
+#include <openeaagles/basicGL/Page.h>
 
 namespace Eaagles {
 	class TestPfd : public BasicGL::Page 	{
