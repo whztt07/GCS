@@ -55,6 +55,7 @@ namespace Eaagles {
 		::osg::ref_ptr<::osg::Camera> camera;
 		::osg::ref_ptr<::osg::PositionAttitudeTransform> moveCessna;
 		::osg::ref_ptr<osgGA::NodeTrackerManipulator> nodeTracker;
+		::osg::ref_ptr<::osg::PositionAttitudeTransform> rotateCessna;
 		Simulation::AirVehicle* av;
 		Simulation::Simulation* sim;
 	};

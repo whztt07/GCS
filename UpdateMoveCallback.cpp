@@ -60,7 +60,15 @@ namespace Eaagles {
 
 			Quat Rot(acRoll, X_AXIS, acPitch, Y_AXIS, acYaw, Z_AXIS);
 
-			mt->setAttitude( Rot );
+			Matrixd Permute(0, -1, 0, 0,
+											-1, 0, 0, 0,
+											0, 0, -1, 0,
+											0, 0, 0, 1); 
+		
+			Matrixd Orient(Rot);
+			Orient = Permute * Orient;
+			Quat D(Orient.getRotate());
+			mt->setAttitude( D );
 			mt->setPosition( Pos );
 		}
 		traverse(node,nv);
