@@ -40,7 +40,7 @@ namespace Eaagles {
 		attitude.makeRotate(DegreesToRadians(phi), X_AXIS, DegreesToRadians(theta), Y_AXIS, DegreesToRadians(psi), Z_AXIS);
 		//attitude *= localToWorld;
 		Quat quat = attitude.getRotate();
-		rotateCessna->setAttitude(quat);
+		//rotateCessna->setAttitude(quat);
 		rotateCessna->addChild(cessna.get());
 
 		//Getting XYZ position for cessna
