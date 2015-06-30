@@ -76,6 +76,7 @@ namespace Eaagles {
 		tHdgRate = 11;
 		cmdHdg = 0;
 		cmdHdgRate = 3;
+		cmdHdgROSD.empty();
 
 		// airspeed
 		airSpd = 0;
@@ -650,7 +651,7 @@ namespace Eaagles {
 		// barometric pressure (selected)
 		baro = 29.92;
 
-		Basic::Pair* pair = findByName("TestButtons");
+		Basic::Pair* pair = findByType(typeid(xPanel::Pfd));
     if (pair != 0) {
 			xPanel::Pfd* p = static_cast<xPanel::Pfd*>(pair->object());
 			if (p != 0) {

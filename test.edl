@@ -1,4 +1,4 @@
-#line 1 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 1 "C:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 
 
 
@@ -9,7 +9,7 @@
 
 ( SimStation
 	tcPriority: 1
-#line 12 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 12 "C:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "ioHandler.epp"
 
 
@@ -103,7 +103,7 @@ ioHandler: ( TestIoHandler
 
    }
 )
-#line 13 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 13 "C:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "scenario.epp"
 ownship: p01
 simulation:
@@ -129,8 +129,8 @@ p01:
 		initLatitude: ( LatLon direction: "n" degrees: 30 minutes: 30.0 seconds: 45.50 )
 		initLongitude: ( LatLon direction: "w" degrees: 85 minutes: 29.5 seconds: 16.50 )
 		initAlt: ( Feet 500 )
-		initHeading: ( Degrees 20.0 )
-		initVelocity: 270
+		initHeading: ( Degrees 0.0 )
+		initVelocity: 200
 
 		positionFreeze: false
 
@@ -323,7 +323,7 @@ gainPattern:
 #line 14 "scenario.epp"
   }
 )
-#line 14 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 14 "C:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 
 	display:
 	( TestDisplay
@@ -351,7 +351,7 @@ gainPattern:
 		}
 		displays:
 		{
-#line 41 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 41 "C:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display1.epp"
 ( GlutDisplay
 
@@ -594,7 +594,7 @@ testhsi:
 #line 116 "display1.epp"
 	}
 )
-#line 42 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 42 "C:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display2.epp"
 ( GlutDisplay
 
@@ -716,7 +716,7 @@ testmap:
 #line 113 "display2.epp"
 	}
 )
-#line 43 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 43 "C:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display3.epp"
 ( GlutDisplay
 
@@ -3392,7 +3392,7 @@ testpfd:
 #line 177 "display3.epp"
 	}
 )
-#line 44 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 44 "C:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 		}
 	)
 )

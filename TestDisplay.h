@@ -78,7 +78,8 @@ namespace Eaagles {
 
 		SendData        headingSD;
 		SendData        rangeSD;
-    
+    SendData				cmdHdgROSD;
+
 		SPtr<Simulation::Station> myStation;
 
 		Simulation::Player* tracks[MAX_TRACKS];    // players that we're displaying
