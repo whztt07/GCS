@@ -35,49 +35,90 @@ namespace Eaagles {
 
     // heading and nav stuff
     LCreal trueHdg;         // degs
+		SendData tHdgSD;
     LCreal tHdgRate;        // degs/sec
     LCreal cmdHdg;          // commanded heading (heading bug) (degs)
     LCreal cmdHdgRate;      // degs/sec
+		SendData cmdHdgROSD;
+		SendData trueHdgSD;
+    SendData hdgTapeSD;
+    SendData cmdHdgSD;
 
     // airspeed
     LCreal airSpd;
     LCreal airSpdRate;
+		SendData airSpdTpSD;    // for the airspeed tape
+    SendData onesSD;        // for the readout ones tape
+    SendData spdRstSD;      // rest of the speed data
+
 
     // altitude
     LCreal alt;
     LCreal altRate;
+    SendData alt1SD;
+    SendData alt2SD;
+    SendData alt3SD;
+    SendData altTpSD;       // for the airspeed tape
+    SendData altTensSD;
+    SendData altSelectSD;   // to select the justification
+    SendData altSD;         // for the actual altitude
+		SendData altBugSD;
+    SendData altDiffSD;
 
     // side slip
     LCreal slip;            // degs
     LCreal slipRate;        // degs/sec
+		SendData slipSD;
 
     // glideslope (in dots)
     LCreal gSlope;
     LCreal gSlopeRate;
+		SendData gSlopeSD;
 
     // Lateral dev
     LCreal latDev;
     LCreal ldRate;
+		SendData latDevSD;
 
-    // commanded speed
+    // commanded speed kts
     LCreal cmdSpd;
-
+    SendData aBugSD;
+    SendData diffSD;
     // commanded alt
     LCreal cmdAlt;
 
     // vvi
     LCreal vvi;
     LCreal vviRate;
+		SendData vviSD;
+    SendData vviROSD;
 
     // flight director stuff (in inches)
     LCreal fDirBank;
     LCreal fDirBankRate;
+		SendData fDirBankSD;
     LCreal fDirPitch;
     LCreal fDirPitchRate;
-    
+    SendData fDirPitchSD;
+		// bank angle
+    SendData baSD;
+    SendData bascaleSD;
+
     // barometric pressure
     LCreal baro;
     LCreal baroRate;
+		SendData baroSD;
+
+		// Gs
+    LCreal gLoad;
+    // Mach
+    LCreal mach;    //// meter altitude
+    SendData mAltSD;
+    SendData cmdMAltSD;
+
+    // ghost horizon
+    SendData pitchGhostSD;
+
 	};
 } // end of Eaagles namespace
 

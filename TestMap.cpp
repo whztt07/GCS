@@ -13,7 +13,7 @@ namespace Eaagles {
 		
 		const double centerLat = 30.5293056;
 		const double centerLon = -85.4879167;
-		const double cessnaHeight = 200.0;
+		const double cessnaHeight = 300.0;
 
 		rootnode = new Group;
 		//camera = new Camera;
@@ -24,7 +24,7 @@ namespace Eaagles {
 		if ( !cessna )
 			return;
 
-		map = osgDB::readNodeFile("c:/Terrain/FromUSGS/output/out.osgb");
+		map = osgDB::readNodeFile("c:/Terrain/FromUSGS/output/out2.osgb");
 		if (!map )
 			return;
 		
