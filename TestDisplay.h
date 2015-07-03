@@ -39,103 +39,13 @@ namespace Eaagles {
 		enum { NCHAR_NAV1_ID = 3, NCHAR_NAV2_ID = 5 };
 	public:
 		TestDisplay();
-	
-		Simulation::Player* getOwnship();
-		Simulation::Simulation* getSimulation();
-		Simulation::Station* getStation();
-
-		void maintainAirTrackSymbols(BasicGL::SymbolLoader* loader, const LCreal rng);
-
-		// Display Interface
-		virtual void mouseEvent(const int button, const int state, const int x, const int y);
-
-		// Component interface
-		virtual bool event(const int event, Basic::Object* const obj = 0);
+		//Basic::Component interface
 		virtual void updateData(const LCreal dt = 0.0f);
-
+		// Basic::Component interface
+		//virtual bool event(const int event, Basic::Object* const obj = 0);
 	protected:
 		// Basic::Component protected interface
 		virtual bool shutdownNotification();
-
-	private:
-		// Key event handlers
-		bool onResetKey();
-		bool onFreezeKey();
-		bool onWpnRelKey();
-		bool onTgtStepKey();
-		bool onRtn2SearchKey();
-		bool onAir2AirKey();
-		bool onAir2GndKey();
-		bool onIncRngKey();
-		bool onDecRngKey();
-		bool onStepOwnshipKey();
-
-		void updatePfd(const LCreal dt);
-
-		xPanel::DspRadar*   rdrDisplay;     // Test RADAR display
-		xPanel::DspRwr*     rwrDisplay;     // Test RWR display
-		LCreal              range;          // SD range
-
-		SendData        headingSD;
-		SendData        rangeSD;
-    SendData				cmdHdgROSD;
-
-		SPtr<Simulation::Station> myStation;
-
-		Simulation::Player* tracks[MAX_TRACKS];    // players that we're displaying
-		int                 trkIdx[MAX_TRACKS];    // Index of track symbols
-
-		// pitch and roll
-		LCreal pitch;           // degs
-		LCreal pitchRate;       // degs/sec
-		LCreal roll;            // degs
-		LCreal rollRate;        // degs/sec
-
-		// heading and nav stuff
-		LCreal trueHdg;         // degs
-		LCreal tHdgRate;        // degs/sec
-		LCreal cmdHdg;          // commanded heading (heading bug) (degs)
-		LCreal cmdHdgRate;      // degs/sec
-
-		// airspeed
-		LCreal airSpd;
-		LCreal airSpdRate;
-
-		// altitude
-		LCreal alt;
-		LCreal altRate;
-
-		// side slip
-		LCreal slip;            // degs
-		LCreal slipRate;        // degs/sec
-
-		// glideslope (in dots)
-		LCreal gSlope;
-		LCreal gSlopeRate;
-
-		// Lateral dev
-		LCreal latDev;
-		LCreal ldRate;
-
-		// commanded speed
-		LCreal cmdSpd;
-
-		// commanded alt
-		LCreal cmdAlt;
-
-		// vvi
-		LCreal vvi;
-		LCreal vviRate;
-
-		// flight director stuff (in inches)
-		LCreal fDirBank;
-		LCreal fDirBankRate;
-		LCreal fDirPitch;
-		LCreal fDirPitchRate;
-    
-		// barometric pressure
-		LCreal baro;
-		LCreal baroRate;
 	};
 } // End Eaagles namespace
 
