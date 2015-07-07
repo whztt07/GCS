@@ -13,7 +13,7 @@ namespace Eaagles {
 		
 		const double centerLat = 30.5293056;
 		const double centerLon = -85.4879167;
-		const double cessnaHeight = 300.0;
+		const double cessnaHeight = 1000.0;
 
 		rootnode = new Group;
 		//camera = new Camera;
@@ -24,7 +24,7 @@ namespace Eaagles {
 		if ( !cessna )
 			return;
 
-		map = osgDB::readNodeFile("c:/Terrain/FromUSGS/output/out2.osgb");
+		map = osgDB::readNodeFile("c:/Terrain/FromUSGS/output/out.osgb");
 		if (!map )
 			return;
 		
@@ -84,6 +84,15 @@ namespace Eaagles {
 		nodeTracker->setTrackerMode( osgGA::NodeTrackerManipulator::NODE_CENTER_AND_ROTATION );
 		nodeTracker->setTrackNode( cessna.get() );
 		
+		ref_ptr<Light> light = new Light;
+		light->setLightNum( 1 ); // Specify light number 1
+		ref_ptr<LightSource> lightSource = new LightSource;
+		lightSource->setLight( light.get() ); // Add to a light source node
+		// Add the source node to the scene root and enable rendering mode GL_
+		rootnode->getOrCreateStateSet()->setMode( GL_LIGHT1, StateAttribute::ON );
+		//lightSource->setReferenceFrame( LightSource::ABSOLUTE_RF );
+
+		rootnode->addChild( lightSource.get() );
 		rootnode->addChild( map.get() );
 		rootnode->addChild( moveCessna.get() );
 		

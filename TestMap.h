@@ -15,6 +15,7 @@
 #include <osg/Camera>
 #include <osg/MatrixTransform>
 #include <osg/PositionAttitudeTransform>
+#include <osg/LightSource>
 
 #include "SimStation.h"
 

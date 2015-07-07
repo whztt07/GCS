@@ -7,7 +7,7 @@ p01:
 		
 		initLatitude:  ( LatLon direction: "n" degrees: 30  minutes: 30.0  seconds: 43.50 )
 		initLongitude: ( LatLon direction: "w" degrees: 85  minutes: 29.5  seconds: 16.50 )
-		initAlt: ( Feet 500 )
+		initAlt: ( Feet 800 )
 		initHeading: ( Degrees 10.0 )      // Initial heading
 		initVelocity: 220
 		
