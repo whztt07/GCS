@@ -10,9 +10,6 @@
 #include <osgGA/NodeTrackerManipulator>
 #include <osgViewer/ViewerEventHandlers>
 #include <osgDB/ReadFile>
-#include <osgGA/TrackballManipulator>
-#include <osgGA/FlightManipulator>
-#include <osg/Camera>
 #include <osg/MatrixTransform>
 #include <osg/PositionAttitudeTransform>
 #include <osg/LightSource>
@@ -53,10 +50,8 @@ namespace Eaagles {
 		::osg::ref_ptr<::osg::Group> rootnode;
 		::osg::ref_ptr<::osg::Node> cessna;
 		::osg::ref_ptr<::osg::Node> map;
-		::osg::ref_ptr<::osg::Camera> camera;
-		::osg::ref_ptr<::osg::PositionAttitudeTransform> moveCessna;
+		::osg::ref_ptr<::osg::PositionAttitudeTransform> movedCessna;
 		::osg::ref_ptr<osgGA::NodeTrackerManipulator> nodeTracker;
-		::osg::ref_ptr<::osg::PositionAttitudeTransform> rotateCessna;
 		Simulation::AirVehicle* av;
 		Simulation::Simulation* sim;
 	};
