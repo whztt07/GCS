@@ -33,18 +33,15 @@ namespace Eaagles {
 		if ( !nodeAircraft )
 			return;
 		
-		/*
-		const double centerLat = 42.3583333;
-		const double centerLon = -71.0602778;
-		const double AircraftASL = 10000.0;
-		
-		EllipsoidModel ellipsoid;
-		double x,y,z;
-		ellipsoid.convertLatLongHeightToXYZ(osg::DegreesToRadians(centerLat), osg::DegreesToRadians(centerLon), AircraftASL, x, y, z);
-		Vec3 positionForAircraft = Vec3d(x,y,z);
-		*/
+		nodeEngineCW = osgDB::readNodeFile("c:/jsbsim/aircraft/copter/models/engineCW.ac");
+		if( !nodeEngineCW )
+			return;
+
+		nodeEngineCCW = osgDB::readNodeFile("c:/jsbsim/aircraft/copter/models/engineCCW.ac");
+		if( !nodeEngineCCW )
+			return;
+
 		nodeModifiedAircraft = new PositionAttitudeTransform;
-		//positionedAircraft->setPosition( positionForAircraft );
 		nodeModifiedAircraft->addChild( nodeAircraft.get() );
 				
 		nodeRoot->addChild( nodeModifiedAircraft.get() );
@@ -54,14 +51,6 @@ namespace Eaagles {
 		nodeTracker->setTrackerMode( osgGA::NodeTrackerManipulator::NODE_CENTER_AND_ROTATION );
 		nodeTracker->setTrackNode( nodeAircraft.get() );
 		viewer->setCameraManipulator( nodeTracker.get() );
-		
-		ref_ptr<Light> light = new Light;
-		light->setLightNum( 1 );
-		ref_ptr<LightSource> lightSource = new LightSource;
-		lightSource->setLight( light.get() );
-		nodeRoot->getOrCreateStateSet()->setMode( GL_LIGHT1, StateAttribute::ON );
-		
-		nodeRoot->addChild( lightSource.get() );
 		
 		viewer->setSceneData( nodeRoot.get() );
 		viewer->getCamera()->setSmallFeatureCullingPixelSize(-1.0f);
