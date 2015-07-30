@@ -12,16 +12,24 @@
 #include <openeaagles/simulation/AirVehicle.h>
 #include <openeaagles/simulation/Simulation.h>
 
+#include <osgEarth/ElevationQuery>
+#include <osgEarth/Map>
+#include <osgEarthUtil/AutoClipPlaneHandler>
+#include <osgEarth/Units>
+
 namespace Eaagles {
-	class UpdateCallbackCessna : public ::osg::NodeCallback {
+	class UpdateMoveCallback : public ::osg::NodeCallback {
 	public:
-		UpdateCallbackCessna( Simulation::AirVehicle* av );
-		//UpdateCallbackCessna( const UpdateCallbackCessna& copy, const ::osg::CopyOp& copyop=::osg::CopyOp::SHALLOW_COPY );
+		UpdateMoveCallback( Simulation::AirVehicle* av, osgEarth::Map* map );
 	private:
 		virtual void operator()(::osg::Node* node, ::osg::NodeVisitor* nv);
-		::osg::Matrix translate;
-		::osg::Matrix rotate;
 		Simulation::AirVehicle* Aircraft;
+		osgEarth::Map* Map;
+		osgEarth::Util::ElevationQuery ElevQuery;
+		const osgEarth::SpatialReference* SRS;
+		osg::Vec3d currentRot;
+		osg::Vec3d currentPos;
+		double currentTerrainElevation;
 	};
 }
 #endif

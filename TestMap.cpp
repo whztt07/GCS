@@ -2,6 +2,8 @@
 #include "UpdateMoveCallback.h"
 
 using namespace osg;
+using namespace osgEarth;
+using namespace osgEarth::Util;
 
 namespace Eaagles {
 
@@ -10,47 +12,61 @@ namespace Eaagles {
 	
 	TestMap::TestMap() {
 		STANDARD_CONSTRUCTOR()
-		
-		const double centerLat = 30.5293056;
-		const double centerLon = -85.4879167;
-		const double cessnaHeight = 1000.0;
-		
-		rootnode = new Group;
-		viewer = new osgViewer::Viewer;
+		int argc = 3;
+		char* argv[3] = { {"c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/subdisplays/Debug/subdisplays.exe"}, {"c:/osgEarth/tests/readymap.earth"}, {"--sky"}};
+
+		ArgumentParser arguments(&argc,argv);
+				
+    viewer = new osgViewer::Viewer(arguments);
 		viewer->setUpViewerAsEmbeddedInWindow(0,0,1400,1000);
-		viewer->setSceneData( rootnode.get() );
+    viewer->getDatabasePager()->setUnrefImageDataAfterApplyPolicy( false, false );
 
-		map = osgDB::readNodeFile("c:/Terrain/FromUSGS/output/out.osgb");
-		if (!map )
+		nodeRoot = MapNodeHelper().load( arguments, viewer.get() );
+		if( !nodeRoot )
 			return;
-		rootnode->addChild( map.get() );
 
-		cessna = osgDB::readNodeFile("c:/OpenSceneGraph/data/cessna.osg");
-		if ( !cessna )
+		nodeMap = MapNode::get( nodeRoot.get() );
+		if( !nodeMap )
 			return;
+
+		nodeAircraft = osgDB::readNodeFile("c:/jsbsim/aircraft/copter/models/copter.ac");
+		if ( !nodeAircraft )
+			return;
+		
+		/*
+		const double centerLat = 42.3583333;
+		const double centerLon = -71.0602778;
+		const double AircraftASL = 10000.0;
+		
 		EllipsoidModel ellipsoid;
 		double x,y,z;
-		ellipsoid.convertLatLongHeightToXYZ(osg::DegreesToRadians(centerLat), osg::DegreesToRadians(centerLon), cessnaHeight, x, y, z);
-		Vec3 positionForCessna = Vec3d(x,y,z);
-		
-		movedCessna = new PositionAttitudeTransform;
-		movedCessna->setPosition( positionForCessna );
-		movedCessna->addChild( cessna.get() );
-		rootnode->addChild( movedCessna.get() );
+		ellipsoid.convertLatLongHeightToXYZ(osg::DegreesToRadians(centerLat), osg::DegreesToRadians(centerLon), AircraftASL, x, y, z);
+		Vec3 positionForAircraft = Vec3d(x,y,z);
+		*/
+		nodeModifiedAircraft = new PositionAttitudeTransform;
+		//positionedAircraft->setPosition( positionForAircraft );
+		nodeModifiedAircraft->addChild( nodeAircraft.get() );
+				
+		nodeRoot->addChild( nodeModifiedAircraft.get() );
 		
 		nodeTracker = new osgGA::NodeTrackerManipulator;
-		nodeTracker->setHomePosition( Vec3(0,90,0), Vec3(), Z_AXIS );
+		nodeTracker->setHomePosition( Vec3(0, 0, 5), Vec3(), Vec3(0, 1, 0) );
 		nodeTracker->setTrackerMode( osgGA::NodeTrackerManipulator::NODE_CENTER_AND_ROTATION );
-		nodeTracker->setTrackNode( cessna.get() );
+		nodeTracker->setTrackNode( nodeAircraft.get() );
 		viewer->setCameraManipulator( nodeTracker.get() );
 		
 		ref_ptr<Light> light = new Light;
 		light->setLightNum( 1 );
 		ref_ptr<LightSource> lightSource = new LightSource;
-		lightSource->setLight( light.get() ); 
-		rootnode->getOrCreateStateSet()->setMode( GL_LIGHT1, StateAttribute::ON );
-		rootnode->addChild( lightSource.get() );
-
+		lightSource->setLight( light.get() );
+		nodeRoot->getOrCreateStateSet()->setMode( GL_LIGHT1, StateAttribute::ON );
+		
+		nodeRoot->addChild( lightSource.get() );
+		
+		viewer->setSceneData( nodeRoot.get() );
+		viewer->getCamera()->setSmallFeatureCullingPixelSize(-1.0f);
+		viewer->getCamera()->addCullCallback( new osgEarth::Util::AutoClipPlaneCullCallback(NULL) );
+				
 		viewer->realize();
 	}
 	
@@ -59,7 +75,7 @@ namespace Eaagles {
 		if (sta != 0) {
       sim = sta->getSimulation();
       av = dynamic_cast<Simulation::AirVehicle*>(sta->getOwnship());
-			movedCessna->setUpdateCallback( new UpdateCallbackCessna (av) );
+			nodeModifiedAircraft->setUpdateCallback( new UpdateMoveCallback ( av, nodeMap->getMap() ) );
 			return true;
 		}
 		return false;
@@ -80,4 +96,3 @@ namespace Eaagles {
 			viewer->frame();
 	}
 } // end of Eaagles namespace
-

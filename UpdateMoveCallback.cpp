@@ -1,40 +1,57 @@
 #include "UpdateMoveCallback.h"
 #include <osg/PositionAttitudeTransform>
-//#include <osg/CoordinateSystemNode>
+#include <osg/Uniform>
+#include <JSBSim/math/FGMatrix33.h>
+#include <JSBSim/math/FGColumnVector3.h>
+#include <iostream>
 
 using namespace osg;
+using namespace osgEarth;
+using namespace osgEarth::Util;
+using namespace JSBSim;
 
 namespace Eaagles {
-	UpdateCallbackCessna::UpdateCallbackCessna( Simulation::AirVehicle* av ) : NodeCallback(), translate(), rotate(), Aircraft(av) {}
-	//UpdateCallbackCessna::UpdateCallbackCessna( const UpdateCallbackCessna& copy, const CopyOp& copyop=CopyOp::SHALLOW_COPY ) : NodeCallback(copy, copyop), translate(copy.translate),	rotate(copy.translate) {}
+	UpdateMoveCallback::UpdateMoveCallback( Simulation::AirVehicle* av, osgEarth::Map* map ) : 
+		NodeCallback(), 
+		Aircraft(av), 
+		Map(map), 
+		ElevQuery(Map), 
+		SRS(SpatialReference::get("epsg:4326")->getECEF()),
+		currentRot(0.0,0.0,0.0),
+		currentPos(0.0,0.0,0.0),
+		currentTerrainElevation(-1.0)
+	{}
 
-	void UpdateCallbackCessna::operator()(Node* node, NodeVisitor* nv) { 
+	void UpdateMoveCallback::operator()(Node* node, NodeVisitor* nv) { 
 		PositionAttitudeTransform* mt = dynamic_cast<PositionAttitudeTransform*>( node );
 		if ( mt != NULL && Aircraft != NULL ) {
-			const osg::Vec3d currRot = Aircraft->getGeocEulerAngles();
-			const osg::Vec3d currPos = Aircraft->getGeocPosition();
+			currentRot = Aircraft->getGeocEulerAngles();
+			currentPos = Aircraft->getGeocPosition();
+		  
+			double x = currentPos.x();
+			double y = currentPos.y();
+			double z = currentPos.z();
 
-			double x = currPos.x();
-			double y = currPos.y();
-			double z = currPos.z();
-
-			double acRoll = currRot.x();
-			double acPitch = currRot.y();
-			double acYaw = currRot.z();
+			double acRoll = currentRot.x();
+			double acPitch = currentRot.y();
+			double acYaw = currentRot.z();
 
 			Vec3d Pos(x,y,z);
-						
+			osgEarth::GeoPoint GP(SRS, Pos);
+			bool foundElevation = ElevQuery.getElevation(GP, currentTerrainElevation);
+			currentTerrainElevation /= 0.3048;
+			Aircraft->setTerrainElevation(currentTerrainElevation);
+			
 			Quat Rot(acRoll, X_AXIS, acPitch, Y_AXIS, acYaw, Z_AXIS);
+			
+			Matrixd Permute(0,  1,  0,  0,
+											0,  0, -1,  0,
+										 -1,  0,  0,  0,
+											0,  0,  0,  1); 
 
-			Matrixd Permute(0, -1, 0, 0,
-											-1, 0, 0, 0,
-											0, 0, -1, 0,
-											0, 0, 0, 1); 
-		
 			Matrixd Orient(Rot);
 			Orient = Permute * Orient;
-			Quat D(Orient.getRotate());
-			mt->setAttitude( D );
+			mt->setAttitude( Orient.getRotate() );
 			mt->setPosition( Pos );
 		}
 		traverse(node,nv);

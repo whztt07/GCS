@@ -123,12 +123,13 @@ p01:
 	( Aircraft
 		id: 1
 		side: blue
-		type: "F-16"
 		signature: ( SigSphere radius: 2.0 )
 
-		initLatitude: ( LatLon direction: "n" degrees: 30 minutes: 30.0 seconds: 44.00 )
-		initLongitude: ( LatLon direction: "w" degrees: 85 minutes: 29.5 seconds: 16.50 )
-		initAlt: ( Feet 800 )
+
+
+		initLatitude: ( LatLon direction: "n" degrees: 42 minutes: 21.0 seconds: 29.98 )
+		initLongitude: ( LatLon direction: "w" degrees: 71 minutes: 3.0 seconds: 37.00 )
+		initAlt: ( Feet 10000 )
 		initHeading: ( Degrees 0.0 )
 		initVelocity: 220
 
@@ -150,173 +151,6 @@ p01:
 				altitudeHoldMode: false
 				headingHoldMode: false
 				velocityHoldMode: false
-			)
-
-			antennas:
-			( Gimbal
-				components:
-				{
-					radar:
-					( Antenna
-						maxPlayersOfInterest: 6
-						playerOfInterestTypes:
-						{ "air" "weapon" }
-						polarization: horizontal
-						gain: ( dB 42 )
-#line 45 "player01.epp"
-#line 1 "gainPattern.epp"
-
-
-
-
-gainPattern:
-( Func1
-   table: ( Table1
-
-       x: [ 0.0 0.01745 0.02618 0.04363 0.05236 0.061087 0.06981 0.07854 ]
-       data: [ 0.0 -3.0 -10.0 -30.0 -20.0 -14.0 -25.0 -80.0 ]
-   )
-)
-#line 46 "player01.epp"
-						initPosition: [ 0 0 ]
-						maxRates: [ 0.8727 0.8727 ]
-						commandRates: [ 0.43633 0.6981 ]
-						reference: [ 0 0 ]
-						searchVolume: [ 1.0472 0.05 ]
-						numBars: 2
-						playerOfInterestTypes: { air ground weapon ship building lifeform space }
-						maxPlayersOfInterest: 20
-						maxRange2PlayersOfInterest: ( KiloMeters 100.0 )
-						maxAngle2PlayersOfInterest: ( Degrees 90.0 )
-						localPlayersOfInterestOnly: false
-						useWorldCoordinates: false
-					)
-					rwr:
-					( Antenna
-						scanMode: manual
-						polarization: horizontal
-						gain: ( dB 12 )
-					)
-				}
-			)
-
-			sensors:
-			( SensorMgr
-				components:
-				{
-					( Tws
-						trackManagerName: twsTrkMgr
-						antennaName: radar
-						powerPeak: ( KiloWatts 500.0 )
-						frequency: ( GigaHertz 3.0 )
-						bandwidth: ( GigaHertz 2.0 )
-						PRF: ( Hertz 500.0 )
-						pulseWidth: ( MilliSeconds 0.01 )
-						threshold: ( dB 0.0 )
-						ranges: [ 10 20 40 80 160 ]
-						initRangeIdx: 2
-					)
-					( Rwr
-						antennaName: rwr
-						threshold: ( dB 0.0 )
-						frequency: ( GigaHertz 3.0 )
-						bandwidth: ( GigaHertz 2.0 )
-					)
-				}
-			)
-
-			obc:
-			( OnboardComputer
-				components:
-				{
-					twsTrkMgr:
-					( AirTrkMgr
-						maxTracks: 50
-						alpha: 1.0
-						beta: 0.5
-						gamma: 0.0
-						positionGate: 1500
-						rangeGate: 500
-						velocityGate: 10
-						firstTrackId: 2000
-					)
-				}
-			)
-
-			sms:
-			( StoresMgr
-				numStations: 4
-				stores:
-				{
-					1:
-					( AamMissile
-						id: 201
-						type: "AIM-120C"
-						signature: ( SigDihedralCR a: 0.1 )
-						mode: inactive
-						minSpeed: 0
-						maxSpeed: 800
-						speedMaxG: 800
-						maxg: 9
-						maxAccel: 200
-						maxBurstRng: 50
-						maxTOF: 30
-						eobt: 90
-						tsg: 0
-						dataLogTime: ( Seconds 0.2 )
-					)
-					2:
-					( AamMissile
-						id: 202
-						type: "AIM-120C"
-						signature: ( SigDihedralCR a: 0.1 )
-						mode: inactive
-						minSpeed: 0
-						maxSpeed: 800
-						speedMaxG: 800
-						maxg: 9
-						maxAccel: 200
-						maxBurstRng: 50
-						maxTOF: 30
-						eobt: 90
-						tsg: 0
-						dataLogTime: ( Seconds 0.2 )
-					)
-					3:
-					( AamMissile
-						id: 203
-						type: "AIM-120C"
-						signature: ( SigDihedralCR a: 0.1 )
-						mode: inactive
-						minSpeed: 0
-						maxSpeed: 800
-						speedMaxG: 800
-						maxg: 9
-						maxAccel: 200
-						maxBurstRng: 50
-						maxTOF: 30
-						eobt: 90
-						tsg: 0
-						dataLogTime: ( Seconds 0.2 )
-					)
-					4:
-					( AamMissile
-						id: 204
-						type: "AIM-120C"
-						signature: ( SigDihedralCR a: 0.1 )
-						mode: inactive
-						minSpeed: 0
-						maxSpeed: 800
-						speedMaxG: 800
-						maxg: 9
-						maxAccel: 200
-						maxBurstRng: 50
-						maxTOF: 30
-						eobt: 90
-						tsg: 0
-						dataLogTime: ( Seconds 0.2 )
-					)
-				}
 			)
 		}
 	)

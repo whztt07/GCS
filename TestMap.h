@@ -13,6 +13,14 @@
 #include <osg/MatrixTransform>
 #include <osg/PositionAttitudeTransform>
 #include <osg/LightSource>
+#include <osg/ArgumentParser>
+
+#include <osgEarth/Notify>
+#include <osgEarthUtil/EarthManipulator>
+#include <osgEarthUtil/ExampleResources>
+#include <osgEarthUtil/AutoClipPlaneHandler>
+#include <osgEarth/Units>
+#include <osgEarth/Viewpoint>
 
 #include "SimStation.h"
 
@@ -47,11 +55,13 @@ namespace Eaagles {
 
 	private:
 		::osg::ref_ptr<osgViewer::Viewer> viewer;
-		::osg::ref_ptr<::osg::Group> rootnode;
-		::osg::ref_ptr<::osg::Node> cessna;
-		::osg::ref_ptr<::osg::Node> map;
-		::osg::ref_ptr<::osg::PositionAttitudeTransform> movedCessna;
+		::osg::ref_ptr<::osg::Group> nodeRoot;
+		::osg::ref_ptr<::osg::Node> nodeAircraft;
+		::osg::ref_ptr<::osg::PositionAttitudeTransform> nodeModifiedAircraft;
 		::osg::ref_ptr<osgGA::NodeTrackerManipulator> nodeTracker;
+		::osg::ref_ptr<osgEarth::MapNode> nodeMap;
+		::osg::ref_ptr<::osg::Node> nodeEngineCW;
+		::osg::ref_ptr<::osg::Node> nodeEngineCCW;
 		Simulation::AirVehicle* av;
 		Simulation::Simulation* sim;
 	};
