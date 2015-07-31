@@ -29,7 +29,7 @@ namespace Eaagles {
 		if( !nodeMap )
 			return;
 
-		nodeAircraft = osgDB::readNodeFile("c:/jsbsim/aircraft/copter/models/copter.ac");
+		nodeAircraft = dynamic_cast<Group*> (osgDB::readNodeFile("c:/jsbsim/aircraft/copter/models/copter.ac"));
 		if ( !nodeAircraft )
 			return;
 		
@@ -41,17 +41,48 @@ namespace Eaagles {
 		if( !nodeEngineCCW )
 			return;
 
+		groupAircraft = new Group;
+
+		ref_ptr<MatrixTransform> setupForwardEngine = new MatrixTransform;
+	  setupForwardEngine->setMatrix( Matrix::translate( 0.0, 0.0, -0.2855 ) );
+		setupForwardEngine->addChild( nodeEngineCW.get() );
+		
+		ref_ptr<MatrixTransform> setupRightEngine = new MatrixTransform;
+	  setupRightEngine->setMatrix( Matrix::translate( 0.2855, 0.0, 0.0 ) );
+		setupRightEngine->addChild( nodeEngineCCW.get() );
+
+		ref_ptr<MatrixTransform> setupBackEngine = new MatrixTransform;
+	  setupBackEngine->setMatrix( Matrix::translate( 0.0, 0.0, 0.2855 ) );
+		setupBackEngine->addChild( nodeEngineCW.get() );
+
+		ref_ptr<MatrixTransform> setupLeftEngine = new MatrixTransform;
+	  setupLeftEngine->setMatrix( Matrix::translate( -0.2855, 0.0, 0.0 ) );
+		setupLeftEngine->addChild( nodeEngineCCW.get() );
+
+		groupAircraft->addChild( nodeAircraft.get() );
+		groupAircraft->addChild( setupForwardEngine.get() );
+		groupAircraft->addChild( setupRightEngine.get() );
+		groupAircraft->addChild( setupBackEngine.get() );
+		groupAircraft->addChild( setupLeftEngine.get() );
+
 		nodeModifiedAircraft = new PositionAttitudeTransform;
-		nodeModifiedAircraft->addChild( nodeAircraft.get() );
+		nodeModifiedAircraft->addChild( groupAircraft.get() );
 				
 		nodeRoot->addChild( nodeModifiedAircraft.get() );
 		
 		nodeTracker = new osgGA::NodeTrackerManipulator;
-		nodeTracker->setHomePosition( Vec3(0, 0, 5), Vec3(), Vec3(0, 1, 0) );
+		nodeTracker->setHomePosition( Vec3(0, 0, 6), Vec3(), Vec3(0, 1, 0) );
 		nodeTracker->setTrackerMode( osgGA::NodeTrackerManipulator::NODE_CENTER_AND_ROTATION );
 		nodeTracker->setTrackNode( nodeAircraft.get() );
 		viewer->setCameraManipulator( nodeTracker.get() );
 		
+		light = new Light;
+		light->setLightNum( 1 );
+		lightSource = new LightSource;
+		lightSource->setLight( light.get() );
+		nodeRoot->getOrCreateStateSet()->setMode( GL_LIGHT1, StateAttribute::ON );
+		nodeRoot->addChild( lightSource.get() );
+
 		viewer->setSceneData( nodeRoot.get() );
 		viewer->getCamera()->setSmallFeatureCullingPixelSize(-1.0f);
 		viewer->getCamera()->addCullCallback( new osgEarth::Util::AutoClipPlaneCullCallback(NULL) );

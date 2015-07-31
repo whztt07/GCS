@@ -57,11 +57,14 @@ namespace Eaagles {
 		::osg::ref_ptr<osgViewer::Viewer> viewer;
 		::osg::ref_ptr<::osg::Group> nodeRoot;
 		::osg::ref_ptr<::osg::Node> nodeAircraft;
+		::osg::ref_ptr<::osg::Node> nodeEngineCW;
+		::osg::ref_ptr<::osg::Node> nodeEngineCCW;
+		::osg::ref_ptr<::osg::Group> groupAircraft;
 		::osg::ref_ptr<::osg::PositionAttitudeTransform> nodeModifiedAircraft;
 		::osg::ref_ptr<osgGA::NodeTrackerManipulator> nodeTracker;
 		::osg::ref_ptr<osgEarth::MapNode> nodeMap;
-		::osg::ref_ptr<::osg::Node> nodeEngineCW;
-		::osg::ref_ptr<::osg::Node> nodeEngineCCW;
+		::osg::ref_ptr<::osg::Light> light;
+		::osg::ref_ptr<::osg::LightSource> lightSource;
 		Simulation::AirVehicle* av;
 		Simulation::Simulation* sim;
 	};
