@@ -29,7 +29,7 @@ namespace Eaagles {
 		if( !nodeMap )
 			return;
 
-		nodeAircraft = dynamic_cast<Group*> (osgDB::readNodeFile("c:/jsbsim/aircraft/copter/models/copter.ac"));
+		nodeAircraft = osgDB::readNodeFile("c:/jsbsim/aircraft/copter/models/copter.ac");
 		if ( !nodeAircraft )
 			return;
 		
@@ -44,19 +44,19 @@ namespace Eaagles {
 		groupAircraft = new Group;
 
 		ref_ptr<MatrixTransform> setupForwardEngine = new MatrixTransform;
-	  setupForwardEngine->setMatrix( Matrix::translate( 0.0, 0.0, -0.2855 ) );
+	  setupForwardEngine->setMatrix( Matrix::translate( 0.0, -0.01, -0.2855 ) );
 		setupForwardEngine->addChild( nodeEngineCW.get() );
 		
 		ref_ptr<MatrixTransform> setupRightEngine = new MatrixTransform;
-	  setupRightEngine->setMatrix( Matrix::translate( 0.2855, 0.0, 0.0 ) );
+	  setupRightEngine->setMatrix( Matrix::translate( 0.2855, -0.01, 0.0 ) );
 		setupRightEngine->addChild( nodeEngineCCW.get() );
 
 		ref_ptr<MatrixTransform> setupBackEngine = new MatrixTransform;
-	  setupBackEngine->setMatrix( Matrix::translate( 0.0, 0.0, 0.2855 ) );
+	  setupBackEngine->setMatrix( Matrix::translate( 0.0, -0.01, 0.2855 ) );
 		setupBackEngine->addChild( nodeEngineCW.get() );
 
 		ref_ptr<MatrixTransform> setupLeftEngine = new MatrixTransform;
-	  setupLeftEngine->setMatrix( Matrix::translate( -0.2855, 0.0, 0.0 ) );
+	  setupLeftEngine->setMatrix( Matrix::translate( -0.2855, -0.01, 0.0 ) );
 		setupLeftEngine->addChild( nodeEngineCCW.get() );
 
 		groupAircraft->addChild( nodeAircraft.get() );
