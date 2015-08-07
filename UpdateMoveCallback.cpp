@@ -19,8 +19,9 @@ namespace Eaagles {
 		SRS(SpatialReference::get("epsg:4326")->getECEF()),
 		currentRot(0.0,0.0,0.0),
 		currentPos(0.0,0.0,0.0),
-		currentTerrainElevation(-1.0)
-	{}
+		currentTerrainElevation(-1.0)	{
+			Aircraft->setAutopilotEnabled(true);
+	}
 
 	void UpdateMoveCallback::operator()(Node* node, NodeVisitor* nv) { 
 		PositionAttitudeTransform* mt = dynamic_cast<PositionAttitudeTransform*>( node );

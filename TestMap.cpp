@@ -13,7 +13,7 @@ namespace Eaagles {
 	TestMap::TestMap() {
 		STANDARD_CONSTRUCTOR()
 		int argc = 3;
-		char* argv[3] = { {"c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/subdisplays/Debug/subdisplays.exe"}, {"c:/osgEarth/tests/readymap.earth"}, {"--sky"}};
+		char* argv[3] = { {"c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/subdisplays/Debug/subdisplays.exe"}, {"c:/osgEarth/tests/boston.earth"}, {"--sky"}};
 
 		ArgumentParser arguments(&argc,argv);
 				
@@ -29,15 +29,17 @@ namespace Eaagles {
 		if( !nodeMap )
 			return;
 
-		nodeAircraft = osgDB::readNodeFile("c:/jsbsim/aircraft/copter/models/copter.ac");
+		const std::string pathToModels("c:/OpenEaaglesExamples/shared/data/JSBSim/aircraft/copter/Models/");
+
+		nodeAircraft = osgDB::readNodeFile(pathToModels + "copter.ac");
 		if ( !nodeAircraft )
 			return;
 		
-		nodeEngineCW = osgDB::readNodeFile("c:/jsbsim/aircraft/copter/models/engineCW.ac");
+		nodeEngineCW = osgDB::readNodeFile(pathToModels + "engineCW.ac");
 		if( !nodeEngineCW )
 			return;
 
-		nodeEngineCCW = osgDB::readNodeFile("c:/jsbsim/aircraft/copter/models/engineCCW.ac");
+		nodeEngineCCW = osgDB::readNodeFile(pathToModels + "engineCCW.ac");
 		if( !nodeEngineCCW )
 			return;
 

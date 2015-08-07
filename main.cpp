@@ -96,7 +96,6 @@ namespace Eaagles {
 	}
 }
 
-
 int main(int argc, char* argv[]) {
 	return Eaagles::main(argc, argv);
 }

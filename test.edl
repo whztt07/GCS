@@ -125,13 +125,13 @@ p01:
 		side: blue
 		signature: ( SigSphere radius: 2.0 )
 
-
-
 		initLatitude: ( LatLon direction: "n" degrees: 42 minutes: 21.0 seconds: 29.98 )
 		initLongitude: ( LatLon direction: "w" degrees: 71 minutes: 3.0 seconds: 37.00 )
-		initAlt: ( Feet 1000 )
+		initAlt: ( Feet 2000 )
+		initRoll: ( Degrees 0.0 )
+		initPitch: ( Degrees 0.0 )
 		initHeading: ( Degrees 0.0 )
-		initVelocity: 220
+		initVelocity: 0.0
 
 		positionFreeze: false
 
@@ -147,6 +147,7 @@ p01:
 
 			pilot:
 			( Autopilot
+				enabled: true
 				navMode: false
 				altitudeHoldMode: false
 				headingHoldMode: false
