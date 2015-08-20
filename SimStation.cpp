@@ -21,7 +21,7 @@ namespace Eaagles {
 	// slot table for this class type
 	BEGIN_SLOTTABLE(SimStation)
 			"display",                  //  1) Main Display
-			"autoResetTimer",           //  2: Auto RESET timer value (Basic::Time); default: zero (no auto reset)
+			"autoResetTimer"            //  2: Auto RESET timer value (Basic::Time); default: zero (no auto reset)
 	END_SLOTTABLE(SimStation)
 
 	//  Map slot table to handles 
@@ -163,7 +163,7 @@ namespace Eaagles {
 		}
 		return true;
 	}
-
+	
 	//------------------------------------------------------------------------------
 	// getSlotByIndex() for BasicGL::Page
 	//------------------------------------------------------------------------------

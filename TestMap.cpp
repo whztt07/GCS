@@ -1,5 +1,6 @@
 #include "TestMap.h"
 #include "UpdateMoveCallback.h"
+#include <algorithm>
 
 using namespace osg;
 using namespace osgEarth;
@@ -10,10 +11,47 @@ namespace Eaagles {
 	IMPLEMENT_EMPTY_SLOTTABLE_SUBCLASS(TestMap,"TestMap")
 	EMPTY_SERIALIZER(TestMap)
 	
+	class UpdateCallback : public NodeCallback {
+	public:
+		UpdateCallback(Simulation::AirVehicle* av, int engineNumber) : Aircraft(av), EngineNumber(engineNumber), angle(0.0), deltaAngle(0.0), rotation() {}
+		virtual void operator()(Node* node, NodeVisitor* nv) {
+			MatrixTransform* mt = dynamic_cast<MatrixTransform*>( node );
+			if ( mt != NULL && Aircraft != NULL ) {
+				LCreal rpm[4];
+				Aircraft->getEngRPM(rpm, 4);
+				LCreal rps[4];
+				std::transform(rpm, rpm + (sizeof(rpm) / sizeof(LCreal)), rps,  [](LCreal d) { return d / 60.0f; } );
+				deltaAngle = 2.0f * osg::PI / ((float)rps[EngineNumber]);
+				if(angle > 2.0f * osg::PI)
+					angle = 0.0;
+				angle += deltaAngle;
+				rotation.makeRotate(angle, Y_AXIS);
+				Matrix rotate(rotation);
+				Matrix translate = mt->getMatrix();
+				Matrix setupTransAndRot = rotate * translate;
+				mt->setMatrix(setupTransAndRot);
+			}
+      traverse(node,nv);
+		}
+	private:
+		Simulation::AirVehicle* Aircraft;
+		int EngineNumber;
+		double angle;
+		double deltaAngle;
+		Quat rotation;
+	};
+
+	MatrixTransform* createTransformNode( Node* node, const Matrix& matrix ) {
+		ref_ptr<MatrixTransform> trans = new MatrixTransform;
+		trans->addChild( node );
+		trans->setMatrix( matrix );
+		return trans.release();
+	}
+	
 	TestMap::TestMap() {
 		STANDARD_CONSTRUCTOR()
 		int argc = 3;
-		char* argv[3] = { {"c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/subdisplays/Debug/subdisplays.exe"}, {"c:/osgEarth/tests/boston.earth"}, {"--sky"}};
+		char* argv[3] = { {"c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/subdisplays/Debug/subdisplays.exe"}, {"c:/osgEarth/tests/readymap.earth"}, {"--sky"}};
 
 		ArgumentParser arguments(&argc,argv);
 				
@@ -29,7 +67,7 @@ namespace Eaagles {
 		if( !nodeMap )
 			return;
 
-		const std::string pathToModels("c:/OpenEaaglesExamples/shared/data/JSBSim/aircraft/copter/Models/");
+		const std::string pathToModels("c:/OpenEaaglesExamples/shared/data/JSBSim/aircraft/copter/models/");
 
 		nodeAircraft = osgDB::readNodeFile(pathToModels + "copter.ac");
 		if ( !nodeAircraft )
@@ -44,24 +82,13 @@ namespace Eaagles {
 			return;
 
 		groupAircraft = new Group;
-
-		ref_ptr<MatrixTransform> setupForwardEngine = new MatrixTransform;
-	  setupForwardEngine->setMatrix( Matrix::translate( 0.0, -0.01, -0.2855 ) );
-		setupForwardEngine->addChild( nodeEngineCW.get() );
-		
-		ref_ptr<MatrixTransform> setupRightEngine = new MatrixTransform;
-	  setupRightEngine->setMatrix( Matrix::translate( 0.2855, -0.01, 0.0 ) );
-		setupRightEngine->addChild( nodeEngineCCW.get() );
-
-		ref_ptr<MatrixTransform> setupBackEngine = new MatrixTransform;
-	  setupBackEngine->setMatrix( Matrix::translate( 0.0, -0.01, 0.2855 ) );
-		setupBackEngine->addChild( nodeEngineCW.get() );
-
-		ref_ptr<MatrixTransform> setupLeftEngine = new MatrixTransform;
-	  setupLeftEngine->setMatrix( Matrix::translate( -0.2855, -0.01, 0.0 ) );
-		setupLeftEngine->addChild( nodeEngineCCW.get() );
-
 		groupAircraft->addChild( nodeAircraft.get() );
+
+		setupForwardEngine = createTransformNode( nodeEngineCCW.get(), Matrix::translate( 0.0, -0.01, -0.2855 ) );
+		setupRightEngine = createTransformNode( nodeEngineCW.get(), Matrix::translate( 0.2855, -0.01, 0.0 ) );
+		setupBackEngine = createTransformNode( nodeEngineCCW.get(), Matrix::translate( 0.0, -0.01, 0.2855 ) );
+		setupLeftEngine = createTransformNode( nodeEngineCW.get(), Matrix::translate( -0.2855, -0.01, 0.0) );
+				
 		groupAircraft->addChild( setupForwardEngine.get() );
 		groupAircraft->addChild( setupRightEngine.get() );
 		groupAircraft->addChild( setupBackEngine.get() );
@@ -87,7 +114,7 @@ namespace Eaagles {
 
 		viewer->setSceneData( nodeRoot.get() );
 		viewer->getCamera()->setSmallFeatureCullingPixelSize(-1.0f);
-		viewer->getCamera()->addCullCallback( new osgEarth::Util::AutoClipPlaneCullCallback(NULL) );
+		viewer->getCamera()->addCullCallback( new AutoClipPlaneCullCallback(NULL) );
 				
 		viewer->realize();
 	}
@@ -97,6 +124,10 @@ namespace Eaagles {
 		if (sta != 0) {
       sim = sta->getSimulation();
       av = dynamic_cast<Simulation::AirVehicle*>(sta->getOwnship());
+			setupForwardEngine->setUpdateCallback(new UpdateCallback(av, 0) );
+			setupRightEngine->setUpdateCallback(new UpdateCallback(av, 1) );
+			setupBackEngine->setUpdateCallback(new UpdateCallback(av, 2) );
+			setupLeftEngine->setUpdateCallback(new UpdateCallback(av, 3) );
 			nodeModifiedAircraft->setUpdateCallback( new UpdateMoveCallback ( av, nodeMap->getMap() ) );
 			return true;
 		}

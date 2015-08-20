@@ -65,6 +65,10 @@ namespace Eaagles {
 		::osg::ref_ptr<osgEarth::MapNode> nodeMap;
 		::osg::ref_ptr<::osg::Light> light;
 		::osg::ref_ptr<::osg::LightSource> lightSource;
+		::osg::ref_ptr<::osg::MatrixTransform> setupForwardEngine;
+		::osg::ref_ptr<::osg::MatrixTransform> setupRightEngine;
+		::osg::ref_ptr<::osg::MatrixTransform> setupBackEngine;
+		::osg::ref_ptr<::osg::MatrixTransform> setupLeftEngine;
 		Simulation::AirVehicle* av;
 		Simulation::Simulation* sim;
 	};

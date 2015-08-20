@@ -33,7 +33,7 @@ namespace Eaagles {
 	// Description (input) File -- After being processed by the C preprocessor
 	const char* testFileName = "../test.edl";
 	// Frame Rate
-	const int frameRate = 60;
+	const int frameRate = 1;
 	// Top level Station
 	static Eaagles::Simulation::Station* station = 0;
 

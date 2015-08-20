@@ -7,7 +7,7 @@
 #include <openeaagles/simulation/Station.h>
 
 namespace Eaagles {
-   namespace Basic { class Table1; }
+   namespace Basic { class Table1; class NetHandler; class Number; }
    namespace Glut  { class GlutDisplay; }
    namespace Simulation { class AirVehicle; }
 
@@ -25,7 +25,7 @@ namespace Eaagles {
 	//      autoResetTimer          <Time>               ! Auto RESET timer value (Basic::Time); default: 0
 	//------------------------------------------------------------------------------
 	class SimStation : public Simulation::Station {
-	DECLARE_SUBCLASS(SimStation, Simulation::Station)
+		DECLARE_SUBCLASS(SimStation, Simulation::Station)
 	public:
 		SimStation();
 		// Step our "ownship" to the next local air vehicle

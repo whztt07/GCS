@@ -1,15 +1,7 @@
 #line 1 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
-
-
-
-
-
-
-
-
 ( SimStation
 	tcPriority: 1
-#line 12 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 4 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "ioHandler.epp"
 
 
@@ -100,10 +92,9 @@ ioHandler: ( TestIoHandler
    }
 )
 #line 9 "ioHandler.epp"
-
    }
 )
-#line 13 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 5 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "scenario.epp"
 ownship: p01
 simulation:
@@ -111,13 +102,8 @@ simulation:
 
   freeze: false
 
-
-  latitude:  37.0
-  longitude:  -116.0
-
-
   players: {
-#line 13 "scenario.epp"
+#line 8 "scenario.epp"
 #line 1 "player01.epp"
 p01:
 	( Aircraft
@@ -140,9 +126,11 @@ p01:
 		components:
 		{
 			dynamicsModel:
-			( JSBSimModel
+			( JSBSimNetModel
 				rootDir:  "c:/OpenEaaglesExamples/shared/data/JSBSim/"
-				model: "f16"
+				model: "copter"
+				netInput: ( UdpUnicastHandler ipAddress: "127.0.0.1" port: 5501 shared: true )
+				netOutput: ( UdpUnicastHandler ipAddress: "127.0.0.1" port: 3002 shared: true )
 			)
 
 			pilot:
@@ -155,10 +143,10 @@ p01:
 			)
 		}
 	)
-#line 14 "scenario.epp"
+#line 9 "scenario.epp"
   }
 )
-#line 14 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 6 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 
 	display:
 	( TestDisplay
@@ -186,7 +174,7 @@ p01:
 		}
 		displays:
 		{
-#line 41 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 33 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display1.epp"
 ( GlutDisplay
 
@@ -202,14 +190,7 @@ p01:
   vpHeight: 500
   clearColor: (rgb 0 0 0)
   fullScreen: 0
-
-
-  materials: {
-		m1: ( Material diffuseColor: { 0.5 0.5 0.8 } specularColor: { 0.8 0.8 0.8 } shininess: 100 )
-  }
-
-
-
+#line 23 "display1.epp"
   colorTable:
 	{
     black: ( rgba 0 0 0 )
@@ -429,7 +410,7 @@ testhsi:
 #line 116 "display1.epp"
 	}
 )
-#line 42 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 34 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display2.epp"
 ( GlutDisplay
 
@@ -445,14 +426,7 @@ testhsi:
   vpHeight: 1000
   clearColor: (rgb 0 0 0)
   fullScreen: 0
-
-
-  materials: {
-		m1: ( Material diffuseColor: { 0.5 0.5 0.8 } specularColor: { 0.8 0.8 0.8 } shininess: 100 )
-  }
-
-
-
+#line 23 "display2.epp"
   colorTable:
 	{
     black: ( rgba 0 0 0 )
@@ -551,7 +525,7 @@ testmap:
 #line 113 "display2.epp"
 	}
 )
-#line 43 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 35 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display3.epp"
 ( GlutDisplay
 
@@ -567,14 +541,7 @@ testmap:
   vpHeight: 500
   clearColor: (rgb 0 0 0)
   fullScreen: 0
-
-
-  materials: {
-		m1: ( Material diffuseColor: { 0.5 0.5 0.8 } specularColor: { 0.8 0.8 0.8 } shininess: 100 )
-  }
-
-
-
+#line 23 "display3.epp"
   colorTable:
 	{
     black: ( rgba 0 0 0 )
@@ -3227,7 +3194,7 @@ testpfd:
 #line 177 "display3.epp"
 	}
 )
-#line 44 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 36 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
 		}
 	)
 )

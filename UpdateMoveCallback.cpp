@@ -1,4 +1,5 @@
 #include "UpdateMoveCallback.h"
+
 #include <osg/PositionAttitudeTransform>
 #include <osg/Uniform>
 #include <JSBSim/math/FGMatrix33.h>
@@ -56,6 +57,5 @@ namespace Eaagles {
 			mt->setPosition( Pos );
 		}
 		traverse(node,nv);
-		return;
 	}
 }
