@@ -55,7 +55,7 @@
       <AdditionalIncludeDirectories>C:\OpenEaagles\include;C:\OpenEaagles3rdParty\include;c:\OpenEaaglesExamples\shared;C:\OpenSceneGraph\install\vs2012\include;C:\osgEarth\install\vs2012\include;C:\OpenEaagles3rdParty\include\JSBSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\OpenEaagles\lib\vs2012;C:\OpenEaagles3rdParty\lib\vs2012-32;C:\OpenEaaglesExamples\lib\vs2012;C:\OpenSceneGraph\install\vs2012\lib;C:\osgEarth\install\vs2012\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>oeGlut_d.lib;oeInstruments_d.lib;oeBasicGL_d.lib;oeBasic_d.lib;ftgl_d.lib;freetype2_d.lib;freeglut_d.lib;glu32.lib;opengl32.lib;Ws2_32.lib;Winmm.lib;comctl32.lib;gdi32.lib;osgGAd.lib;osgDBd.lib;osgUtild.lib;osgd.lib;OpenThreadsd.lib;osgViewerd.lib;osgTextd.lib;oeSimulation_d.lib;oeVehicles_d.lib;oeIoDevice_d.lib;oeDafif_d.lib;libzmq_d.lib;jsbsim_d.lib;oeOtw_d.lib;ccl_lib_d.lib;oeDis_d.lib;oeSensors_d.lib;oeRecorder_d.lib;oeTerrain_d.lib;libprotobuf_d.lib;xPanel_d.lib;xZeroMQHandlers_d.lib;osgEarthUtild.lib;osgEarthAnnotationd.lib;osgEarthFeaturesd.lib;osgEarthSymbologyd.lib;osgEarthd.lib;C:\OpenSceneGraph\3rdParty\vs2012\3rdParty_x86_x64\x86\lib\libcurld.lib;C:\OpenSceneGraph\3rdParty\vs2012\3rdParty_x86_x64\x86\lib\zlibstaticd.lib;C:\GEOS\install\lib\libgeos.lib;C:\OpenSceneGraph\3rdParty\vs2012\3rdParty_x86_x64\x86\lib\gdal_i.lib;%(AdditionalDependencies)</AdditionalDependencies>

@@ -33,7 +33,7 @@ namespace Eaagles {
 	// Description (input) File -- After being processed by the C preprocessor
 	const char* testFileName = "../test.edl";
 	// Frame Rate
-	const int frameRate = 1;
+	const int frameRate = 60;
 	// Top level Station
 	static Eaagles::Simulation::Station* station = 0;
 
@@ -69,7 +69,7 @@ namespace Eaagles {
 		station->updateData(dt);
 	}
 	
-	int main(int argc, char* argv[]) {
+	int exec(int argc, char* argv[]) {
 		glutInit(&argc, argv);
 	  
 		station = builder(testFileName);
@@ -87,7 +87,7 @@ namespace Eaagles {
 		station->updateTC(dt);
 		station->event(Eaagles::Basic::Component::RESET_EVENT);
 
-		glutTimerFunc(msecs, updateDataCB, 1);
+		glutTimerFunc(msecs, updateDataCB, msecs);
 
 		station->createTimeCriticalProcess();
 
@@ -96,6 +96,8 @@ namespace Eaagles {
 	}
 }
 
-int main(int argc, char* argv[]) {
-	return Eaagles::main(argc, argv);
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+	const int argc = 1;
+	char* argv[argc] = {};
+	return Eaagles::exec(argc, argv);
 }

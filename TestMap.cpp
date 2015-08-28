@@ -11,36 +11,6 @@ namespace Eaagles {
 	IMPLEMENT_EMPTY_SLOTTABLE_SUBCLASS(TestMap,"TestMap")
 	EMPTY_SERIALIZER(TestMap)
 	
-	class UpdateCallback : public NodeCallback {
-	public:
-		UpdateCallback(Simulation::AirVehicle* av, int engineNumber) : Aircraft(av), EngineNumber(engineNumber), angle(0.0), deltaAngle(0.0), rotation() {}
-		virtual void operator()(Node* node, NodeVisitor* nv) {
-			MatrixTransform* mt = dynamic_cast<MatrixTransform*>( node );
-			if ( mt != NULL && Aircraft != NULL ) {
-				LCreal rpm[4];
-				Aircraft->getEngRPM(rpm, 4);
-				LCreal rps[4];
-				std::transform(rpm, rpm + (sizeof(rpm) / sizeof(LCreal)), rps,  [](LCreal d) { return d / 60.0f; } );
-				deltaAngle = 2.0f * osg::PI / ((float)rps[EngineNumber]);
-				if(angle > 2.0f * osg::PI)
-					angle = 0.0;
-				angle += deltaAngle;
-				rotation.makeRotate(angle, Y_AXIS);
-				Matrix rotate(rotation);
-				Matrix translate = mt->getMatrix();
-				Matrix setupTransAndRot = rotate * translate;
-				mt->setMatrix(setupTransAndRot);
-			}
-      traverse(node,nv);
-		}
-	private:
-		Simulation::AirVehicle* Aircraft;
-		int EngineNumber;
-		double angle;
-		double deltaAngle;
-		Quat rotation;
-	};
-
 	MatrixTransform* createTransformNode( Node* node, const Matrix& matrix ) {
 		ref_ptr<MatrixTransform> trans = new MatrixTransform;
 		trans->addChild( node );
@@ -124,10 +94,6 @@ namespace Eaagles {
 		if (sta != 0) {
       sim = sta->getSimulation();
       av = dynamic_cast<Simulation::AirVehicle*>(sta->getOwnship());
-			setupForwardEngine->setUpdateCallback(new UpdateCallback(av, 0) );
-			setupRightEngine->setUpdateCallback(new UpdateCallback(av, 1) );
-			setupBackEngine->setUpdateCallback(new UpdateCallback(av, 2) );
-			setupLeftEngine->setUpdateCallback(new UpdateCallback(av, 3) );
 			nodeModifiedAircraft->setUpdateCallback( new UpdateMoveCallback ( av, nodeMap->getMap() ) );
 			return true;
 		}

@@ -113,7 +113,7 @@ p01:
 
 		initLatitude: ( LatLon direction: "n" degrees: 42 minutes: 21.0 seconds: 29.98 )
 		initLongitude: ( LatLon direction: "w" degrees: 71 minutes: 3.0 seconds: 37.00 )
-		initAlt: ( Feet 2000 )
+		initAltAGL: ( Feet 1.0 )
 		initRoll: ( Degrees 0.0 )
 		initPitch: ( Degrees 0.0 )
 		initHeading: ( Degrees 0.0 )
@@ -129,17 +129,8 @@ p01:
 			( JSBSimNetModel
 				rootDir:  "c:/OpenEaaglesExamples/shared/data/JSBSim/"
 				model: "copter"
-				netInput: ( UdpUnicastHandler ipAddress: "127.0.0.1" port: 5501 shared: true )
-				netOutput: ( UdpUnicastHandler ipAddress: "127.0.0.1" port: 3002 shared: true )
-			)
-
-			pilot:
-			( Autopilot
-				enabled: true
-				navMode: false
-				altitudeHoldMode: false
-				headingHoldMode: false
-				velocityHoldMode: false
+				netOutput: ( UdpUnicastHandler ipAddress: "127.0.0.1" port: 5502 localPort: 5503 shared: true )
+				netInput: ( UdpUnicastHandler ipAddress: "127.0.0.1" port: 5503 shared: true )
 			)
 		}
 	)
