@@ -52,6 +52,9 @@ namespace Eaagles {
 		virtual void draw();
 
 		virtual bool onEntry();
+	
+	protected:
+		void initAircraftPosition(double lat, double lon, double altAGL);
 
 	private:
 		::osg::ref_ptr<osgViewer::Viewer> viewer;

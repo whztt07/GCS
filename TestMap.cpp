@@ -1,10 +1,12 @@
 #include "TestMap.h"
 #include "UpdateMoveCallback.h"
 #include <algorithm>
+#include <memory>
 
 using namespace osg;
 using namespace osgEarth;
 using namespace osgEarth::Util;
+using namespace std;
 
 namespace Eaagles {
 
@@ -89,12 +91,32 @@ namespace Eaagles {
 		viewer->realize();
 	}
 	
+	void TestMap::initAircraftPosition(double lat, double lon, double altAGL) {
+		osgEarth::Util::ElevationQuery elevQuery( nodeMap->getMap() );
+		const osgEarth::SpatialReference* SRS = SpatialReference::get("epsg:4326")->getECEF();
+
+	}
+
 	bool TestMap::onEntry() {
 		SimStation* const sta = static_cast<SimStation*>( findContainerByType(typeid(SimStation)) );
 		if (sta != 0) {
       sim = sta->getSimulation();
       av = dynamic_cast<Simulation::AirVehicle*>(sta->getOwnship());
 			nodeModifiedAircraft->setUpdateCallback( new UpdateMoveCallback ( av, nodeMap->getMap() ) );
+			double initLat = av->getInitLatitude();
+			double initLon = av->getInitLongitude();
+			double initHAE = 0.0; // to get just X,Y on the sea level;
+			double x, y, z;
+			EllipsoidModel EarthEllipsoid;
+			EarthEllipsoid.convertLatLongHeightToXYZ(DegreesToRadians(initLat), DegreesToRadians(initLon), initHAE, x, y, z);
+			const osgEarth::SpatialReference* SR(SpatialReference::get("epsg:4326")->getECEF());
+			osgEarth::GeoPoint GP(SR, x, y, z, osgEarth::ALTMODE_ABSOLUTE);
+			double initTerrainElevation = -1;
+			osgEarth::Util::ElevationQuery ElevQuery(nodeMap->getMap());
+			bool foundTerrainElevation = ElevQuery.getElevation(GP, initTerrainElevation);
+			if( foundTerrainElevation && initTerrainElevation != -1 ) {
+				av->setAltitude(initTerrainElevation + av->getInitAltitudeAGL());
+			}
 			return true;
 		}
 		return false;

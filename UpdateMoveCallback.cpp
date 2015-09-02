@@ -37,6 +37,7 @@ namespace Eaagles {
 			double acYaw = currentRot.z();
 
 			Vec3d Pos(x,y,z);
+			
 			osgEarth::GeoPoint GP(SRS, Pos);
 			bool foundElevation = ElevQuery.getElevation(GP, currentTerrainElevation);
 			currentTerrainElevation /= 0.3048;
