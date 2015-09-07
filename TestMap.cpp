@@ -91,12 +91,6 @@ namespace Eaagles {
 		viewer->realize();
 	}
 	
-	void TestMap::initAircraftPosition(double lat, double lon, double altAGL) {
-		osgEarth::Util::ElevationQuery elevQuery( nodeMap->getMap() );
-		const osgEarth::SpatialReference* SRS = SpatialReference::get("epsg:4326")->getECEF();
-
-	}
-
 	bool TestMap::onEntry() {
 		SimStation* const sta = static_cast<SimStation*>( findContainerByType(typeid(SimStation)) );
 		if (sta != 0) {
