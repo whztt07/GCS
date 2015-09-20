@@ -28,7 +28,7 @@ namespace Eaagles {
 		ArgumentParser arguments(&argc,argv);
 				
     viewer = new osgViewer::Viewer(arguments);
-		viewer->setUpViewerAsEmbeddedInWindow(0,0,1400,1000);
+		viewer->setUpViewerAsEmbeddedInWindow(0,0,1403,1025);
     viewer->getDatabasePager()->setUnrefImageDataAfterApplyPolicy( false, false );
 
 		nodeRoot = MapNodeHelper().load( arguments, viewer.get() );

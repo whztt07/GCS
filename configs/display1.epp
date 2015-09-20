@@ -8,8 +8,8 @@
   far:     2.0
   vpX: 0
   vpY: 0
-  vpWidth: 500
-  vpHeight: 500
+  vpWidth: 512
+  vpHeight: 512
   clearColor: (rgb 0 0 0)
   fullScreen: 0
   

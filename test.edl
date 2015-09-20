@@ -157,8 +157,8 @@ p01:
 		far: 2.0
 		vpX: 0
 		vpY: 0
-		vpWidth: 1900
-		vpHeight: 1000
+		vpWidth: 1915
+		vpHeight: 1025
 
 		components:
 		{
@@ -185,8 +185,8 @@ p01:
   far: 2.0
   vpX: 0
   vpY: 0
-  vpWidth: 500
-  vpHeight: 500
+  vpWidth: 512
+  vpHeight: 512
   clearColor: (rgb 0 0 0)
   fullScreen: 0
 #line 23 "display1.epp"
@@ -419,10 +419,10 @@ testhsi:
   top: 10.5
   near: -2.0
   far: 2.0
-  vpX: 500
+  vpX: 512
   vpY: 0
-  vpWidth: 1400
-  vpHeight: 1000
+  vpWidth: 1403
+  vpHeight: 1025
   clearColor: (rgb 0 0 0)
   fullScreen: 0
 #line 23 "display2.epp"
@@ -535,9 +535,9 @@ testmap:
   near: -2.0
   far: 2.0
 	vpX: 0
-  vpY: 500
-  vpWidth: 500
-  vpHeight: 500
+  vpY: 512
+  vpWidth: 512
+  vpHeight: 512
   clearColor: (rgb 0 0 0)
   fullScreen: 0
 #line 23 "display3.epp"
