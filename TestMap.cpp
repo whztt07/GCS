@@ -23,7 +23,7 @@ namespace Eaagles {
 	TestMap::TestMap() {
 		STANDARD_CONSTRUCTOR()
 		int argc = 3;
-		char* argv[3] = { {"c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/subdisplays/Debug/subdisplays.exe"}, {"c:/osgEarth/tests/readymap.earth"}, {"--sky"}};
+		char* argv[3] = { {"c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/subdisplays/Debug/subdisplays.exe"}, {"c:/osgEarth/tests/boston.earth"}, {"--sky"}};
 
 		ArgumentParser arguments(&argc,argv);
 				
@@ -72,8 +72,10 @@ namespace Eaagles {
 		nodeRoot->addChild( nodeModifiedAircraft.get() );
 		
 		nodeTracker = new osgGA::NodeTrackerManipulator;
-		nodeTracker->setHomePosition( Vec3(0, 0, 6), Vec3(), Vec3(0, 1, 0) );
-		nodeTracker->setTrackerMode( osgGA::NodeTrackerManipulator::NODE_CENTER_AND_ROTATION );
+		//nodeTracker->setHomePosition( Vec3(0, 0, 6), Vec3(), Vec3(0, 1, 0) );
+		//nodeTracker->setTrackerMode( osgGA::NodeTrackerManipulator::NODE_CENTER_AND_ROTATION );
+		nodeTracker->setHomePosition( Vec3(-6, 0, 0), Vec3(), Vec3(0, 0, 1) );
+		nodeTracker->setTrackerMode( osgGA::NodeTrackerManipulator::NODE_CENTER );
 		nodeTracker->setTrackNode( nodeAircraft.get() );
 		viewer->setCameraManipulator( nodeTracker.get() );
 		

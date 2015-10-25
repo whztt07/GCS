@@ -1,40 +1,40 @@
 ( SimStation
-	tcPriority: 1
-	 
+  tcPriority: 1
+  
   #include "ioHandler.epp"
-	#include "scenario.epp"
-	
-	display:
-	( TestDisplay
-		left:       -5.0
-		right:       5.0
-		bottom:     -3.0
-		top:         3.0
-		near:       -2.0
-		far:         2.0
-		vpX: 					 0
-		vpY: 					 0
-		vpWidth:    1915
-		vpHeight:   1025
-		
-		components: 
-		{
-			( Line
-				segment: true
-				color: red
-				vertices: {
-					[  0.0 10.0 ]  [   0.0 -10.0 ]
-					[ 10.0  0.0 ]  [ -10.0   0.0 ] 
-				}
-			)
-		}
-		displays: 
-		{
-			#include "display1.epp"
-			#include "display2.epp"
-			#include "display3.epp"
-		}
-	)
+  #include "scenario.epp"
+  
+  display:
+  ( TestDisplay
+  	left:       -5.0
+  	right:       5.0
+  	bottom:     -3.0
+  	top:         3.0
+  	near:       -2.0
+  	far:         2.0
+  	vpX: 		 0
+  	vpY: 		 0
+  	vpWidth:    1905
+  	vpHeight:   1009
+  	  	
+  	components: 
+  	{
+  		( Line
+  			segment: true
+  			color: red
+  			vertices: {
+  				[  0.0 10.0 ]  [   0.0 -10.0 ]
+  				[ 10.0  0.0 ]  [ -10.0   0.0 ] 
+  			}
+  		)
+  	}
+  	displays: 
+  	{
+	  #include "display1.epp"
+  	  #include "display2.epp"
+  	  #include "display3.epp"
+  	}
+  )
 )
 
 

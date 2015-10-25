@@ -6,10 +6,10 @@
   top:     10.5
   near:    -2.0
   far:     2.0
-	vpX: 0
-  vpY: 512
-  vpWidth: 512
-  vpHeight: 512
+  vpX: 0
+  vpY: 505
+  vpWidth: 505
+  vpHeight: 505
   clearColor: (rgb 0 0 0)
   fullScreen: 0
   

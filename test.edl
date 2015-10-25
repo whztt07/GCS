@@ -1,7 +1,7 @@
-#line 1 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 1 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 ( SimStation
-	tcPriority: 1
-#line 4 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+  tcPriority: 1
+#line 4 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "ioHandler.epp"
 
 
@@ -94,7 +94,7 @@ ioHandler: ( TestIoHandler
 #line 9 "ioHandler.epp"
    }
 )
-#line 5 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 5 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "scenario.epp"
 ownship: p01
 simulation:
@@ -113,7 +113,7 @@ p01:
 
 		initLatitude: ( LatLon direction: "n" degrees: 42 minutes: 21.0 seconds: 29.98 )
 		initLongitude: ( LatLon direction: "w" degrees: 71 minutes: 3.0 seconds: 37.00 )
-		initAltAGL: ( Meters 0.025 )
+		initAltAGL: ( Meters 0.28 )
 		initRoll: ( Degrees 0.0 )
 		initPitch: ( Degrees 0.0 )
 		initHeading: ( Degrees 0.0 )
@@ -129,8 +129,8 @@ p01:
 			( JSBSimNetModel
 				rootDir:  "c:/OpenEaaglesExamples/shared/data/JSBSim/"
 				model: "copter"
-				netOutput: ( UdpUnicastHandler ipAddress: "127.0.0.1" port: 5502 localPort: 5503 shared: true )
-				netInput: ( UdpUnicastHandler ipAddress: "127.0.0.1" port: 5503 shared: true )
+				netOutput: ( UdpUnicastHandler ipAddress: "192.168.88.150" port: 5502 localPort: 5503 shared: true )
+				netInput: ( UdpUnicastHandler ipAddress: "192.168.88.101" port: 5503 shared: true )
 			)
 
 			pilot:
@@ -145,35 +145,35 @@ p01:
 #line 9 "scenario.epp"
   }
 )
-#line 6 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 6 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 
-	display:
-	( TestDisplay
-		left: -5.0
-		right: 5.0
-		bottom: -3.0
-		top: 3.0
-		near: -2.0
-		far: 2.0
-		vpX: 0
-		vpY: 0
-		vpWidth: 1915
-		vpHeight: 1025
+  display:
+  ( TestDisplay
+  	left: -5.0
+  	right: 5.0
+  	bottom: -3.0
+  	top: 3.0
+  	near: -2.0
+  	far: 2.0
+  	vpX: 0
+  	vpY: 0
+  	vpWidth: 1905
+  	vpHeight: 1009
 
-		components:
-		{
-			( Line
-				segment: true
-				color: red
-				vertices: {
-					[ 0.0 10.0 ] [ 0.0 -10.0 ]
-					[ 10.0 0.0 ] [ -10.0 0.0 ]
-				}
-			)
-		}
-		displays:
-		{
-#line 33 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+  	components:
+  	{
+  		( Line
+  			segment: true
+  			color: red
+  			vertices: {
+  				[ 0.0 10.0 ] [ 0.0 -10.0 ]
+  				[ 10.0 0.0 ] [ -10.0 0.0 ]
+  			}
+  		)
+  	}
+  	displays:
+  	{
+#line 33 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display1.epp"
 ( GlutDisplay
 
@@ -185,8 +185,8 @@ p01:
   far: 2.0
   vpX: 0
   vpY: 0
-  vpWidth: 512
-  vpHeight: 512
+  vpWidth: 505
+  vpHeight: 505
   clearColor: (rgb 0 0 0)
   fullScreen: 0
 #line 23 "display1.epp"
@@ -409,7 +409,7 @@ testhsi:
 #line 116 "display1.epp"
 	}
 )
-#line 34 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 34 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display2.epp"
 ( GlutDisplay
 
@@ -419,10 +419,10 @@ testhsi:
   top: 10.5
   near: -2.0
   far: 2.0
-  vpX: 512
+  vpX: 505
   vpY: 0
-  vpWidth: 1403
-  vpHeight: 1025
+  vpWidth: 1400
+  vpHeight: 1009
   clearColor: (rgb 0 0 0)
   fullScreen: 0
 #line 23 "display2.epp"
@@ -524,7 +524,7 @@ testmap:
 #line 113 "display2.epp"
 	}
 )
-#line 35 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
+#line 35 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display3.epp"
 ( GlutDisplay
 
@@ -534,10 +534,10 @@ testmap:
   top: 10.5
   near: -2.0
   far: 2.0
-	vpX: 0
-  vpY: 512
-  vpWidth: 512
-  vpHeight: 512
+  vpX: 0
+  vpY: 505
+  vpWidth: 505
+  vpHeight: 505
   clearColor: (rgb 0 0 0)
   fullScreen: 0
 #line 23 "display3.epp"
@@ -3193,7 +3193,7 @@ testpfd:
 #line 177 "display3.epp"
 	}
 )
-#line 36 "c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/configs/test.epp"
-		}
-	)
+#line 36 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
+  	}
+  )
 )

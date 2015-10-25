@@ -101,3 +101,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	char* argv[argc] = {};
 	return Eaagles::exec(argc, argv);
 }
+
+/*
+int main(int argc, char* argv[]) {
+	//const int argc = 1;
+	//char* argv[argc] = {};
+	return Eaagles::exec(argc, argv);
+}
+*/
