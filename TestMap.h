@@ -10,7 +10,6 @@
 #include <osgGA/NodeTrackerManipulator>
 #include <osgViewer/ViewerEventHandlers>
 #include <osgDB/ReadFile>
-#include <osg/MatrixTransform>
 #include <osg/PositionAttitudeTransform>
 #include <osg/LightSource>
 #include <osg/ArgumentParser>
@@ -23,6 +22,7 @@
 #include <osgEarth/Viewpoint>
 
 #include "SimStation.h"
+#include "EngineVisitor.h"
 
 #include <openeaagles/basic/Pair.h>
 #include <openeaagles/basic/Timers.h>
@@ -65,12 +65,13 @@ namespace Eaagles {
 		::osg::ref_ptr<osgEarth::MapNode> nodeMap;
 		::osg::ref_ptr<::osg::Light> light;
 		::osg::ref_ptr<::osg::LightSource> lightSource;
-		::osg::ref_ptr<::osg::MatrixTransform> setupForwardEngine;
-		::osg::ref_ptr<::osg::MatrixTransform> setupRightEngine;
-		::osg::ref_ptr<::osg::MatrixTransform> setupBackEngine;
-		::osg::ref_ptr<::osg::MatrixTransform> setupLeftEngine;
+		::osg::ref_ptr<::osgSim::DOFTransform> setupForwardEngine;
+		::osg::ref_ptr<::osgSim::DOFTransform> setupRightEngine;
+		::osg::ref_ptr<::osgSim::DOFTransform> setupBackEngine;
+		::osg::ref_ptr<::osgSim::DOFTransform> setupLeftEngine;
 		Simulation::AirVehicle* av;
 		Simulation::Simulation* sim;
+		EngineVisitor* engineVisitor;
 	};
 } // end of Eaagles namespace
 

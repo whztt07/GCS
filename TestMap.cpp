@@ -4,6 +4,8 @@
 #include <memory>
 
 using namespace osg;
+using namespace osgGA;
+using namespace osgSim;
 using namespace osgEarth;
 using namespace osgEarth::Util;
 using namespace std;
@@ -12,14 +14,7 @@ namespace Eaagles {
 
 	IMPLEMENT_EMPTY_SLOTTABLE_SUBCLASS(TestMap,"TestMap")
 	EMPTY_SERIALIZER(TestMap)
-	
-	MatrixTransform* createTransformNode( Node* node, const Matrix& matrix ) {
-		ref_ptr<MatrixTransform> trans = new MatrixTransform;
-		trans->addChild( node );
-		trans->setMatrix( matrix );
-		return trans.release();
-	}
-	
+		
 	TestMap::TestMap() {
 		STANDARD_CONSTRUCTOR()
 		int argc = 3;
@@ -30,7 +25,10 @@ namespace Eaagles {
     viewer = new osgViewer::Viewer(arguments);
 		viewer->setUpViewerAsEmbeddedInWindow(0,0,1403,1025);
     viewer->getDatabasePager()->setUnrefImageDataAfterApplyPolicy( false, false );
-
+		
+		engineVisitor = new EngineVisitor;
+		viewer->addEventHandler(engineVisitor);
+		
 		nodeRoot = MapNodeHelper().load( arguments, viewer.get() );
 		if( !nodeRoot )
 			return;
@@ -56,10 +54,10 @@ namespace Eaagles {
 		groupAircraft = new Group;
 		groupAircraft->addChild( nodeAircraft.get() );
 
-		setupForwardEngine = createTransformNode( nodeEngineCCW.get(), Matrix::translate( 0.0, -0.01, -0.2855 ) );
-		setupRightEngine = createTransformNode( nodeEngineCW.get(), Matrix::translate( 0.2855, -0.01, 0.0 ) );
-		setupBackEngine = createTransformNode( nodeEngineCCW.get(), Matrix::translate( 0.0, -0.01, 0.2855 ) );
-		setupLeftEngine = createTransformNode( nodeEngineCW.get(), Matrix::translate( -0.2855, -0.01, 0.0) );
+		setupForwardEngine = EngineVisitor::createEngineNode( nodeEngineCCW.get(), Vec3( 0.0, -0.01, -0.2855 ) );
+		setupRightEngine = EngineVisitor::createEngineNode( nodeEngineCW.get(), Vec3( 0.2855, -0.01, 0.0 ) );
+		setupBackEngine = EngineVisitor::createEngineNode( nodeEngineCCW.get(), Vec3( 0.0, -0.01, 0.2855 ) );
+		setupLeftEngine = EngineVisitor::createEngineNode( nodeEngineCW.get(), Vec3( -0.2855, -0.01, 0.0) );
 				
 		groupAircraft->addChild( setupForwardEngine.get() );
 		groupAircraft->addChild( setupRightEngine.get() );
@@ -85,6 +83,8 @@ namespace Eaagles {
 		lightSource->setLight( light.get() );
 		nodeRoot->getOrCreateStateSet()->setMode( GL_LIGHT1, StateAttribute::ON );
 		nodeRoot->addChild( lightSource.get() );
+		
+		nodeRoot->accept(*engineVisitor);
 
 		viewer->setSceneData( nodeRoot.get() );
 		viewer->getCamera()->setSmallFeatureCullingPixelSize(-1.0f);
@@ -98,6 +98,7 @@ namespace Eaagles {
 		if (sta != 0) {
       sim = sta->getSimulation();
       av = dynamic_cast<Simulation::AirVehicle*>(sta->getOwnship());
+			engineVisitor->setAirVehicle(av);
 			nodeModifiedAircraft->setUpdateCallback( new UpdateMoveCallback ( av, nodeMap->getMap() ) );
 			double initLat = av->getInitLatitude();
 			double initLon = av->getInitLongitude();
