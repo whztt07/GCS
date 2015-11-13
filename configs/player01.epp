@@ -6,7 +6,7 @@ p01:
 		
 		initLatitude:  ( LatLon direction: "n" degrees: 42  minutes: 21.0  seconds: 29.98 )
 		initLongitude: ( LatLon direction: "w" degrees: 71  minutes: 3.0  seconds: 37.00 )
-		initAltAGL: ( Meters 0.28 )
+		initAltAGL: ( Meters 128 )
 		initRoll: ( Degrees 0.0 )
 		initPitch: ( Degrees 0.0 )
 		initHeading: ( Degrees 0.0 )
@@ -22,8 +22,8 @@ p01:
 			( JSBSimNetModel
 				rootDir: JSBSIM_PATH
 				model: "copter"
-				netOutput: ( UdpUnicastHandler  ipAddress: "192.168.88.150" port: 5502 localPort: 5503 shared: true )
-				netInput: ( UdpUnicastHandler  ipAddress: "192.168.88.101" port: 5503 shared: true )
+				//tcpHandler: ( TcpServerSingle localIpAddress: "192.168.0.10" port: 3001 )
+				//noWait: true
 			)
 			
 			pilot: 

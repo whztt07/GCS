@@ -95,17 +95,16 @@ namespace Eaagles {
 		return 0;
 	}
 }
-
+/*
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	const int argc = 1;
 	char* argv[argc] = {};
 	return Eaagles::exec(argc, argv);
 }
+*/
 
-/*
 int main(int argc, char* argv[]) {
 	//const int argc = 1;
 	//char* argv[argc] = {};
 	return Eaagles::exec(argc, argv);
 }
-*/
