@@ -18,7 +18,7 @@ namespace Eaagles {
 		Simulation::Simulation* getSimulation();
 		Simulation::Station* getStation();
 
-		SPtr<Simulation::Station> myStation;
+		Basic::safe_ptr<Simulation::Station> myStation;
 
 		LCreal heading;             // our heading 
     SendData headingSD;

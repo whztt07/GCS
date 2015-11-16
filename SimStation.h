@@ -7,7 +7,7 @@
 #include <openeaagles/simulation/Station.h>
 
 namespace Eaagles {
-   namespace Basic { class Table1; class NetHandler; class Number; }
+	namespace Basic { class Table1; class NetHandler; class Number; }
    namespace Glut  { class GlutDisplay; }
    namespace Simulation { class AirVehicle; }
 
@@ -39,7 +39,7 @@ namespace Eaagles {
 		virtual void reset();
 	private:
 		// Main Display
-		SPtr<Glut::GlutDisplay> mainDisplay;
+		Basic::safe_ptr<Glut::GlutDisplay> mainDisplay;
 		bool displayInit;
 		// Auto reset timer
 		LCreal      autoResetTimer;      // Auto RESET timer (sends a RESET_EVENT after timeout)

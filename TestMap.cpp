@@ -112,7 +112,7 @@ namespace Eaagles {
 			osgEarth::Util::ElevationQuery ElevQuery(nodeMap->getMap());
 			bool foundTerrainElevation = ElevQuery.getElevation(GP, initTerrainElevation);
 			if( foundTerrainElevation && initTerrainElevation != -1 ) {
-				av->setAltitude(initTerrainElevation + av->getInitAltitudeAGL());
+				av->setAltitude(initTerrainElevation + 100);
 			}
 			return true;
 		}

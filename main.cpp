@@ -23,7 +23,7 @@
 #include "openeaagles/otw/Factory.h"
 #include "openeaagles/sensors/Factory.h"
 #include "openeaagles/simulation/Factory.h"
-#include "openeaagles/vehicles/Factory.h"
+#include "openeaagles/dynamics/Factory.h"
 
 #include "Factory.h"
 #include "SimStation.h"
@@ -75,7 +75,7 @@ namespace Eaagles {
 		station = builder(testFileName);
 		if (station == 0) {
 			std::cerr << "Invalid configuration file!" << std::endl;
-			std::exit(EXIT_FAILURE);
+			return EXIT_FAILURE;
 		}
 
 		station->event(Eaagles::Basic::Component::RESET_EVENT);
@@ -92,9 +92,10 @@ namespace Eaagles {
 		station->createTimeCriticalProcess();
 
 		glutMainLoop();
-		return 0;
+		return EXIT_SUCCESS;
 	}
 }
+
 /*
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	const int argc = 1;
@@ -104,7 +105,5 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 */
 
 int main(int argc, char* argv[]) {
-	//const int argc = 1;
-	//char* argv[argc] = {};
 	return Eaagles::exec(argc, argv);
 }
