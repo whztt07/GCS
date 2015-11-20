@@ -83,6 +83,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Factory.cpp" />
+    <ClCompile Include="..\JSBSimNetModel.cpp" />
     <ClCompile Include="..\main.cpp" />
     <ClCompile Include="..\SimStation.cpp" />
     <ClCompile Include="..\TestDisplay.cpp" />
@@ -95,6 +96,7 @@
   <ItemGroup>
     <ClInclude Include="..\EngineVisitor.h" />
     <ClInclude Include="..\Factory.h" />
+    <ClInclude Include="..\JSBSimNetModel.h" />
     <ClInclude Include="..\SimStation.h" />
     <ClInclude Include="..\TestDisplay.h" />
     <ClInclude Include="..\TestHsi.h" />

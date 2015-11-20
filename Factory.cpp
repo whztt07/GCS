@@ -8,6 +8,7 @@
 #include "TestMap.h"
 #include "TestHsi.h"
 #include "TestPfd.h"
+#include "JSBSimNetModel.h"
 
 #include <openeaagles/basic/Object.h>
 #include <xPanel/Factory.h>
@@ -50,6 +51,9 @@ namespace Eaagles {
 		}
 		if ( std::strcmp(name, TestIoHandler::getFactoryName()) == 0 ) {
 			obj = new TestIoHandler();
+		}
+		if (std::strcmp(name, JSBSimNetModel::getFactoryName()) == 0) {
+			obj = new JSBSimNetModel();
 		}
 		// Example libraries
 		if (obj == 0) 

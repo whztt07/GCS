@@ -1,7 +1,7 @@
-#line 1 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
+#line 1 "c:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 ( SimStation
   tcPriority: 1
-#line 4 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
+#line 4 "c:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "ioHandler.epp"
 
 
@@ -94,7 +94,7 @@ ioHandler: ( TestIoHandler
 #line 9 "ioHandler.epp"
    }
 )
-#line 5 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
+#line 5 "c:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "scenario.epp"
 ownship: p01
 simulation:
@@ -143,7 +143,7 @@ p01:
 #line 9 "scenario.epp"
   }
 )
-#line 6 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
+#line 6 "c:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 
   display:
   ( TestDisplay
@@ -171,7 +171,7 @@ p01:
   	}
   	displays:
   	{
-#line 33 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
+#line 33 "c:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display1.epp"
 ( GlutDisplay
 
@@ -407,7 +407,7 @@ testhsi:
 #line 116 "display1.epp"
 	}
 )
-#line 34 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
+#line 34 "c:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display2.epp"
 ( GlutDisplay
 
@@ -522,7 +522,7 @@ testmap:
 #line 113 "display2.epp"
 	}
 )
-#line 35 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
+#line 35 "c:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display3.epp"
 ( GlutDisplay
 
@@ -3191,7 +3191,7 @@ testpfd:
 #line 177 "display3.epp"
 	}
 )
-#line 36 "C:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
+#line 36 "c:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
   	}
   )
 )
