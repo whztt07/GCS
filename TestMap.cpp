@@ -14,18 +14,39 @@ namespace Eaagles {
 
 	IMPLEMENT_EMPTY_SLOTTABLE_SUBCLASS(TestMap,"TestMap")
 	EMPTY_SERIALIZER(TestMap)
-		
+	/*
+	void reshape(int w, int h) {
+		// update the window dimensions, in case the window has been resized.
+		if (window.valid()) {
+			window->resized(window->getTraits()->x, window->getTraits()->y, w, h);
+			window->getEventQueue()->windowResize(window->getTraits()->x, window->getTraits()->y, w, h);
+		}
+	}
+	*/
 	TestMap::TestMap() {
 		STANDARD_CONSTRUCTOR()
 		int argc = 3;
 		char* argv[3] = { {"c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/subdisplays/Debug/subdisplays.exe"}, {"c:/osgEarth/tests/boston.earth"}, {"--sky"}};
 
 		ArgumentParser arguments(&argc,argv);
-				
-    viewer = new osgViewer::Viewer(arguments);
-		viewer->setUpViewerAsEmbeddedInWindow(0,0,1403,1025);
-    viewer->getDatabasePager()->setUnrefImageDataAfterApplyPolicy( false, false );
 		
+		int left, top, right, bottom;
+
+		//Ugly hack for Windows only!
+		RECT DesktopClientRect;
+		if (SystemParametersInfo(SPI_GETWORKAREA, 0, &DesktopClientRect, 0)) {
+			left = DesktopClientRect.left;
+			top = DesktopClientRect.top;
+			right = DesktopClientRect.right;
+			bottom = DesktopClientRect.bottom;
+		}
+		//
+    
+		viewer = new osgViewer::Viewer(arguments);
+		//Get these numbers from .epp file!
+		window = viewer->setUpViewerAsEmbeddedInWindow(300,0,500,600);
+    viewer->getDatabasePager()->setUnrefImageDataAfterApplyPolicy( false, false );
+				
 		engineVisitor = new EngineVisitor;
 		viewer->addEventHandler(engineVisitor);
 		
@@ -112,7 +133,7 @@ namespace Eaagles {
 			osgEarth::Util::ElevationQuery ElevQuery(nodeMap->getMap());
 			bool foundTerrainElevation = ElevQuery.getElevation(GP, initTerrainElevation);
 			if( foundTerrainElevation && initTerrainElevation != -1 ) {
-				av->setAltitude(initTerrainElevation + 100);
+				av->setAltitude(initTerrainElevation);
 			}
 			return true;
 		}

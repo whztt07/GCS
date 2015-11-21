@@ -8,10 +8,9 @@
   far:     2.0
   vpX: 0
   vpY: 0
-  vpWidth: 505
-  vpHeight: 505
+  vpWidth: 300
+  vpHeight: 300
   clearColor: (rgb 0 0 0)
-  fullScreen: 0
   
   #if defined (SHOW_MATERIALS)
   materials: {

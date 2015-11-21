@@ -13,6 +13,7 @@ namespace Eaagles {
     TestHsi();
 		// Basic::Component interface
     virtual void updateData(const LCreal dt = 0);
+
 	private:
 		Simulation::Player* getOwnship();
 		Simulation::Simulation* getSimulation();
@@ -22,10 +23,6 @@ namespace Eaagles {
 
 		LCreal heading;             // our heading 
     SendData headingSD;
-    LCreal  headingRate;        // rate which are going (up or down)
-    SendData headingROSD;
-    SendData dmeROSD;           // dme
-    LCreal dme;
 	};
 } // end of Eaagles namespace
 

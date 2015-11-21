@@ -49,10 +49,10 @@ namespace Eaagles {
     // Basic::Component interface
     virtual void updateData(const LCreal dt = 0);
 		
+		//Basic::Page interface
 		virtual void draw();
-
 		virtual bool onEntry();
-	
+
 	private:
 		::osg::ref_ptr<osgViewer::Viewer> viewer;
 		::osg::ref_ptr<::osg::Group> nodeRoot;
@@ -69,6 +69,7 @@ namespace Eaagles {
 		::osg::ref_ptr<::osgSim::DOFTransform> setupRightEngine;
 		::osg::ref_ptr<::osgSim::DOFTransform> setupBackEngine;
 		::osg::ref_ptr<::osgSim::DOFTransform> setupLeftEngine;
+		::osg::observer_ptr<osgViewer::GraphicsWindow> window;
 		Simulation::AirVehicle* av;
 		Simulation::Simulation* sim;
 		EngineVisitor* engineVisitor;

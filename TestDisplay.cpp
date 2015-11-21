@@ -52,5 +52,10 @@ namespace Eaagles {
 		 // Update base classes stuff
 		 BaseClass::updateData(dt);
 	}
+
+	void TestDisplay::reshapeIt(int w, int h) {
+		// Update base classes stuff
+		BaseClass::reshapeIt(w,h);
+	}
 } // End Eaagles namespace
 

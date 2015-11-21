@@ -17,7 +17,6 @@ namespace Eaagles {
 
 	void TestPfd::updateData(const LCreal dt) {
 		Simulation::AirVehicle* av = static_cast<Simulation::AirVehicle*>(getOwnship());
-		
 		trueHdg = av->getHeadingD();
 		if (trueHdg > 360) 
 			trueHdg = 0;

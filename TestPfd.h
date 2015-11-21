@@ -13,8 +13,8 @@ namespace Eaagles {
 		TestPfd();
 	  // Basic::Component interface
 		virtual void updateData(const LCreal dt = 0);
-	private:
 
+	private:
 		Simulation::Player* getOwnship();
 		Simulation::Simulation* getSimulation();
 		Simulation::Station* getStation();
@@ -117,7 +117,6 @@ namespace Eaagles {
 
     // ghost horizon
     SendData pitchGhostSD;
-
 	};
 } // end of Eaagles namespace
 

@@ -6,23 +6,15 @@ namespace Eaagles {
 	EMPTY_SERIALIZER(TestHsi)
 
 	TestHsi::TestHsi() {
-			STANDARD_CONSTRUCTOR()
-			heading = 0;
-			headingSD.empty();
-			headingRate = 20;
-			headingROSD.empty();
-			dme = 0;
-			dmeROSD.empty();
+		STANDARD_CONSTRUCTOR()
+		heading = 0;
+		headingSD.empty();
 	}
 
 	void TestHsi::copyData(const TestHsi& org, const bool)	{
 		BaseClass::copyData(org);
 		heading = org.heading;
     headingSD.empty();
-    headingRate = org.headingRate;
-    headingROSD.empty();
-    dme = org.dme;
-    dmeROSD.empty();
 	}
 
 	EMPTY_DELETEDATA(TestHsi)

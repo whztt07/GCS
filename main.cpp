@@ -88,7 +88,6 @@ namespace Eaagles {
 		station->event(Eaagles::Basic::Component::RESET_EVENT);
 
 		glutTimerFunc(msecs, updateDataCB, msecs);
-
 		station->createTimeCriticalProcess();
 
 		glutMainLoop();

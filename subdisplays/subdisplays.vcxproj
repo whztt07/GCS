@@ -82,6 +82,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\EngineVisitor.cpp" />
     <ClCompile Include="..\Factory.cpp" />
     <ClCompile Include="..\JSBSimNetModel.cpp" />
     <ClCompile Include="..\main.cpp" />

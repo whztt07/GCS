@@ -6,13 +6,12 @@
   top:     10.5
   near:    -2.0
   far:     2.0
-  vpX: 505
+  vpX: 300
   vpY: 0
-  vpWidth: 1400
-  vpHeight: 1009
+  vpWidth: 500
+  vpHeight: 600
   clearColor: (rgb 0 0 0)
-  fullScreen: 0
-  	
+	  
   #if defined (SHOW_MATERIALS)
   materials: {
 		m1: ( Material diffuseColor: { 0.5 0.5 0.8 } specularColor: { 0.8 0.8 0.8 } shininess: 100 )

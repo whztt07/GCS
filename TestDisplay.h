@@ -39,10 +39,11 @@ namespace Eaagles {
 		enum { NCHAR_NAV1_ID = 3, NCHAR_NAV2_ID = 5 };
 	public:
 		TestDisplay();
+		//Basic::Display interface
+		virtual void reshapeIt(int w, int h);
 		//Basic::Component interface
 		virtual void updateData(const LCreal dt = 0.0f);
 		// Basic::Component interface
-		//virtual bool event(const int event, Basic::Object* const obj = 0);
 	protected:
 		// Basic::Component protected interface
 		virtual bool shutdownNotification();
