@@ -1,14 +1,14 @@
 #ifndef TEST_HSI
 #define TEST_HSI
 
-#include <openeaagles/basicGL/Page.h>
+#include <openeaagles/gui/glut/GlutDisplay.h>
 #include <openeaagles/simulation/Simulation.h>
 #include <openeaagles/simulation/AirVehicle.h>
 #include "SimStation.h"
 
 namespace Eaagles {
-	class TestHsi : public BasicGL::Page {
-	DECLARE_SUBCLASS(TestHsi,BasicGL::Page)
+	class TestHsi : public Glut::GlutDisplay {
+	DECLARE_SUBCLASS(TestHsi, Glut::GlutDisplay)
 	public:
     TestHsi();
 		// Basic::Component interface

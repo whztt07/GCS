@@ -14,15 +14,11 @@ namespace Eaagles {
 
 	IMPLEMENT_EMPTY_SLOTTABLE_SUBCLASS(TestMap,"TestMap")
 	EMPTY_SERIALIZER(TestMap)
-	/*
-	void reshape(int w, int h) {
-		// update the window dimensions, in case the window has been resized.
-		if (window.valid()) {
-			window->resized(window->getTraits()->x, window->getTraits()->y, w, h);
-			window->getEventQueue()->windowResize(window->getTraits()->x, window->getTraits()->y, w, h);
-		}
-	}
-	*/
+
+	BEGIN_EVENT_HANDLER(TestMap)
+		ON_EVENT(RESET_EVENT,onEntry)
+	END_EVENT_HANDLER()
+
 	TestMap::TestMap() {
 		STANDARD_CONSTRUCTOR()
 		int argc = 3;
@@ -30,7 +26,7 @@ namespace Eaagles {
 
 		ArgumentParser arguments(&argc,argv);
 		
-		int left, top, right, bottom;
+		int left, top, right, bottom = { 0 };
 
 		//Ugly hack for Windows only!
 		RECT DesktopClientRect;
@@ -153,5 +149,12 @@ namespace Eaagles {
 	void TestMap::draw() {
 		if (viewer->isRealized()) 
 			viewer->frame();
+	}
+
+	void TestMap::reshapeIt(int w, int h) {
+		if (window.valid()) {
+			window->resized(window->getTraits()->x, window->getTraits()->y, w, h);
+			window->getEventQueue()->windowResize(window->getTraits()->x, window->getTraits()->y, w, h);
+		}
 	}
 } // end of Eaagles namespace

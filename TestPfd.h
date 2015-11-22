@@ -1,14 +1,14 @@
 #ifndef TEST_PFD
 #define TEST_PFD
 
-#include <openeaagles/basicGL/Page.h>
+#include <openeaagles/gui/glut/GlutDisplay.h>
 #include <openeaagles/simulation/Simulation.h>
 #include <openeaagles/simulation/AirVehicle.h>
 #include "SimStation.h"
 
 namespace Eaagles {
-	class TestPfd : public BasicGL::Page 	{
-	DECLARE_SUBCLASS(TestPfd,BasicGL::Page)
+	class TestPfd : public Glut::GlutDisplay {
+	DECLARE_SUBCLASS(TestPfd, Glut::GlutDisplay)
 	public:
 		TestPfd();
 	  // Basic::Component interface

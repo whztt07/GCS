@@ -28,30 +28,30 @@
 #include <openeaagles/basic/Timers.h>
 #include <openeaagles/basic/Parser.h>
 #include <openeaagles/basicGL/Graphic.h>
-#include <openeaagles/basicGL/Page.h>
 #include <openeaagles/simulation/AirVehicle.h>
 #include <openeaagles/simulation/Simulation.h>
-
 #include <openeaagles/gui/glut/GlutDisplay.h>
-#include <GL/glut.h>
-
 #include <openeaagles/gui/glut/Factory.h>
 #include <openeaagles/basic/Factory.h>
 #include <openeaagles/basicGL/Factory.h>
 #include <openeaagles/instruments/Factory.h>
 
 namespace Eaagles {
-	class TestMap : public BasicGL::Page {
-		DECLARE_SUBCLASS(TestMap, BasicGL::Page)
+	class TestMap : public Glut::GlutDisplay {
+		DECLARE_SUBCLASS(TestMap, Glut::GlutDisplay)
 	public:
     TestMap();
 
     // Basic::Component interface
     virtual void updateData(const LCreal dt = 0);
 		
-		//Basic::Page interface
+		//BasicGL::Page interface
 		virtual void draw();
-		virtual bool onEntry();
+		virtual bool onEntry() override;
+
+		virtual bool event(const int event, Basic::Object* const obj = nullptr) override;
+		//BasicGL::Display interface
+		virtual void reshapeIt(int w, int h);
 
 	private:
 		::osg::ref_ptr<osgViewer::Viewer> viewer;

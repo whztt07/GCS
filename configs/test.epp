@@ -14,7 +14,7 @@
   	far:         2.0
   	vpX: 		     100
   	vpY:				 100
-  	vpWidth:     800
+  	vpWidth:     1100
   	vpHeight:    600
 		resizeSubwindows: 1
 		
