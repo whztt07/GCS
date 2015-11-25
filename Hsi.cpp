@@ -1,46 +1,46 @@
-#include "TestHsi.h"
+#include "Hsi.h"
 
 namespace Eaagles {
 
-	IMPLEMENT_EMPTY_SLOTTABLE_SUBCLASS(TestHsi,"TestHsi")
-	EMPTY_SERIALIZER(TestHsi)
+	IMPLEMENT_EMPTY_SLOTTABLE_SUBCLASS(Hsi,"Hsi")
+	EMPTY_SERIALIZER(Hsi)
 
-	TestHsi::TestHsi() {
+	Hsi::Hsi() {
 		STANDARD_CONSTRUCTOR()
 		heading = 0;
 		headingSD.empty();
 	}
 
-	void TestHsi::copyData(const TestHsi& org, const bool)	{
+	void Hsi::copyData(const Hsi& org, const bool)	{
 		BaseClass::copyData(org);
 		heading = org.heading;
     headingSD.empty();
 	}
 
-	EMPTY_DELETEDATA(TestHsi)
+	EMPTY_DELETEDATA(Hsi)
 
-	void TestHsi::updateData(const LCreal dt) {
+	void Hsi::updateData(const LCreal dt) {
 		Simulation::AirVehicle* av = static_cast<Simulation::AirVehicle*>(getOwnship());
 		heading = av->getHeadingD();
     send("hsi1", UPDATE_VALUE6, heading, headingSD);
 		BaseClass::updateData(dt);
 	}
 
-	Simulation::Player* TestHsi::getOwnship()	{
+	Simulation::Player* Hsi::getOwnship()	{
 		Simulation::Player* p = 0;
 		Simulation::Station* sta = getStation();
 		if (sta != 0) p = sta->getOwnship();
 		return p;
 	}
 
-	Simulation::Simulation* TestHsi::getSimulation() {
+	Simulation::Simulation* Hsi::getSimulation() {
 	 Simulation::Simulation* s = 0;
 	 Simulation::Station* sta = getStation();
 	 if (sta != 0) s = sta->getSimulation();
 	 return s;
 	}
 
-	Simulation::Station* TestHsi::getStation() {
+	Simulation::Station* Hsi::getStation() {
 	 if (myStation == 0) {
 			Simulation::Station* s = dynamic_cast<Simulation::Station*>( findContainerByType(typeid(Simulation::Station)) );
 			if (s != 0) myStation = s;

@@ -84,26 +84,26 @@
   <ItemGroup>
     <ClCompile Include="..\EngineVisitor.cpp" />
     <ClCompile Include="..\Factory.cpp" />
-    <ClCompile Include="..\JSBSimNetModel.cpp" />
+    <ClCompile Include="..\NetFDM.cpp" />
     <ClCompile Include="..\main.cpp" />
     <ClCompile Include="..\SimStation.cpp" />
-    <ClCompile Include="..\TestDisplay.cpp" />
-    <ClCompile Include="..\TestHsi.cpp" />
-    <ClCompile Include="..\TestMap.cpp" />
+    <ClCompile Include="..\Display.cpp" />
+    <ClCompile Include="..\Hsi.cpp" />
+    <ClCompile Include="..\Map.cpp" />
     <ClCompile Include="..\TestIoHandler.cpp" />
-    <ClCompile Include="..\TestPfd.cpp" />
+    <ClCompile Include="..\Pfd.cpp" />
     <ClCompile Include="..\UpdateMoveCallback.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\EngineVisitor.h" />
     <ClInclude Include="..\Factory.h" />
-    <ClInclude Include="..\JSBSimNetModel.h" />
+    <ClInclude Include="..\NetFDM.h" />
     <ClInclude Include="..\SimStation.h" />
-    <ClInclude Include="..\TestDisplay.h" />
-    <ClInclude Include="..\TestHsi.h" />
-    <ClInclude Include="..\TestMap.h" />
+    <ClInclude Include="..\Display.h" />
+    <ClInclude Include="..\Hsi.h" />
+    <ClInclude Include="..\Map.h" />
     <ClInclude Include="..\TestIoHandler.h" />
-    <ClInclude Include="..\TestPfd.h" />
+    <ClInclude Include="..\Pfd.h" />
     <ClInclude Include="..\UpdateMoveCallback.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

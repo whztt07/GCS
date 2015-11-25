@@ -113,7 +113,6 @@ p01:
 
 		initLatitude: ( LatLon direction: "n" degrees: 42 minutes: 21.0 seconds: 29.98 )
 		initLongitude: ( LatLon direction: "w" degrees: 71 minutes: 3.0 seconds: 37.00 )
-
 		initRoll: ( Degrees 0.0 )
 		initPitch: ( Degrees 0.0 )
 		initHeading: ( Degrees 0.0 )
@@ -126,7 +125,7 @@ p01:
 		components:
 		{
 			dynamicsModel:
-			( JSBSimNetModel
+			( NetFDM
 				rootDir: JSBSIM_PATH
 				model: "copter"
 			)
@@ -146,7 +145,7 @@ p01:
 #line 6 "c:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 
   display:
-  ( TestDisplay
+  ( Display
   	left: -5.0
   	right: 5.0
   	bottom: -3.0
@@ -174,7 +173,7 @@ p01:
   	{
 #line 34 "c:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display1.epp"
-( TestHsi
+( Hsi
 
   left: -10.5
   right: 10.5
@@ -398,7 +397,7 @@ p01:
 )
 #line 35 "c:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display2.epp"
-( TestMap
+( Map
 
   left: -10.5
   right: 10.5
@@ -501,7 +500,7 @@ p01:
 )
 #line 36 "c:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/test.epp"
 #line 1 "display3.epp"
-( TestPfd
+( Pfd
 
   left: -10.5
   right: 10.5

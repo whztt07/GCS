@@ -1,21 +1,21 @@
-#include "TestPfd.h"
+#include "Pfd.h"
 
 namespace Eaagles {
 
-	IMPLEMENT_EMPTY_SLOTTABLE_SUBCLASS(TestPfd,"TestPfd")
-	EMPTY_SERIALIZER(TestPfd)
+	IMPLEMENT_EMPTY_SLOTTABLE_SUBCLASS(Pfd,"Pfd")
+	EMPTY_SERIALIZER(Pfd)
 
-	TestPfd::TestPfd() {
+	Pfd::Pfd() {
 		STANDARD_CONSTRUCTOR()
 	}
 	
-	void TestPfd::copyData(const TestPfd& org, const bool) {
+	void Pfd::copyData(const Pfd& org, const bool) {
 		BaseClass::copyData(org);
 	}
 
-	EMPTY_DELETEDATA(TestPfd)
+	EMPTY_DELETEDATA(Pfd)
 
-	void TestPfd::updateData(const LCreal dt) {
+	void Pfd::updateData(const LCreal dt) {
 		Simulation::AirVehicle* av = static_cast<Simulation::AirVehicle*>(getOwnship());
 		trueHdg = av->getHeadingD();
 		if (trueHdg > 360) 
@@ -128,21 +128,21 @@ namespace Eaagles {
 		BaseClass::updateData(dt);
 	}
 
-	Simulation::Player* TestPfd::getOwnship()	{
+	Simulation::Player* Pfd::getOwnship()	{
 		 Simulation::Player* p = 0;
 		 Simulation::Station* sta = getStation();
 		 if (sta != 0) p = sta->getOwnship();
 		 return p;
 	}
 
-	Simulation::Simulation* TestPfd::getSimulation() {
+	Simulation::Simulation* Pfd::getSimulation() {
 		 Simulation::Simulation* s = 0;
 		 Simulation::Station* sta = getStation();
 		 if (sta != 0) s = sta->getSimulation();
 		 return s;
 	}
 
-	Simulation::Station* TestPfd::getStation() {
+	Simulation::Station* Pfd::getStation() {
 		 if (myStation == 0) {
 				Simulation::Station* s = dynamic_cast<Simulation::Station*>( findContainerByType(typeid(Simulation::Station)) );
 				if (s != 0) myStation = s;

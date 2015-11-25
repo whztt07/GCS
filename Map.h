@@ -3,8 +3,8 @@
 //
 // Description: Tests our core HSI graphic
 //------------------------------------------------------------------------------
-#ifndef TEST_MAP
-#define TEST_MAP
+#ifndef MAP
+#define MAP
 
 #include <osgViewer/Viewer>
 #include <osgGA/NodeTrackerManipulator>
@@ -37,10 +37,10 @@
 #include <openeaagles/instruments/Factory.h>
 
 namespace Eaagles {
-	class TestMap : public Glut::GlutDisplay {
-		DECLARE_SUBCLASS(TestMap, Glut::GlutDisplay)
+	class Map : public Glut::GlutDisplay {
+	DECLARE_SUBCLASS(Map, Glut::GlutDisplay)
 	public:
-    TestMap();
+    Map();
 
     // Basic::Component interface
     virtual void updateData(const LCreal dt = 0);

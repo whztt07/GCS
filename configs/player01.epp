@@ -6,7 +6,6 @@ p01:
 		
 		initLatitude:  ( LatLon direction: "n" degrees: 42  minutes: 21.0  seconds: 29.98 )
 		initLongitude: ( LatLon direction: "w" degrees: 71  minutes: 3.0  seconds: 37.00 )
-		//initAltAGL: ( Meters 128 )
 		initRoll: ( Degrees 0.0 )
 		initPitch: ( Degrees 0.0 )
 		initHeading: ( Degrees 0.0 )
@@ -19,7 +18,7 @@ p01:
 		components: 
 		{
 			dynamicsModel: 
-			( JSBSimNetModel
+			( NetFDM
 				rootDir: JSBSIM_PATH
 				model: "copter"
 			)
