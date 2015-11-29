@@ -21,9 +21,6 @@
     <ClCompile Include="..\SimStation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\TestIoHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Factory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,12 +45,12 @@
     <ClCompile Include="..\Display.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\IoHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\SimStation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\TestIoHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Factory.h">
@@ -78,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IoHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

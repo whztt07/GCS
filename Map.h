@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
-// Class: TestHsi
+// Class: Map
 //
-// Description: Tests our core HSI graphic
+// Description: Displays 3D map of the environment and the air vehicle.
 //------------------------------------------------------------------------------
 #ifndef MAP
 #define MAP
@@ -47,7 +47,7 @@ namespace Eaagles {
 		
 		//BasicGL::Page interface
 		virtual void draw();
-		virtual bool onEntry() override;
+		virtual bool onEntry();
 
 		virtual bool event(const int event, Basic::Object* const obj = nullptr) override;
 		//BasicGL::Display interface

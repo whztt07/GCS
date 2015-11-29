@@ -2,7 +2,7 @@
 // Class: Factory
 //------------------------------------------------------------------------------
 #include "Factory.h"
-#include "TestIoHandler.h"
+#include "IoHandler.h"
 #include "SimStation.h"
 #include "Display.h"
 #include "Map.h"
@@ -16,10 +16,8 @@
 #include <openeaagles/basic/Factory.h>
 #include <openeaagles/basicGL/Factory.h>
 #include <openeaagles/gui/glut/Factory.h>
-#include <openeaagles/dis/Factory.h>
 #include <openeaagles/instruments/Factory.h>
 #include <openeaagles/ioDevice/Factory.h>
-#include <openeaagles/sensors/Factory.h>
 #include <openeaagles/simulation/Factory.h>
 #include <openeaagles/dynamics/Factory.h>
 
@@ -46,8 +44,8 @@ namespace Eaagles {
 		if ( std::strcmp(name, Display::getFactoryName()) == 0 ) {
 			obj = new Display();
 		}
-		if ( std::strcmp(name, TestIoHandler::getFactoryName()) == 0 ) {
-			obj = new TestIoHandler();
+		if ( std::strcmp(name, IoHandler::getFactoryName()) == 0 ) {
+			obj = new IoHandler();
 		}
 		if (std::strcmp(name, NetFDM::getFactoryName()) == 0) {
 			obj = new NetFDM();
@@ -60,10 +58,6 @@ namespace Eaagles {
 			obj = IoDevice::Factory::createObj(name);
 		if (obj == 0) 
 			obj = Dynamics::Factory::createObj(name);
-		if (obj == 0) 
-			obj = Sensor::Factory::createObj(name);
-		if (obj == 0) 
-			obj = Network::Dis::Factory::createObj(name);
 		if (obj == 0) 
 			obj = BasicGL::Factory::createObj(name);
 		if (obj == 0) 

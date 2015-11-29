@@ -7,7 +7,7 @@
 
 
 
-ioHandler: ( TestIoHandler
+ioHandler: ( IoHandler
    inputData: ( IoData numAI: 10 numDI: 40 )
    devices: {
 #line 8 "ioHandler.epp"

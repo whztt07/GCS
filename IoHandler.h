@@ -1,23 +1,23 @@
 //------------------------------------------------------------------------------
-// Class: TestIoHandler
+// Class: IoHandler
 //------------------------------------------------------------------------------
-#ifndef __Eaagles_Example_TestIoHandler_H__
-#define __Eaagles_Example_TestIoHandler_H__
+#ifndef IOHANDLER
+#define IOHANDLER
 
 #include <openeaagles/basic/IoHandler.h>
 
 namespace Eaagles {
 	namespace Simulation { class AirVehicle; }
 	//------------------------------------------------------------------------------
-	// Class:  TestIoHandler
+	// Class:  IoHandler
 	//
 	// Description:  Handles the flow of I/O data to and from the
 	//               stick and throttle hardware.
 	//------------------------------------------------------------------------------
-	class TestIoHandler : public Basic::IoHandler {
-		DECLARE_SUBCLASS(TestIoHandler, Basic::IoHandler)
+	class IoHandler : public Basic::IoHandler {
+		DECLARE_SUBCLASS(IoHandler, Basic::IoHandler)
 	public:
-		TestIoHandler();
+		IoHandler();
 		// Basic::IoHandler interface functions
 		virtual void inputDevices(const LCreal dt);    // Handle input devices
 	protected:

@@ -1,9 +1,7 @@
 #include "Display.h"
 #include "SimStation.h"
-#include "openeaagles/simulation/Simulation.h"
-#include "openeaagles/basic/Pair.h"
-#include "openeaagles/basic/PairStream.h"
 #include <GL/glut.h>
+#include <openeaagles/basic/PairStream.h>
 
 namespace Eaagles {
 
@@ -26,7 +24,8 @@ namespace Eaagles {
 	//------------------------------------------------------------------------------
 	bool Display::shutdownNotification() {
 		 Basic::Component* parent = container();
-		 if (parent != 0) parent->event(SHUTDOWN_EVENT);
+		 if (parent != 0) 
+			 parent->event(SHUTDOWN_EVENT);
 		 return BaseClass::shutdownNotification();
 	}
 

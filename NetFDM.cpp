@@ -48,7 +48,7 @@ namespace Eaagles {
 		connected = false;
 	}
 
-	
+
 	//------------------------------------------------------------------------------
 	// copyData() -- copy (delete) member data
 	//------------------------------------------------------------------------------
@@ -337,16 +337,17 @@ namespace Eaagles {
 		std::string data;
 		double time, altitudeASL, v_north, v_east, v_down, U, V, W, Roll, Pitch, Yaw, P, Q, R, VelDotX, VelDotY, VelDotZ;
 
+		Simulation::Player* player = static_cast<Simulation::Player*>(findContainerByType(typeid(Simulation::Player)));
+		if (player == 0) {
+			std::cerr << "player: " << std::endl;
+			return;
+		}
+
 		while(connected) {
-			Simulation::Player* player = static_cast<Simulation::Player*>(findContainerByType(typeid(Simulation::Player)));
-			if (player == 0) {
-				std::cerr << "player: " << std::endl;
-				return;
-			}
 			auto n = recvData(buffer, MAX_SIZE);
 			if (n > 0) {
 				data.assign(buffer, n);
-				std::cerr << "RECV: " << data << std::endl;
+				//std::cerr << "RECV: " << data << std::endl;
 				auto string_start = data.find_first_not_of("\r\n", 0);
 				if (string_start == std::string::npos)
 					continue;
@@ -413,8 +414,8 @@ namespace Eaagles {
 				commandToSend += std::to_string(rudderCmd) + std::string(",");
 				commandToSend += std::to_string(throttleCmd);
 				commandToSend += std::string("\r\n");
-				if ( sendData(commandToSend.c_str(), commandToSend.length()) )
-					std::cerr << "SENT: " << commandToSend << std::endl;
+				if ( sendData(commandToSend.c_str(), commandToSend.length()) ){}
+					//std::cerr << "SENT: " << commandToSend << std::endl;
 			}
 		}
 	}

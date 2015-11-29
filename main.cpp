@@ -9,19 +9,12 @@
 #include "openeaagles/gui/glut/GlutDisplay.h"
 #include <GL/glut.h>
 
-// class factories
-#include "xPanel/Factory.h"
-
-// class factories
-#include "../shared/xZeroMQHandlers/Factory.h"
 #include "openeaagles/basic/Factory.h"
 #include "openeaagles/basicGL/Factory.h"
 #include "openeaagles/gui/glut/Factory.h"
 #include "openeaagles/dis/Factory.h"
 #include "openeaagles/instruments/Factory.h"
 #include "openeaagles/ioDevice/Factory.h"
-#include "openeaagles/otw/Factory.h"
-#include "openeaagles/sensors/Factory.h"
 #include "openeaagles/simulation/Factory.h"
 #include "openeaagles/dynamics/Factory.h"
 

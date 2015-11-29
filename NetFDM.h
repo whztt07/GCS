@@ -34,7 +34,7 @@ namespace Eaagles {
 		// Component interface
 		virtual void reset();
 		
-		//JSBSimNetModel slots
+		//NetFDM slots
 		const Basic::String* getRootDir() const;  // JSBSim root directory
 		virtual bool setRootDir(const Basic::String* const dir);
 

@@ -90,7 +90,7 @@
     <ClCompile Include="..\Display.cpp" />
     <ClCompile Include="..\Hsi.cpp" />
     <ClCompile Include="..\Map.cpp" />
-    <ClCompile Include="..\TestIoHandler.cpp" />
+    <ClCompile Include="..\IoHandler.cpp" />
     <ClCompile Include="..\Pfd.cpp" />
     <ClCompile Include="..\UpdateMoveCallback.cpp" />
   </ItemGroup>
@@ -102,7 +102,7 @@
     <ClInclude Include="..\Display.h" />
     <ClInclude Include="..\Hsi.h" />
     <ClInclude Include="..\Map.h" />
-    <ClInclude Include="..\TestIoHandler.h" />
+    <ClInclude Include="..\IoHandler.h" />
     <ClInclude Include="..\Pfd.h" />
     <ClInclude Include="..\UpdateMoveCallback.h" />
   </ItemGroup>
