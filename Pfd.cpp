@@ -35,7 +35,7 @@ namespace Eaagles {
 		// test data
 		LCreal mach = av->getMach();
 		// commanded speed
-		cmdSpd = 150;
+		cmdSpd = av->getGload();
 
 		// here is sideslip
 		slip = av->getSideSlipD();

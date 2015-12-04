@@ -45,6 +45,7 @@ namespace Eaagles {
 		rootDir = 0;
 		model = 0;
 		vcas = 0.0;
+		gLoad = 0.0;
 		connected = false;
 	}
 
@@ -135,6 +136,9 @@ namespace Eaagles {
 		return vcas;
 	}
 
+	LCreal NetFDM::getGload() const {
+		return gLoad;
+	}
 
 	//------------------------------------------------------------------------------
 	// setControlStickRollInput(Roll) --  Control inputs: normalized
@@ -347,7 +351,7 @@ namespace Eaagles {
 			auto n = recvData(buffer, MAX_SIZE);
 			if (n > 0) {
 				data.assign(buffer, n);
-				//std::cerr << "RECV: " << data << std::endl;
+				std::cerr << "RECV: " << data << std::endl;
 				auto string_start = data.find_first_not_of("\r\n", 0);
 				if (string_start == std::string::npos)
 					continue;
@@ -400,6 +404,7 @@ namespace Eaagles {
 					VelDotY = stod(trim(tokens[15]));
 					VelDotZ = stod(trim(tokens[16]));
 					vcas = stod(trim(tokens[17]));
+					gLoad = time;
 
 					player->setAltitude(Basic::Distance::FT2M * altitudeASL, true);
 					player->setVelocity(static_cast<LCreal>(Basic::Distance::FT2M * v_north), static_cast<LCreal>(Basic::Distance::FT2M * v_east), static_cast<LCreal>(Basic::Distance::FT2M * v_down));
@@ -415,7 +420,7 @@ namespace Eaagles {
 				commandToSend += std::to_string(throttleCmd);
 				commandToSend += std::string("\r\n");
 				if ( sendData(commandToSend.c_str(), commandToSend.length()) ){}
-					//std::cerr << "SENT: " << commandToSend << std::endl;
+					std::cerr << "SENT: " << commandToSend << std::endl;
 			}
 		}
 	}

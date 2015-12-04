@@ -22,6 +22,7 @@ namespace Eaagles {
 
 		// AerodynamicsModel interface
 		virtual LCreal getCalibratedAirspeed() const;
+		virtual LCreal getGload() const;
 		virtual int getEngRPM(LCreal* const rpm, const int max) const;
 		virtual void setControlStickRollInput(const LCreal roll);
 		virtual void setControlStickPitchInput(const LCreal pitch);
@@ -65,6 +66,7 @@ namespace Eaagles {
 		SOCKET listenerSock, clientSock;
 		
 		LCreal vcas;
+		LCreal gLoad;
 		double aileronCmd;
 		double elevatorCmd;
 		double rudderCmd;
