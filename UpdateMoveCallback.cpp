@@ -1,15 +1,10 @@
 #include "UpdateMoveCallback.h"
-
 #include <osg/PositionAttitudeTransform>
 #include <osg/Uniform>
-#include <JSBSim/math/FGMatrix33.h>
-#include <JSBSim/math/FGColumnVector3.h>
-#include <iostream>
 
 using namespace osg;
 using namespace osgEarth;
 using namespace osgEarth::Util;
-using namespace JSBSim;
 
 namespace Eaagles {
 	UpdateMoveCallback::UpdateMoveCallback( Simulation::AirVehicle* av, osgEarth::Map* map ) : 

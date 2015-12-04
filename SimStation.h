@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------------
 // Class: SimStation
 //------------------------------------------------------------------------------
-#ifndef SIM_STATION
-#define SIM_STATION
+#ifndef SIMSTATION
+#define SIMSTATION
 
 #include <openeaagles/simulation/Station.h>
 

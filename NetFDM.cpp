@@ -20,17 +20,8 @@ namespace Eaagles {
 	//------------------------------------------------------------------------------
 	// Slot table
 	//------------------------------------------------------------------------------
-	BEGIN_SLOTTABLE(NetFDM)
-			"rootDir",      //  1 root directory for JSBSim models
-			"model"         //  2 JSBSim model
-	END_SLOTTABLE(NetFDM)
+	EMPTY_SLOTTABLE(NetFDM)
 	
-	// Map slot table to handles 
-	BEGIN_SLOT_MAP(NetFDM)
-			ON_SLOT( 1, setRootDir,         Basic::String)
-			ON_SLOT( 2, setModel,           Basic::String)
-	END_SLOT_MAP()
-
 	EMPTY_SERIALIZER(NetFDM)
 
 	//------------------------------------------------------------------------------
@@ -42,13 +33,10 @@ namespace Eaagles {
 	}
 	
 	void NetFDM::initData() {
-		rootDir = 0;
-		model = 0;
 		vcas = 0.0;
 		gLoad = 0.0;
 		connected = false;
 	}
-
 
 	//------------------------------------------------------------------------------
 	// copyData() -- copy (delete) member data
@@ -56,11 +44,7 @@ namespace Eaagles {
 	void NetFDM::copyData(const NetFDM& org, const bool cc) {
 		BaseClass::copyData(org);
 		if (cc) initData();
-		
-		setRootDir( org.rootDir );
-		setModel( org.model );
 	}
-
 
 	std::string& trim_left(std::string& str) {
 		while (str.size() && isspace((unsigned char)str[0])) {
@@ -69,7 +53,6 @@ namespace Eaagles {
 		return str;
 	}
 
-
 	std::string& trim_right(std::string& str) {
 		while (str.size() && isspace((unsigned char)str[str.size()-1])) {
 			str = str.erase(str.size()-1,1);
@@ -77,13 +60,11 @@ namespace Eaagles {
 		return str;
 	}
 
-
 	std::string& trim(std::string& str) {
 		if (str.size() == 0) return str;
 		std::string temp_str = trim_right(str);
 		return str = trim_left(temp_str);
 	}
-
 
 	bool is_number(const std::string& str) {
 		if (str.size())
@@ -91,7 +72,6 @@ namespace Eaagles {
 		else
 			return false;
 	}
-
 
 	std::vector <std::string> split(std::string str, char d) {
 		std::vector <std::string> str_array;
@@ -112,7 +92,6 @@ namespace Eaagles {
 		}
 		return str_array;
 	}
-	
 
 	//------------------------------------------------------------------------------
 	// deleteData() -- delete instance of NetFDM, if any
@@ -120,17 +99,6 @@ namespace Eaagles {
 	void NetFDM::deleteData() {
 		closeConnections();
 	}
-
-	
-	const Basic::String* NetFDM::getRootDir() const { 
-		return rootDir; 
-	}
-
-
-	const Basic::String* NetFDM::getModel() const { 
-		return model; 
-	}
-	
 
 	LCreal NetFDM::getCalibratedAirspeed() const {
 		return vcas;
@@ -148,7 +116,6 @@ namespace Eaagles {
 		fabs(roll) < 0.00002 ? aileronCmd = 0.0 : aileronCmd = roll;
 	}
 
-
 	//------------------------------------------------------------------------------
 	// setControlStickPitchInput(Pitch) --  Control inputs: normalized
 	//  pitch:  -1.0 -> max forward (nose down); 0.0 -> center;  1.0 -> max back (nose up)
@@ -157,7 +124,6 @@ namespace Eaagles {
 		fabs(pitch) < 0.00002 ? elevatorCmd = 0.0 : elevatorCmd = pitch;
 	}
 
-
 	//------------------------------------------------------------------------------
 	// setRudderPedalInput(Yaw) --  Control inputs: normalized
 	//  yaw:  -1.0 -> max left (nose left); 0.0 -> center;  1.0 -> max right (noe right)
@@ -165,20 +131,17 @@ namespace Eaagles {
 	void NetFDM::setRudderPedalInput(const LCreal yaw) {
 		fabs(yaw) < 0.00002 ? rudderCmd = 0.0 : rudderCmd = yaw;
 	}
-
 	
 	int NetFDM::setThrottles(const LCreal* const positions, const int num) {
 		throttleCmd = positions[0];
 		return sizeof(positions);
 	}
 
-
 	int NetFDM::getEngRPM(LCreal* const rpm, const int max) const {
 		for (auto i = 0; i < max; ++i)
 			rpm[i] = throttleCmd * 15000.0;
 		return max;
 	}
-
 
 	//------------------------------------------------------------------------------
 	// dynamics() -- update player's vehicle dynamics
@@ -190,8 +153,8 @@ namespace Eaagles {
 			return;
 		}
 		
-		if (!workerThread.joinable()) {
-			workerThread = std::thread(&NetFDM::socketThread, this);
+		if (!socketThread.joinable()) {
+			socketThread = std::thread(&NetFDM::runThread, this);
 		}
 		
 		BaseClass::dynamics(dt);
@@ -213,51 +176,8 @@ namespace Eaagles {
 		// Get our Player (must have one!)
 		Simulation::Player* p = static_cast<Simulation::Player*>( findContainerByType(typeid(Simulation::Player)) );
 		if (p == 0) return;
-
-		// must have strings set
-		if (rootDir == 0 || model == 0) return;
 	}	
 
-
-	//------------------------------------------------------------------------------
-	// Slot access functions
-	//------------------------------------------------------------------------------
-
-
-	// Sets root directory for JSBSim models
-	bool NetFDM::setRootDir(const Basic::String* const dir) {
-		if (rootDir != 0) {
-			rootDir->unref();
-			rootDir = 0;
-		}
-		if (dir != 0) {
-			rootDir = dir->clone();
-		}
-		return true;
-	}
-
-
-	// Sets JSBSim model
-	bool NetFDM::setModel(const Basic::String* const mdl) {
-		if (model != 0) {
-			model->unref();
-			model = 0;
-		}
-		if (mdl != 0) {
-			model = mdl->clone();
-		}
-		return true;
-	}
-
-
-	//------------------------------------------------------------------------------
-	// getSlotByIndex()
-	//------------------------------------------------------------------------------
-	Basic::Object* NetFDM::getSlotByIndex(const int si) {
-		return BaseClass::getSlotByIndex(si);
-	}
-	
-	
 	//------------------------------------------------------------------------------
 	// Send (transmit) our data buffer; returns true if successful.
 	// 'size' just be less than MAX_SIZE.
@@ -279,7 +199,6 @@ namespace Eaagles {
 		}
 		return false;
 	}
-
 
 	//------------------------------------------------------------------------------
 	// Receive a data buffer; returns number of bytes received;
@@ -306,9 +225,8 @@ namespace Eaagles {
 		}
 		return n;
 	}
-
 		
-	void NetFDM::socketThread() {
+	void NetFDM::runThread() {
 		WSADATA wsaData;
 		if (WSAStartup(MAKEWORD(1, 1), &wsaData)) {
 			std::cerr << "WSAStartup: " << WSAGetLastError() << std::endl;
@@ -425,13 +343,12 @@ namespace Eaagles {
 		}
 	}
 
-
 	//------------------------------------------------------------------------------
 	// close all network connections
 	//------------------------------------------------------------------------------
 	void NetFDM::closeConnections() {
 		connected = false;
-		workerThread.join();
+		socketThread.join();
 		if ( listenerSock )
 			closesocket(listenerSock);
 		if ( clientSock )

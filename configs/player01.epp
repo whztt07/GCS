@@ -17,11 +17,7 @@ p01:
 			
 		components: 
 		{
-			dynamicsModel: 
-			( NetFDM
-				rootDir: JSBSIM_PATH
-				model: "copter"
-			)
+			dynamicsModel: ( NetFDM )
 			
 			pilot: 
 			(	Autopilot

@@ -35,13 +35,6 @@ namespace Eaagles {
 		// Component interface
 		virtual void reset();
 		
-		//NetFDM slots
-		const Basic::String* getRootDir() const;  // JSBSim root directory
-		virtual bool setRootDir(const Basic::String* const dir);
-
-		const Basic::String* getModel() const;      // JSBSim model
-		virtual bool setModel(const Basic::String* const msl);
-
 	protected:
 		// Send (transmit) our data buffer; returns true if successful.
 		// 'size' just be less than MAX_SIZE.
@@ -56,12 +49,9 @@ namespace Eaagles {
 					
 	private:
 		void initData();
-		void socketThread();
+		void runThread();
 
-		const Basic::String* rootDir;   // root directory for JSBSim models
-		const Basic::String* model;     // JSBSim model
-
-		std::thread workerThread;
+		std::thread socketThread;
 		bool connected;
 		SOCKET listenerSock, clientSock;
 		

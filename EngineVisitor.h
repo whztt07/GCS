@@ -1,5 +1,5 @@
-#ifndef ENGINEVISITOR_H
-#define ENGINEVISITOR_H
+#ifndef ENGINEVISITOR
+#define ENGINEVISITOR
 
 #include <osgViewer/ViewerEventHandlers>
 #include <osgSim/DOFTransform>
