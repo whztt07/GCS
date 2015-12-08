@@ -1,7 +1,7 @@
 rem
-call c:\OpenEaaglesExamples\makedefs.bat
+@set mcpp=C:\OpenEaagles3rdParty\bin\mcpp.exe
 rem
-%mcpp% configs/test.epp > test.edl ^
+%mcpp% configs/gcs.epp > gcs.edl ^
  -I c:\OpenEaagles\include ^
  -I c:\OpenEaaglesExamples\shared\data ^
  -DFONT_PATH="\"c:/OpenEaaglesExamples/shared/data/fonts/\"" ^

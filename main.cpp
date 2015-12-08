@@ -24,7 +24,7 @@
 namespace Eaagles {
 	
 	// Description (input) File -- After being processed by the C preprocessor
-	const char* testFileName = "../test.edl";
+	const char* testFileName = "../gcs.edl";
 	// Frame Rate
 	const int frameRate = 60;
 	// Top level Station

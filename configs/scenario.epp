@@ -2,10 +2,10 @@ ownship: p01
 simulation: 
 ( Simulation
 	// Initial freeze condition
-  freeze: false
-  // The initial player list
-  players: {
-		#include "player01.epp"
-  }
+	freeze: false
+	// The initial player list
+	players: {
+		#include "player.epp"
+	}
 )
 
