@@ -37,13 +37,14 @@ namespace Eaagles {
 		virtual void updateTC(const LCreal dt = 0.0f);
 		virtual void updateData(const LCreal dt = 0.0f);
 		virtual void reset();
+
 	private:
 		// Main Display
 		Basic::safe_ptr<Glut::GlutDisplay> mainDisplay;
 		bool displayInit;
 		// Auto reset timer
 		LCreal      autoResetTimer;      // Auto RESET timer (sends a RESET_EVENT after timeout)
-		const Basic::Time* autoResetTimer0;   // Init value of the Auto RESET timer
+		Basic::safe_ptr<const Basic::Time> autoResetTimer0;   // Init value of the Auto RESET timer
 	};
 } // End Eaagles namespace
 

@@ -52,13 +52,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\OpenEaagles\include;C:\OpenEaagles3rdParty\include;c:\OpenEaaglesExamples\shared;C:\OpenSceneGraph\install\vs2015\include;C:\osgEarth\install\vs2015\include;C:\OpenEaagles3rdParty\include\JSBSim;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\OpenEaagles\include;C:\OpenEaagles3rdParty\include;c:\OpenEaaglesExamples\shared;C:\OpenSceneGraph\installation\include;C:\osgEarth\installation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\OpenEaagles\lib\vs2015;C:\OpenEaagles3rdParty\lib\vs2015-32;C:\OpenEaaglesExamples\lib\vs2015;C:\OpenSceneGraph\install\vs2015\lib;C:\osgEarth\install\vs2015\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>oeGlut_d.lib;oeInstruments_d.lib;oeBasicGL_d.lib;oeBasic_d.lib;ftgl_d.lib;freetype2_d.lib;freeglut_d.lib;glu32.lib;opengl32.lib;Ws2_32.lib;Winmm.lib;comctl32.lib;gdi32.lib;osgGAd.lib;osgDBd.lib;osgUtild.lib;osgd.lib;OpenThreadsd.lib;osgViewerd.lib;osgTextd.lib;osgSimd.lib;oeSimulation_d.lib;oeDynamics_d.lib;oeIoDevice_d.lib;oeDafif_d.lib;libzmq_d.lib;jsbsim_d.lib;oeOtw_d.lib;ccl_lib_d.lib;oeDis_d.lib;oeSensors_d.lib;oeRecorder_d.lib;oeTerrain_d.lib;libprotobuf_d.lib;xPanel_d.lib;xZeroMQHandlers_d.lib;osgEarthUtild.lib;osgEarthAnnotationd.lib;osgEarthFeaturesd.lib;osgEarthSymbologyd.lib;osgEarthd.lib;c:\OpenSceneGraph\3rdParty\10_curl-7.33.0\installation\lib\libcurld.lib;c:\OpenSceneGraph\3rdParty\build\3rdParty\v130-x86\lib\zlibd.lib;c:\OpenSceneGraph\3rdParty\11_gdal-2.0.1\install\lib\gdal_i.lib;c:\osgEarth\3rdParty\geos-3.4.2\install\lib\libgeos.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\OpenEaagles\lib\vs2015;C:\OpenEaagles3rdParty\lib\vs2015-32;C:\OpenEaaglesExamples\lib\vs2015;C:\OpenSceneGraph\installation\lib;C:\osgEarth\installation\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>oeGlut_d.lib;oeInstruments_d.lib;oeBasicGL_d.lib;oeBasic_d.lib;ftgl_d.lib;freetype2_d.lib;freeglut_d.lib;glu32.lib;opengl32.lib;Ws2_32.lib;Winmm.lib;comctl32.lib;gdi32.lib;osgGAd.lib;osgDBd.lib;osgUtild.lib;osgd.lib;OpenThreadsd.lib;osgViewerd.lib;osgTextd.lib;osgSimd.lib;oeSimulation_d.lib;oeDynamics_d.lib;oeIoDevice_d.lib;oeDafif_d.lib;libzmq_d.lib;jsbsim_d.lib;oeOtw_d.lib;ccl_lib_d.lib;oeDis_d.lib;oeSensors_d.lib;oeRecorder_d.lib;oeTerrain_d.lib;libprotobuf_d.lib;xPanel_d.lib;xZeroMQHandlers_d.lib;osgEarthUtild.lib;osgEarthAnnotationd.lib;osgEarthFeaturesd.lib;osgEarthSymbologyd.lib;osgEarthd.lib;c:\OpenSceneGraph\3rdParty\curl\installation\lib\libcurl.lib;c:\OpenSceneGraph\3rdParty\installation\v130-x86\lib\zlibd.lib;c:\OpenSceneGraph\3rdParty\gdal\gdal\installation\lib\gdal_i.lib;c:\osgEarth\3rdParty\libgeos\installation\lib\libgeosd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -70,15 +70,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\OpenEaagles\include;C:\OpenEaagles3rdParty\include;c:\OpenEaaglesExamples\shared;C:\OpenSceneGraph\install\vs2015\include;C:\osgEarth\install\vs2015\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\OpenEaagles\include;C:\OpenEaagles3rdParty\include;c:\OpenEaaglesExamples\shared;C:\OpenSceneGraph\installation\include;C:\osgEarth\installation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\OpenEaagles\lib\vs2015;C:\OpenEaagles3rdParty\lib\vs2015-32;C:\OpenEaaglesExamples\lib\vs2015;C:\OpenSceneGraph\install\vs2015\lib;C:\osgEarth\install\vs2015\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>oeGlut.lib;oeInstruments.lib;oeBasicGL.lib;oeBasic.lib;ftgl.lib;freetype2.lib;freeglut.lib;glu32.lib;opengl32.lib;Ws2_32.lib;Winmm.lib;osgGA.lib;osgDB.lib;osgUtil.lib;osg.lib;OpenThreads.lib;osgViewer.lib;osgText.lib;osgSim.lib;oeSimulation.lib;oeDynamics.lib;oeIoDevice.lib;oeDafif.lib;libzmq.lib;jsbsim.lib;oeOtw.lib;ccl_lib.lib;oeDis.lib;oeSensors.lib;oeRecorder.lib;oeTerrain.lib;libprotobuf.lib;xPanel.lib;xZeroMQHandlers.lib;osgEarthUtil.lib;osgEarthAnnotation.lib;osgEarthFeatures.lib;osgEarthSymbology.lib;osgEarth.lib;C:\OpenSceneGraph\3rdParty\10_curl-7.33.0\installation\lib\libcurl.lib;C:\OpenSceneGraph\3rdParty\build\3rdParty\v130-x86\lib\zlib.lib;C:\osgEarth\3rdParty\geos-3.4.2\install\lib\libgeos.lib;C:\OpenSceneGraph\3rdParty\11_gdal-2.0.1\install\lib\gdal_i.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\OpenEaagles\lib\vs2015;C:\OpenEaagles3rdParty\lib\vs2015-32;C:\OpenEaaglesExamples\lib\vs2015;C:\OpenSceneGraph\installation\lib;C:\osgEarth\installation\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>oeGlut.lib;oeInstruments.lib;oeBasicGL.lib;oeBasic.lib;ftgl.lib;freetype2.lib;freeglut.lib;glu32.lib;opengl32.lib;Ws2_32.lib;Winmm.lib;osgGA.lib;osgDB.lib;osgUtil.lib;osg.lib;OpenThreads.lib;osgViewer.lib;osgText.lib;osgSim.lib;oeSimulation.lib;oeDynamics.lib;oeIoDevice.lib;oeDafif.lib;libzmq.lib;jsbsim.lib;oeOtw.lib;ccl_lib.lib;oeDis.lib;oeSensors.lib;oeRecorder.lib;oeTerrain.lib;libprotobuf.lib;xPanel.lib;xZeroMQHandlers.lib;osgEarthUtil.lib;osgEarthAnnotation.lib;osgEarthFeatures.lib;osgEarthSymbology.lib;osgEarth.lib;C:\OpenSceneGraph\3rdParty\curl\installation\lib\libcurl.lib;C:\OpenSceneGraph\3rdParty\installation\v130-x86\lib\zlib.lib;C:\osgEarth\3rdParty\libgeos\installation\lib\libgeos.lib;C:\OpenSceneGraph\3rdParty\gdal\gdal\installation\lib\gdal_i.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

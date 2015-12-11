@@ -1,4 +1,5 @@
 #include "EngineVisitor.h"
+#include <algorithm>
 
 using namespace osg;
 using namespace osgSim;
@@ -6,18 +7,19 @@ using namespace osgGA;
 
 namespace Eaagles {
 
-	EngineVisitor::EngineVisitor() : NodeVisitor(NodeVisitor::TRAVERSE_ALL_CHILDREN), av(NULL) {}
+	EngineVisitor::EngineVisitor() : NodeVisitor(NodeVisitor::TRAVERSE_ALL_CHILDREN), uav(nullptr) {}
 
 	EngineVisitor::~EngineVisitor() {}
 
 	void EngineVisitor::apply(Transform& node) {
 		DOFTransform* pDof = dynamic_cast<DOFTransform*>(&node);
+		static int i = 0;
 		if (pDof) {
-			mDofs.push_back(pDof);
 			pDof->setAnimationOn(true);
 			pDof->setIncrementHPR(Vec3(0.0, 0.0, 0.0));
 			pDof->setMaxHPR(Vec3(0.0, 0.0, 45000.0));
 			pDof->setMinHPR(Vec3(0.0, 0.0, 0.0));
+			mEngines[i] = pDof;
 		}
 		NodeVisitor::apply(node);
 	}
@@ -31,18 +33,19 @@ namespace Eaagles {
 			return false;
 
 		if (ea.getEventType() == GUIEventAdapter::FRAME) {
-			if (av != NULL) {
+			if (uav != nullptr) {
 				LCreal rpm[4];
-				av->getEngRPM(rpm, 4);
-				animationRPM(rpm[0]);
+				uav->getEngRPM(rpm, 4);
+				std::copy_n(std::begin(rpm), 4, mRpms.begin());
+				animationRPM(mRpms);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	void EngineVisitor::setAirVehicle(Simulation::AirVehicle* pav) {
-		av = pav;
+	void EngineVisitor::setVehicle(Simulation::UnmannedAirVehicle* pav) {
+		uav = pav;
 	}
 
 	DOFTransform* EngineVisitor::createEngineNode(Node* node, const Vec3& vec) {
@@ -53,8 +56,8 @@ namespace Eaagles {
 		return transformEngine.release();
 	}
 
-	void EngineVisitor::animationRPM(double rpm) {
-		for (size_t i = 0; i < mDofs.size(); ++i)
-			mDofs[i]->setIncrementHPR(::osg::Vec3(0.0, 0.0, rpm));
+	void EngineVisitor::animationRPM(const Rpms& rpm) {
+		for (auto i = 0; i < mEngines.size(); ++i)
+			mEngines[i]->setIncrementHPR(::osg::Vec3(0.0, 0.0, rpm[i]));
 	}
 }

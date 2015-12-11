@@ -19,32 +19,28 @@ namespace Eaagles {
 		ON_EVENT('v',onEntry)
 	END_EVENT_HANDLER()
 
+	static osgSim::DOFTransform* createEngineNode(::osg::Node* node, const ::osg::Vec3& vec) {
+		ref_ptr<DOFTransform> transformEngine = new DOFTransform;
+		transformEngine->setCurrentTranslate(vec);
+		transformEngine->setCurrentScale(Vec3(1, 1, 1));
+		transformEngine->addChild(node);
+		return transformEngine.release();
+	}
+
 	Map::Map() {
 		STANDARD_CONSTRUCTOR()
 		int argc = 3;
 		char* argv[3] = { {"c:/Users/Fete/Documents/Visual Studio 2012/Projects/demoSubDisplays/subdisplays/Debug/subdisplays.exe"}, {"c:/osgEarth/tests/boston.earth"}, {"--sky"}};
 
 		ArgumentParser arguments(&argc,argv);
-		
-		int left, top, right, bottom = { 0 };
-
-		//Ugly hack for Windows only!
-		RECT DesktopClientRect;
-		if (SystemParametersInfo(SPI_GETWORKAREA, 0, &DesktopClientRect, 0)) {
-			left = DesktopClientRect.left;
-			top = DesktopClientRect.top;
-			right = DesktopClientRect.right;
-			bottom = DesktopClientRect.bottom;
-		}
-		//
-    
+		    
 		viewer = new osgViewer::Viewer(arguments);
 		//Get these numbers from .epp file!
 		window = viewer->setUpViewerAsEmbeddedInWindow(300,0,500,600);
     viewer->getDatabasePager()->setUnrefImageDataAfterApplyPolicy( false, false );
 				
-		engineVisitor = new EngineVisitor;
-		viewer->addEventHandler(engineVisitor);
+		//engineVisitor = new EngineVisitor;
+		//viewer->addEventHandler(engineVisitor);
 		
 		nodeRoot = MapNodeHelper().load( arguments, viewer.get() );
 		if( !nodeRoot )
@@ -71,10 +67,10 @@ namespace Eaagles {
 		groupAircraft = new Group;
 		groupAircraft->addChild( nodeAircraft.get() );
 
-		setupForwardEngine = EngineVisitor::createEngineNode( nodeEngineCCW.get(), Vec3( 0.0, -0.01, -0.2855 ) );
-		setupRightEngine = EngineVisitor::createEngineNode( nodeEngineCW.get(), Vec3( 0.2855, -0.01, 0.0 ) );
-		setupBackEngine = EngineVisitor::createEngineNode( nodeEngineCCW.get(), Vec3( 0.0, -0.01, 0.2855 ) );
-		setupLeftEngine = EngineVisitor::createEngineNode( nodeEngineCW.get(), Vec3( -0.2855, -0.01, 0.0) );
+		setupForwardEngine = createEngineNode( nodeEngineCCW.get(), Vec3( 0.0, -0.01, -0.2855 ) );
+		setupRightEngine = createEngineNode( nodeEngineCW.get(), Vec3( 0.2855, -0.01, 0.0 ) );
+		setupBackEngine = createEngineNode( nodeEngineCCW.get(), Vec3( 0.0, -0.01, 0.2855 ) );
+		setupLeftEngine = createEngineNode( nodeEngineCW.get(), Vec3( -0.2855, -0.01, 0.0) );
 				
 		groupAircraft->addChild( setupForwardEngine.get() );
 		groupAircraft->addChild( setupRightEngine.get() );
@@ -101,7 +97,7 @@ namespace Eaagles {
 		nodeRoot->getOrCreateStateSet()->setMode( GL_LIGHT1, StateAttribute::ON );
 		nodeRoot->addChild( lightSource.get() );
 		
-		nodeRoot->accept(*engineVisitor);
+		//nodeRoot->accept(*engineVisitor);
 
 		viewer->setSceneData( nodeRoot.get() );
 		viewer->getCamera()->setSmallFeatureCullingPixelSize(-1.0f);
@@ -114,22 +110,21 @@ namespace Eaagles {
 		SimStation* const sta = static_cast<SimStation*>( findContainerByType(typeid(SimStation)) );
 		if (sta != 0) {
       sim = sta->getSimulation();
-      av = dynamic_cast<Simulation::AirVehicle*>(sta->getOwnship());
-			engineVisitor->setAirVehicle(av);
-			nodeModifiedAircraft->setUpdateCallback( new UpdateMoveCallback ( av, nodeMap->getMap() ) );
-			double initLat = av->getInitLatitude();
-			double initLon = av->getInitLongitude();
-			double initHAE = 0.0; // to get just X,Y on the sea level;
+      uav = dynamic_cast<Simulation::UnmannedAirVehicle*>(sta->getOwnship());
+			//engineVisitor->setAirVehicle(av);
+			nodeModifiedAircraft->setUpdateCallback( new UpdateMoveCallback ( uav.getRefPtr() ) );
+			double initLat = uav->getInitLatitude();
+			double initLon = uav->getInitLongitude();
 			double x, y, z;
 			EllipsoidModel EarthEllipsoid;
-			EarthEllipsoid.convertLatLongHeightToXYZ(DegreesToRadians(initLat), DegreesToRadians(initLon), initHAE, x, y, z);
+			EarthEllipsoid.convertLatLongHeightToXYZ(DegreesToRadians(initLat), DegreesToRadians(initLon), 0.0, x, y, z);  // to get just X,Y on the sea level;
 			const osgEarth::SpatialReference* SR(SpatialReference::get("epsg:4326")->getECEF());
 			osgEarth::GeoPoint GP(SR, x, y, z, osgEarth::ALTMODE_ABSOLUTE);
 			double initTerrainElevation = -1;
 			osgEarth::Util::ElevationQuery ElevQuery(nodeMap->getMap());
 			bool foundTerrainElevation = ElevQuery.getElevation(GP, initTerrainElevation);
 			if( foundTerrainElevation && initTerrainElevation != -1 ) {
-				av->setAltitude(initTerrainElevation);
+				uav->setAltitude(initTerrainElevation);
 			}
 			return true;
 		}

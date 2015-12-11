@@ -1,6 +1,5 @@
 ( Map
-	
-  left:   -10.5
+	left:   -10.5
   right:   10.5
   bottom: -10.5
   top:     10.5
@@ -102,7 +101,7 @@
     )
   } // end of font list
 	
-  normalFont: default
+	normalFont: default
 	
 	components: {}  
 )

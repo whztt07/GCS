@@ -4,7 +4,6 @@
 #include <openeaagles/gui/glut/GlutDisplay.h>
 
 namespace Eaagles {
-	namespace Simulation { class Simulation; class Station; }
 
 	class Display : public Glut::GlutDisplay {
 	DECLARE_SUBCLASS(Display, Glut::GlutDisplay)

@@ -1,6 +1,4 @@
 #include "Display.h"
-#include "SimStation.h"
-#include <GL/glut.h>
 #include <openeaagles/basic/PairStream.h>
 
 namespace Eaagles {

@@ -16,7 +16,7 @@
   	vpY:		100
   	vpWidth:	1100
   	vpHeight:	600
-	resizeSubwindows: 1
+		resizeSubwindows: 1
 		
   	components: 
   	{
@@ -31,9 +31,9 @@
   	}
   	displays: 
   	{
-		#include "display1.epp"
-		#include "display2.epp"
-		#include "display3.epp"
+			#include "display1.epp"
+			#include "display2.epp"
+			#include "display3.epp"
   	}
   )
 )

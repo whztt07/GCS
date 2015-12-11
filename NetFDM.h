@@ -5,13 +5,11 @@
 #ifndef NETFDM
 #define NETFDM
 
-#include "openeaagles/simulation/dynamics/AerodynamicsModel.h"
-#include "openeaagles/basic/String.h"
+#include <openeaagles/simulation/dynamics/AerodynamicsModel.h>
+#include <openeaagles/basic/String.h>
 #include <thread>
 
 namespace Eaagles {
-
-	namespace Basic { class String; class Number; };
 
 	class NetFDM : public Simulation::AerodynamicsModel {
 	DECLARE_SUBCLASS(NetFDM, Simulation::AerodynamicsModel)

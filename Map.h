@@ -6,6 +6,9 @@
 #ifndef MAP
 #define MAP
 
+#include "SimStation.h"
+#include "EngineVisitor.h"
+
 #include <osgViewer/Viewer>
 #include <osgGA/NodeTrackerManipulator>
 #include <osgViewer/ViewerEventHandlers>
@@ -20,9 +23,10 @@
 #include <osgEarthUtil/AutoClipPlaneHandler>
 #include <osgEarth/Units>
 #include <osgEarth/Viewpoint>
+#include <osgEarth/ElevationQuery>
+#include <osgEarth/Map>
 
-#include "SimStation.h"
-#include "EngineVisitor.h"
+#include <osgSim/DOFTransform>
 
 #include <openeaagles/basic/Pair.h>
 #include <openeaagles/basic/Timers.h>
@@ -37,10 +41,11 @@
 #include <openeaagles/instruments/Factory.h>
 
 namespace Eaagles {
+	
 	class Map : public Glut::GlutDisplay {
 	DECLARE_SUBCLASS(Map, Glut::GlutDisplay)
 	public:
-    Map();
+		Map();
 
     // Basic::Component interface
     virtual void updateData(const LCreal dt = 0);
@@ -49,7 +54,9 @@ namespace Eaagles {
 		virtual void draw();
 		virtual bool onEntry();
 
+		//Basic::Component interface
 		virtual bool event(const int event, Basic::Object* const obj = nullptr) override;
+		
 		//BasicGL::Display interface
 		virtual void reshapeIt(int w, int h);
 
@@ -70,9 +77,9 @@ namespace Eaagles {
 		::osg::ref_ptr<::osgSim::DOFTransform> setupBackEngine;
 		::osg::ref_ptr<::osgSim::DOFTransform> setupLeftEngine;
 		::osg::observer_ptr<osgViewer::GraphicsWindow> window;
-		Simulation::AirVehicle* av;
-		Simulation::Simulation* sim;
-		EngineVisitor* engineVisitor;
+		Basic::safe_ptr<Simulation::UnmannedAirVehicle> uav;
+		Basic::safe_ptr<Simulation::Simulation> sim;
+		//EngineVisitor* engineVisitor;
 	};
 } // end of Eaagles namespace
 

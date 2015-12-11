@@ -1,17 +1,15 @@
 #include "SimStation.h"
-#include "openeaagles/simulation/Simulation.h"
-#include "openeaagles/simulation/AirVehicle.h"
-#include "openeaagles/gui/glut/GlutDisplay.h"
-#include "openeaagles/basic/Identifier.h"
-#include "openeaagles/basic/Boolean.h"
-#include "openeaagles/basic/NetHandler.h"
-#include "openeaagles/basic/Pair.h"
-#include "openeaagles/basic/PairStream.h"
-#include "openeaagles/basic/Tables.h"
-#include "openeaagles/basic/Timers.h"
-#include "openeaagles/basic/units/Angles.h"
-#include "openeaagles/basic/units/Times.h"
-#include "openeaagles/basic/osg/Vec4"
+#include <openeaagles/simulation/Simulation.h>
+#include <openeaagles/simulation/AirVehicle.h>
+#include <openeaagles/gui/glut/GlutDisplay.h>
+#include <openeaagles/basic/Identifier.h>
+#include <openeaagles/basic/Boolean.h>
+#include <openeaagles/basic/Pair.h>
+#include <openeaagles/basic/PairStream.h>
+#include <openeaagles/basic/Tables.h>
+#include <openeaagles/basic/Timers.h>
+#include <openeaagles/basic/units/Angles.h>
+#include <openeaagles/basic/units/Times.h>
 
 namespace Eaagles {
 
@@ -146,6 +144,18 @@ namespace Eaagles {
 		if (mainDisplay != 0) 
 			mainDisplay->container(this);
 		displayInit = false;
+		/*
+		//Ugly hack for Windows only!
+		int left, top, right, bottom = { 0 };
+		RECT DesktopClientRect;
+		if (SystemParametersInfo(SPI_GETWORKAREA, 0, &DesktopClientRect, 0)) {
+			left = DesktopClientRect.left;
+			top = DesktopClientRect.top;
+			right = DesktopClientRect.right;
+			bottom = DesktopClientRect.bottom;
+		}
+		mainDisplay->reshapeIt(100, 100);
+		*/
 		return true;
 	}
 
@@ -170,5 +180,4 @@ namespace Eaagles {
 	Basic::Object* SimStation::getSlotByIndex(const int si) {
 		return BaseClass::getSlotByIndex(si);
 	}
-
 } // End Eaagles namespace
