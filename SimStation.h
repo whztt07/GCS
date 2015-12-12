@@ -37,6 +37,9 @@ namespace Eaagles {
 		virtual void updateTC(const LCreal dt = 0.0f);
 		virtual void updateData(const LCreal dt = 0.0f);
 		virtual void reset();
+		virtual bool event(const int event, Basic::Object* const obj = nullptr) override;
+		//SimStation interface
+		bool onEntry();
 
 	private:
 		// Main Display

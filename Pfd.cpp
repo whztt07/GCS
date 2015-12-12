@@ -15,6 +15,10 @@ namespace Eaagles {
 
 	EMPTY_DELETEDATA(Pfd)
 
+	BEGIN_EVENT_HANDLER(Pfd)
+		ON_EVENT(Eaagles::Basic::Component::USER_EVENTS + 1, onEntry)
+	END_EVENT_HANDLER()
+
 	void Pfd::updateData(const LCreal dt) {
 		Simulation::AirVehicle* av = static_cast<Simulation::AirVehicle*>(getOwnship());
 		trueHdg = av->getHeadingD();
@@ -148,5 +152,9 @@ namespace Eaagles {
 				if (s != 0) myStation = s;
 		 }
 		 return myStation;
+	}
+
+	bool Pfd::onEntry() {
+		return true;
 	}
 } // end of Eaagles namespace

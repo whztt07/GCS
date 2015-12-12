@@ -13,6 +13,10 @@ namespace Eaagles {
     Hsi();
 		// Basic::Component interface
     virtual void updateData(const LCreal dt = 0);
+		//Basic::Component interface
+		virtual bool event(const int event, Basic::Object* const obj = nullptr) override;
+		//Hsi interface
+		bool onEntry();
 
 	private:
 		Simulation::Player* getOwnship();

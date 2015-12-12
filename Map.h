@@ -7,7 +7,7 @@
 #define MAP
 
 #include "SimStation.h"
-#include "EngineVisitor.h"
+//#include "EngineVisitor.h"
 
 #include <osgViewer/Viewer>
 #include <osgGA/NodeTrackerManipulator>
@@ -46,19 +46,16 @@ namespace Eaagles {
 	DECLARE_SUBCLASS(Map, Glut::GlutDisplay)
 	public:
 		Map();
-
     // Basic::Component interface
     virtual void updateData(const LCreal dt = 0);
-		
 		//BasicGL::Page interface
 		virtual void draw();
-		virtual bool onEntry();
-
-		//Basic::Component interface
-		virtual bool event(const int event, Basic::Object* const obj = nullptr) override;
-		
 		//BasicGL::Display interface
 		virtual void reshapeIt(int w, int h);
+		//Basic::Component interface
+		virtual bool event(const int event, Basic::Object* const obj = nullptr) override;
+		//Map interface
+		bool onEntry();
 
 	private:
 		::osg::ref_ptr<osgViewer::Viewer> viewer;

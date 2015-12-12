@@ -106,7 +106,7 @@ simulation:
 #line 8 "scenario.epp"
 #line 1 "player.epp"
 p01:
-	( Aircraft
+	( UnmannedAirVehicle
 		id: 1
 		side: blue
 		signature: ( SigSphere radius: 2.0 )
@@ -152,7 +152,7 @@ p01:
   	vpY: 100
   	vpWidth: 1100
   	vpHeight: 600
-	resizeSubwindows: 1
+		resizeSubwindows: 1
 
   	components:
   	{
@@ -394,8 +394,7 @@ p01:
 #line 35 "c:/Users/elias/Documents/Visual Studio 2015/Projects/demoSubDisplays/configs/gcs.epp"
 #line 1 "display2.epp"
 ( Map
-
-  left: -10.5
+	left: -10.5
   right: 10.5
   bottom: -10.5
   top: 10.5
@@ -406,7 +405,7 @@ p01:
   vpWidth: 800
   vpHeight: 600
   clearColor: (rgb 0 0 0)
-#line 22 "display2.epp"
+#line 21 "display2.epp"
   colorTable:
 	{
     black: ( rgba 0 0 0 )
@@ -490,7 +489,7 @@ p01:
     )
   }
 
-  normalFont: default
+	normalFont: default
 
 	components: {}
 )

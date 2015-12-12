@@ -28,6 +28,10 @@ namespace Eaagles {
 			ON_SLOT( 2, setSlotAutoResetTime,       Basic::Time)
 	END_SLOT_MAP()
 
+	BEGIN_EVENT_HANDLER(SimStation)
+		ON_EVENT(Eaagles::Basic::Component::USER_EVENTS+1, onEntry)
+	END_EVENT_HANDLER()
+
 	SimStation::SimStation() {
 		STANDARD_CONSTRUCTOR()
 		mainDisplay = 0;
@@ -144,18 +148,6 @@ namespace Eaagles {
 		if (mainDisplay != 0) 
 			mainDisplay->container(this);
 		displayInit = false;
-		/*
-		//Ugly hack for Windows only!
-		int left, top, right, bottom = { 0 };
-		RECT DesktopClientRect;
-		if (SystemParametersInfo(SPI_GETWORKAREA, 0, &DesktopClientRect, 0)) {
-			left = DesktopClientRect.left;
-			top = DesktopClientRect.top;
-			right = DesktopClientRect.right;
-			bottom = DesktopClientRect.bottom;
-		}
-		mainDisplay->reshapeIt(100, 100);
-		*/
 		return true;
 	}
 
@@ -179,5 +171,21 @@ namespace Eaagles {
 	//------------------------------------------------------------------------------
 	Basic::Object* SimStation::getSlotByIndex(const int si) {
 		return BaseClass::getSlotByIndex(si);
+	}
+
+	bool SimStation::onEntry() {
+		
+		//Ugly hack for Windows only!
+		int left, top, right, bottom = { 0 };
+		RECT DesktopClientRect;
+		if (SystemParametersInfo(SPI_GETWORKAREA, 0, &DesktopClientRect, 0)) {
+			left = DesktopClientRect.left;
+			top = DesktopClientRect.top;
+			right = DesktopClientRect.right;
+			bottom = DesktopClientRect.bottom;
+			mainDisplay->reshapeIt(100, 100);
+		}
+		mainDisplay->event(Eaagles::Basic::Component::USER_EVENTS + 1);
+		return true;
 	}
 } // End Eaagles namespace

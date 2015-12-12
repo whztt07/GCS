@@ -1,22 +1,22 @@
 //------------------------------------------------------------------------------
 // Demo of sub-displays
 //------------------------------------------------------------------------------
-#include "openeaagles/basic/Pair.h"
-#include "openeaagles/basic/Timers.h"
-#include "openeaagles/basic/Parser.h"
-#include "openeaagles/basicGL/Graphic.h"
+#include <openeaagles/basic/Pair.h>
+#include <openeaagles/basic/Timers.h>
+#include <openeaagles/basic/Parser.h>
+#include <openeaagles/basicGL/Graphic.h>
 
-#include "openeaagles/gui/glut/GlutDisplay.h"
+#include <openeaagles/gui/glut/GlutDisplay.h>
 #include <GL/glut.h>
 
-#include "openeaagles/basic/Factory.h"
-#include "openeaagles/basicGL/Factory.h"
-#include "openeaagles/gui/glut/Factory.h"
-#include "openeaagles/dis/Factory.h"
-#include "openeaagles/instruments/Factory.h"
-#include "openeaagles/ioDevice/Factory.h"
-#include "openeaagles/simulation/Factory.h"
-#include "openeaagles/dynamics/Factory.h"
+#include <openeaagles/basic/Factory.h>
+#include <openeaagles/basicGL/Factory.h>
+#include <openeaagles/gui/glut/Factory.h>
+#include <openeaagles/dis/Factory.h>
+#include <openeaagles/instruments/Factory.h>
+#include <openeaagles/ioDevice/Factory.h>
+#include <openeaagles/simulation/Factory.h>
+#include <openeaagles/dynamics/Factory.h>
 
 #include "Factory.h"
 #include "SimStation.h"
@@ -80,22 +80,18 @@ namespace Eaagles {
 		station->updateTC(dt);
 		station->event(Eaagles::Basic::Component::RESET_EVENT);
 
+		station->event(Eaagles::Basic::Component::USER_EVENTS+1);
+
 		glutTimerFunc(msecs, updateDataCB, msecs);
 		station->createTimeCriticalProcess();
-
+		
 		glutMainLoop();
 		return EXIT_SUCCESS;
 	}
 }
 
-/*
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	const int argc = 1;
 	char* argv[argc] = {};
-	return Eaagles::exec(argc, argv);
-}
-*/
-
-int main(int argc, char* argv[]) {
 	return Eaagles::exec(argc, argv);
 }

@@ -16,7 +16,7 @@ namespace Eaagles {
 	EMPTY_SERIALIZER(Map)
 
 	BEGIN_EVENT_HANDLER(Map)
-		ON_EVENT('v',onEntry)
+		ON_EVENT(Eaagles::Basic::Component::USER_EVENTS + 1,onEntry)
 	END_EVENT_HANDLER()
 
 	static osgSim::DOFTransform* createEngineNode(::osg::Node* node, const ::osg::Vec3& vec) {

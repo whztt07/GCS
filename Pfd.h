@@ -13,7 +13,11 @@ namespace Eaagles {
 		Pfd();
 		// Basic::Component interface
 		virtual void updateData(const LCreal dt = 0);
-		
+		//Basic::Component interface
+		virtual bool event(const int event, Basic::Object* const obj = nullptr) override;
+		//Pfd interface
+		bool onEntry();
+
 	private:
 		Simulation::Player* getOwnship();
 		Simulation::Simulation* getSimulation();

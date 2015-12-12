@@ -1,5 +1,5 @@
 p01:
-	( Aircraft
+	( UnmannedAirVehicle
 		id: 1
 		side: blue
 		signature: ( SigSphere radius: 2.0 )

@@ -55,7 +55,7 @@
       <AdditionalIncludeDirectories>C:\OpenEaagles\include;C:\OpenEaagles3rdParty\include;c:\OpenEaaglesExamples\shared;C:\OpenSceneGraph\installation\include;C:\osgEarth\installation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\OpenEaagles\lib\vs2015;C:\OpenEaagles3rdParty\lib\vs2015-32;C:\OpenEaaglesExamples\lib\vs2015;C:\OpenSceneGraph\installation\lib;C:\osgEarth\installation\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>oeGlut_d.lib;oeInstruments_d.lib;oeBasicGL_d.lib;oeBasic_d.lib;ftgl_d.lib;freetype2_d.lib;freeglut_d.lib;glu32.lib;opengl32.lib;Ws2_32.lib;Winmm.lib;comctl32.lib;gdi32.lib;osgGAd.lib;osgDBd.lib;osgUtild.lib;osgd.lib;OpenThreadsd.lib;osgViewerd.lib;osgTextd.lib;osgSimd.lib;oeSimulation_d.lib;oeDynamics_d.lib;oeIoDevice_d.lib;oeDafif_d.lib;libzmq_d.lib;jsbsim_d.lib;oeOtw_d.lib;ccl_lib_d.lib;oeDis_d.lib;oeSensors_d.lib;oeRecorder_d.lib;oeTerrain_d.lib;libprotobuf_d.lib;xPanel_d.lib;xZeroMQHandlers_d.lib;osgEarthUtild.lib;osgEarthAnnotationd.lib;osgEarthFeaturesd.lib;osgEarthSymbologyd.lib;osgEarthd.lib;c:\OpenSceneGraph\3rdParty\curl\installation\lib\libcurl.lib;c:\OpenSceneGraph\3rdParty\installation\v130-x86\lib\zlibd.lib;c:\OpenSceneGraph\3rdParty\gdal\gdal\installation\lib\gdal_i.lib;c:\osgEarth\3rdParty\libgeos\installation\lib\libgeosd.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -82,7 +82,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\EngineVisitor.cpp" />
     <ClCompile Include="..\Factory.cpp" />
     <ClCompile Include="..\NetFDM.cpp" />
     <ClCompile Include="..\main.cpp" />
@@ -95,7 +94,6 @@
     <ClCompile Include="..\UpdateMoveCallback.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\EngineVisitor.h" />
     <ClInclude Include="..\Factory.h" />
     <ClInclude Include="..\NetFDM.h" />
     <ClInclude Include="..\SimStation.h" />

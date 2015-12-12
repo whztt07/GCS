@@ -19,6 +19,10 @@ namespace Eaagles {
 
 	EMPTY_DELETEDATA(Hsi)
 
+	BEGIN_EVENT_HANDLER(Hsi)
+		ON_EVENT(Eaagles::Basic::Component::USER_EVENTS + 1, onEntry)
+	END_EVENT_HANDLER()
+
 	void Hsi::updateData(const LCreal dt) {
 		Simulation::AirVehicle* av = static_cast<Simulation::AirVehicle*>(getOwnship());
 		heading = av->getHeadingD();
@@ -46,5 +50,9 @@ namespace Eaagles {
 			if (s != 0) myStation = s;
 	 }
 	 return myStation;
+	}
+
+	bool Hsi::onEntry() {
+		return true;
 	}
 } // end of Eaagles namespace
