@@ -151,5 +151,6 @@ namespace Eaagles {
 			window->resized(window->getTraits()->x, window->getTraits()->y, w, h);
 			window->getEventQueue()->windowResize(window->getTraits()->x, window->getTraits()->y, w, h);
 		}
+		BaseClass::reshapeIt(w,h);
 	}
 } // end of Eaagles namespace

@@ -111,7 +111,6 @@ namespace Eaagles {
 			Simulation::Player* f = 0;
 			Simulation::Player* n = 0;
 			bool found = false;
-
 			// Find the next player
 			Basic::List::Item* item = pl->getFirstItem();
 			while (item != 0) {
@@ -174,16 +173,14 @@ namespace Eaagles {
 	}
 
 	bool SimStation::onEntry() {
-		
 		//Ugly hack for Windows only!
-		int left, top, right, bottom = { 0 };
 		RECT DesktopClientRect;
 		if (SystemParametersInfo(SPI_GETWORKAREA, 0, &DesktopClientRect, 0)) {
-			left = DesktopClientRect.left;
-			top = DesktopClientRect.top;
-			right = DesktopClientRect.right;
-			bottom = DesktopClientRect.bottom;
-			mainDisplay->reshapeIt(100, 100);
+			auto left = DesktopClientRect.left;
+			auto top = DesktopClientRect.top;
+			auto right = DesktopClientRect.right;
+			auto bottom = DesktopClientRect.bottom;
+			mainDisplay->reshapeIt(1000, 1000);
 		}
 		mainDisplay->event(Eaagles::Basic::Component::USER_EVENTS + 1);
 		return true;

@@ -82,6 +82,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\EngineVisitor.cpp" />
     <ClCompile Include="..\Factory.cpp" />
     <ClCompile Include="..\NetFDM.cpp" />
     <ClCompile Include="..\main.cpp" />
@@ -94,6 +95,7 @@
     <ClCompile Include="..\UpdateMoveCallback.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\EngineVisitor.h" />
     <ClInclude Include="..\Factory.h" />
     <ClInclude Include="..\NetFDM.h" />
     <ClInclude Include="..\SimStation.h" />
