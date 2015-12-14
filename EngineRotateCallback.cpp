@@ -14,7 +14,7 @@ namespace Eaagles {
 			int engmax = uav->getEngRPM(rpm, NUMBER_OF_ENGINES);
 			if (engmax != NUMBER_OF_ENGINES)
 				return;
-			pEngine->setIncrementHPR(Vec3(0.0, 0.0, pEngine->getEngineIndex()));
+			pEngine->setIncrementHPR(Vec3(0.0, 0.0, rpm[pEngine->getEngineIndex()]));
 		}
 		traverse(node, nv);
 	}

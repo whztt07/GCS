@@ -66,9 +66,6 @@ namespace Eaagles {
 		groupAircraft->addChild( setupBackEngine.get() );
 		groupAircraft->addChild( setupLeftEngine.get() );
 
-		setupEngineBoard = new EngineBoard;
-		groupAircraft->accept(*setupEngineBoard);
-
 		nodeModifiedAircraft = new PositionAttitudeTransform;
 		nodeModifiedAircraft->addChild( groupAircraft.get() );
 				
@@ -102,7 +99,8 @@ namespace Eaagles {
       sim = sta->getSimulation();
       uav = dynamic_cast<Simulation::UnmannedAirVehicle*>(sta->getOwnship());
 			nodeModifiedAircraft->setUpdateCallback( new UpdateMoveCallback ( uav.getRefPtr() ) );
-			setupEngineBoard->setupAircraft( uav.getRefPtr() );
+			setupEngineBoard = new EngineBoard( uav.getRefPtr() );
+			groupAircraft->accept(*setupEngineBoard);
 			double initLat = uav->getInitLatitude();
 			double initLon = uav->getInitLongitude();
 			double x, y, z;

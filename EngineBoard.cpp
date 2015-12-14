@@ -6,7 +6,7 @@ using namespace osgSim;
 
 namespace Eaagles {
 
-	EngineBoard::EngineBoard() : NodeVisitor(NodeVisitor::TRAVERSE_ALL_CHILDREN) {}
+	EngineBoard::EngineBoard(Simulation::UnmannedAirVehicle* pav) : NodeVisitor(NodeVisitor::TRAVERSE_ALL_CHILDREN), uav(pav) {}
 
 	void EngineBoard::apply(Transform& node) {
 		Engine* pEngine = dynamic_cast<Engine*>(&node);
@@ -18,7 +18,6 @@ namespace Eaagles {
 			pEngine->setMaxHPR(Vec3(0.0, 0.0, 45000.0));
 			pEngine->setMinHPR(Vec3(0.0, 0.0, 0.0));
 			pEngine->setUpdateCallback(new EngineRotateCallback(uav.getRefPtr()));
-			mEngines[i] = pEngine;
 			i++;
 		}
 		NodeVisitor::apply(node);
@@ -30,9 +29,5 @@ namespace Eaagles {
 		transformEngine->setCurrentScale(Vec3(1, 1, 1));
 		transformEngine->addChild(node);
 		return transformEngine.release();
-	}
-
-	void EngineBoard::setupAircraft(Simulation::UnmannedAirVehicle* pav) {
-		uav = pav;
 	}
 }
