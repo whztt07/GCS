@@ -82,7 +82,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\EngineVisitor.cpp" />
+    <ClCompile Include="..\Engine.cpp" />
+    <ClCompile Include="..\EngineBoard.cpp" />
+    <ClCompile Include="..\EngineRotateCallback.cpp" />
     <ClCompile Include="..\Factory.cpp" />
     <ClCompile Include="..\NetFDM.cpp" />
     <ClCompile Include="..\main.cpp" />
@@ -95,7 +97,9 @@
     <ClCompile Include="..\UpdateMoveCallback.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\EngineVisitor.h" />
+    <ClInclude Include="..\Engine.h" />
+    <ClInclude Include="..\EngineBoard.h" />
+    <ClInclude Include="..\EngineRotateCallback.h" />
     <ClInclude Include="..\Factory.h" />
     <ClInclude Include="..\NetFDM.h" />
     <ClInclude Include="..\SimStation.h" />

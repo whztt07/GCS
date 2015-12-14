@@ -7,7 +7,8 @@
 #define MAP
 
 #include "SimStation.h"
-//#include "EngineVisitor.h"
+#include "Engine.h"
+#include "EngineBoard.h"
 
 #include <osgViewer/Viewer>
 #include <osgGA/NodeTrackerManipulator>
@@ -25,8 +26,6 @@
 #include <osgEarth/Viewpoint>
 #include <osgEarth/ElevationQuery>
 #include <osgEarth/Map>
-
-#include <osgSim/DOFTransform>
 
 #include <openeaagles/basic/Pair.h>
 #include <openeaagles/basic/Timers.h>
@@ -69,14 +68,14 @@ namespace Eaagles {
 		::osg::ref_ptr<osgEarth::MapNode> nodeMap;
 		::osg::ref_ptr<::osg::Light> light;
 		::osg::ref_ptr<::osg::LightSource> lightSource;
-		::osg::ref_ptr<::osgSim::DOFTransform> setupForwardEngine;
-		::osg::ref_ptr<::osgSim::DOFTransform> setupRightEngine;
-		::osg::ref_ptr<::osgSim::DOFTransform> setupBackEngine;
-		::osg::ref_ptr<::osgSim::DOFTransform> setupLeftEngine;
+		::osg::ref_ptr<Engine> setupForwardEngine;
+		::osg::ref_ptr<Engine> setupRightEngine;
+		::osg::ref_ptr<Engine> setupBackEngine;
+		::osg::ref_ptr<Engine> setupLeftEngine;
+		::osg::ref_ptr<EngineBoard> setupEngineBoard;
 		::osg::observer_ptr<osgViewer::GraphicsWindow> window;
 		Basic::safe_ptr<Simulation::UnmannedAirVehicle> uav;
 		Basic::safe_ptr<Simulation::Simulation> sim;
-		//EngineVisitor* engineVisitor;
 	};
 } // end of Eaagles namespace
 

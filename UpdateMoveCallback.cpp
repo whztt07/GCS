@@ -3,7 +3,7 @@
 using namespace osg;
 
 namespace Eaagles {
-	UpdateMoveCallback::UpdateMoveCallback( Simulation::AirVehicle* av ) : 
+	UpdateMoveCallback::UpdateMoveCallback( Simulation::UnmannedAirVehicle* av ) : 
 		NodeCallback(), 
 		Aircraft(av), 
 		currentRot(0.0,0.0,0.0),

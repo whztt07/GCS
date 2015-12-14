@@ -8,6 +8,7 @@
 #include <openeaagles/simulation/dynamics/AerodynamicsModel.h>
 #include <openeaagles/basic/String.h>
 #include <thread>
+#include <array>
 
 namespace Eaagles {
 
@@ -17,6 +18,7 @@ namespace Eaagles {
 		NetFDM();
 
 		static const unsigned int MAX_SIZE = 1024;  // Max buffer size
+		static const unsigned int NUMBER_OF_ENGINES = 4; // How many engines we have.
 
 		// AerodynamicsModel interface
 		virtual LCreal getCalibratedAirspeed() const;
@@ -59,6 +61,7 @@ namespace Eaagles {
 		double elevatorCmd;
 		double rudderCmd;
 		double throttleCmd;
+		std::array<LCreal, NUMBER_OF_ENGINES> enginesRPM;
 	};
 } // End Eaagles namespace
 

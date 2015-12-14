@@ -45,7 +45,13 @@
     <ClCompile Include="..\IoHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\EngineVisitor.cpp">
+    <ClCompile Include="..\EngineRotateCallback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\EngineBoard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,7 +83,13 @@
     <ClInclude Include="..\IoHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\EngineVisitor.h">
+    <ClInclude Include="..\EngineRotateCallback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\EngineBoard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
