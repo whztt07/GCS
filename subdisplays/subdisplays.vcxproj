@@ -51,14 +51,16 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\OpenEaagles\include;C:\OpenEaagles3rdParty\include;c:\OpenEaaglesExamples\shared;C:\OpenSceneGraph\installation\include;C:\osgEarth\installation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_WIN32_WINNT=0x0602;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\OpenEaagles\include;C:\OpenEaagles3rdParty\include;c:\OpenEaaglesExamples\shared;C:\OpenSceneGraph\installation\include;C:\osgEarth\installation\include;C:\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <UndefinePreprocessorDefinitions>
+      </UndefinePreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\OpenEaagles\lib\vs2015;C:\OpenEaagles3rdParty\lib\vs2015-32;C:\OpenEaaglesExamples\lib\vs2015;C:\OpenSceneGraph\installation\lib;C:\osgEarth\installation\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>oeGlut_d.lib;oeInstruments_d.lib;oeBasicGL_d.lib;oeBasic_d.lib;ftgl_d.lib;freetype2_d.lib;freeglut_d.lib;glu32.lib;opengl32.lib;Ws2_32.lib;Winmm.lib;comctl32.lib;gdi32.lib;osgGAd.lib;osgDBd.lib;osgUtild.lib;osgd.lib;OpenThreadsd.lib;osgViewerd.lib;osgTextd.lib;osgSimd.lib;oeSimulation_d.lib;oeDynamics_d.lib;oeIoDevice_d.lib;oeDafif_d.lib;libzmq_d.lib;jsbsim_d.lib;oeOtw_d.lib;ccl_lib_d.lib;oeDis_d.lib;oeSensors_d.lib;oeRecorder_d.lib;oeTerrain_d.lib;libprotobuf_d.lib;xPanel_d.lib;xZeroMQHandlers_d.lib;osgEarthUtild.lib;osgEarthAnnotationd.lib;osgEarthFeaturesd.lib;osgEarthSymbologyd.lib;osgEarthd.lib;c:\OpenSceneGraph\3rdParty\curl\installation\lib\libcurl.lib;c:\OpenSceneGraph\3rdParty\installation\v130-x86\lib\zlibd.lib;c:\OpenSceneGraph\3rdParty\gdal\gdal\installation\lib\gdal_i.lib;c:\osgEarth\3rdParty\libgeos\installation\lib\libgeosd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\OpenEaagles\lib\vs2015;C:\OpenEaagles3rdParty\lib\vs2015-32;C:\OpenEaaglesExamples\lib\vs2015;C:\OpenSceneGraph\installation\lib;C:\osgEarth\installation\lib;C:\boost\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>oeGlut_d.lib;oeInstruments_d.lib;oeBasicGL_d.lib;oeBasic_d.lib;ftgl_d.lib;freetype2_d.lib;freeglut_d.lib;glu32.lib;opengl32.lib;Ws2_32.lib;Winmm.lib;comctl32.lib;gdi32.lib;osgGAd.lib;osgDBd.lib;osgUtild.lib;osgd.lib;OpenThreadsd.lib;osgViewerd.lib;osgTextd.lib;osgSimd.lib;oeSimulation_d.lib;oeDynamics_d.lib;oeIoDevice_d.lib;oeDafif_d.lib;libzmq_d.lib;jsbsim_d.lib;oeOtw_d.lib;ccl_lib_d.lib;oeDis_d.lib;oeSensors_d.lib;oeRecorder_d.lib;oeTerrain_d.lib;libprotobuf_d.lib;xPanel_d.lib;xZeroMQHandlers_d.lib;osgEarthUtild.lib;osgEarthAnnotationd.lib;osgEarthFeaturesd.lib;osgEarthSymbologyd.lib;osgEarthd.lib;c:\OpenSceneGraph\3rdParty\curl\installation\lib\libcurl.lib;c:\OpenSceneGraph\3rdParty\installation\v130-x86\lib\zlibd.lib;c:\OpenSceneGraph\3rdParty\gdal\gdal\installation\lib\gdal_i.lib;c:\osgEarth\3rdParty\libgeos\installation\lib\libgeosd.lib;libboost_system-vc140-mt-gd-1_59.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -97,6 +99,7 @@
     <ClCompile Include="..\UpdateMoveCallback.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Base.h" />
     <ClInclude Include="..\Engine.h" />
     <ClInclude Include="..\EngineBoard.h" />
     <ClInclude Include="..\EngineRotateCallback.h" />

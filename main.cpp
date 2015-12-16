@@ -1,6 +1,10 @@
 //------------------------------------------------------------------------------
 // Demo of sub-displays
 //------------------------------------------------------------------------------
+
+#include "Factory.h"
+#include "SimStation.h"
+
 #include <openeaagles/basic/Pair.h>
 #include <openeaagles/basic/Timers.h>
 #include <openeaagles/basic/Parser.h>
@@ -17,9 +21,6 @@
 #include <openeaagles/ioDevice/Factory.h>
 #include <openeaagles/simulation/Factory.h>
 #include <openeaagles/dynamics/Factory.h>
-
-#include "Factory.h"
-#include "SimStation.h"
 
 namespace Eaagles {
 	

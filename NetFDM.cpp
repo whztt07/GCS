@@ -13,6 +13,9 @@
 #include <vector>
 #include <algorithm>
 
+using boost::asio::ip::tcp;
+using namespace std;
+
 namespace Eaagles {
 
 	IMPLEMENT_SUBCLASS(NetFDM,"NetFDM")
@@ -27,35 +30,21 @@ namespace Eaagles {
 	//------------------------------------------------------------------------------
 	// Constructor(s)
 	//------------------------------------------------------------------------------
-	NetFDM::NetFDM() : listenerSock(INVALID_SOCKET), clientSock(INVALID_SOCKET) {
+	NetFDM::NetFDM() : acceptor_(new boost::asio::ip::tcp::acceptor(io_service, tcp::endpoint(tcp::v4(), 3001))), socket_(new boost::asio::ip::tcp::socket(io_service)) {
 		STANDARD_CONSTRUCTOR()
 		initData();
 	}
 	
-	void NetFDM::initData() {
-		vcas = 0.0;
-		gLoad = 0.0;
-		connected = false;
-	}
-
-	//------------------------------------------------------------------------------
-	// copyData() -- copy (delete) member data
-	//------------------------------------------------------------------------------
-	void NetFDM::copyData(const NetFDM& org, const bool cc) {
-		BaseClass::copyData(org);
-		if (cc) initData();
-	}
-
 	std::string& trim_left(std::string& str) {
 		while (str.size() && isspace((unsigned char)str[0])) {
-			str = str.erase(0,1);
+			str = str.erase(0, 1);
 		}
 		return str;
 	}
 
 	std::string& trim_right(std::string& str) {
-		while (str.size() && isspace((unsigned char)str[str.size()-1])) {
-			str = str.erase(str.size()-1,1);
+		while (str.size() && isspace((unsigned char)str[str.size() - 1])) {
+			str = str.erase(str.size() - 1, 1);
 		}
 		return str;
 	}
@@ -75,15 +64,15 @@ namespace Eaagles {
 
 	std::vector <std::string> split(std::string str, char d) {
 		std::vector <std::string> str_array;
-		size_t index=0;
+		size_t index = 0;
 		std::string temp = "";
 		trim(str);
 		index = str.find(d);
 		while (index != std::string::npos) {
-			temp = str.substr(0,index);
+			temp = str.substr(0, index);
 			trim(temp);
 			if (temp.size() > 0) str_array.push_back(temp);
-			str = str.erase(0,index+1);
+			str = str.erase(0, index + 1);
 			index = str.find(d);
 		}
 		if (str.size() > 0) {
@@ -93,11 +82,136 @@ namespace Eaagles {
 		return str_array;
 	}
 
+	void NetFDM::do_read() {
+		//auto self(shared_from_this());
+		socket_->async_read_some(boost::asio::buffer(data_, MAX_SIZE), [this](boost::system::error_code ec, std::size_t length) {
+			if (!ec) {
+				Simulation::Player* player = static_cast<Simulation::Player*>(findContainerByType(typeid(Simulation::Player)));
+				if (player == 0) {
+					std::cerr << "No player" << std::endl;
+					return;
+				}
+				if (length > 0 && length <= MAX_SIZE) {
+					std::string data(data_, length);
+					std::cerr << "RECV: " << data << std::endl;
+					auto string_start = data.find_first_not_of("\r\n", 0);
+					if (string_start == std::string::npos)
+						return;
+					auto string_end = data.find_first_of("\r\n", string_start);
+					if (string_end == std::string::npos)
+						return;
+					std::string line = data.substr(string_start, string_end - string_start);
+					if (line.size() == 0)
+						return;
+
+					line = trim(line);
+
+					std::vector <std::string> tokens = split(line, ',');
+					if ((!is_number(tokens[0])) ||
+						(!is_number(tokens[1])) ||
+						(!is_number(tokens[2])) ||
+						(!is_number(tokens[3])) ||
+						(!is_number(tokens[4])) ||
+						(!is_number(tokens[5])) ||
+						(!is_number(tokens[6])) ||
+						(!is_number(tokens[7])) ||
+						(!is_number(tokens[8])) ||
+						(!is_number(tokens[9])) ||
+						(!is_number(tokens[10])) ||
+						(!is_number(tokens[11])) ||
+						(!is_number(tokens[12])) ||
+						(!is_number(tokens[13])) ||
+						(!is_number(tokens[14])) ||
+						(!is_number(tokens[15])) ||
+						(!is_number(tokens[16])) ||
+						(!is_number(tokens[17]))) {
+						return;
+					}
+					else {
+						auto time = stod(trim(tokens[0]));
+						auto altitudeASL = stod(trim(tokens[1]));
+						auto v_north = stod(trim(tokens[2]));
+						auto v_east = stod(trim(tokens[3]));
+						auto v_down = stod(trim(tokens[4]));
+						auto U = stod(trim(tokens[5]));
+						auto V = stod(trim(tokens[6]));
+						auto W = stod(trim(tokens[7]));
+						auto Roll = stod(trim(tokens[8]));
+						auto Pitch = stod(trim(tokens[9]));
+						auto Yaw = stod(trim(tokens[10]));
+						auto P = stod(trim(tokens[11]));
+						auto Q = stod(trim(tokens[12]));
+						auto R = stod(trim(tokens[13]));
+						auto VelDotX = stod(trim(tokens[14]));
+						auto VelDotY = stod(trim(tokens[15]));
+						auto VelDotZ = stod(trim(tokens[16]));
+						vcas = stod(trim(tokens[17]));
+						gLoad = time;
+
+						player->setAltitude(Basic::Distance::FT2M * altitudeASL, true);
+						player->setVelocity(static_cast<LCreal>(Basic::Distance::FT2M * v_north), static_cast<LCreal>(Basic::Distance::FT2M * v_east), static_cast<LCreal>(Basic::Distance::FT2M * v_down));
+						player->setVelocityBody(static_cast<LCreal>(Basic::Distance::FT2M * U), static_cast<LCreal>(Basic::Distance::FT2M * V), static_cast<LCreal>(Basic::Distance::FT2M * W));
+						player->setEulerAngles(static_cast<LCreal>(Roll), static_cast<LCreal>(Pitch), static_cast<LCreal>(Yaw));
+						player->setAngularVelocities(static_cast<LCreal>(P), static_cast<LCreal>(Q), static_cast<LCreal>(R));
+						player->setAcceleration(static_cast<LCreal>(Basic::Distance::FT2M * VelDotX), static_cast<LCreal>(Basic::Distance::FT2M * VelDotY), static_cast<LCreal>(Basic::Distance::FT2M * VelDotZ));
+					}
+					do_write();
+				}
+			}
+		});
+	}
+
+	void NetFDM::do_write() {
+		//auto self(shared_from_this());
+		std::string commandToSend;
+		commandToSend += std::to_string(aileronCmd) + std::string(",");
+		commandToSend += std::to_string(elevatorCmd) + std::string(",");
+		commandToSend += std::to_string(rudderCmd) + std::string(",");
+		commandToSend += std::to_string(throttleCmd);
+		commandToSend += std::string("\r\n");
+		std::size_t length = commandToSend.length();
+		boost::asio::async_write(*socket_, boost::asio::buffer(data_, length), [this](boost::system::error_code ec, std::size_t length) {
+			if (!ec) {
+				do_read();
+			}
+		});
+	}
+
+	void NetFDM::do_accept() {
+		acceptor_->async_accept(*socket_, [this](boost::system::error_code ec) {
+			if (!ec) {
+				do_read();
+			}
+		});
+	}
+
+	void NetFDM::initData() {
+		memset(data_, 0, MAX_SIZE);
+		vcas = 0.0;
+		gLoad = 0.0;
+		socketThread = std::thread(&NetFDM::runThread, this);
+	}
+
+	//------------------------------------------------------------------------------
+	// copyData() -- copy (delete) member data
+	//------------------------------------------------------------------------------
+	void NetFDM::copyData(const NetFDM& org, const bool cc) {
+		BaseClass::copyData(org);
+		if (cc) initData();
+	}
+
 	//------------------------------------------------------------------------------
 	// deleteData() -- delete instance of NetFDM, if any
 	//------------------------------------------------------------------------------
 	void NetFDM::deleteData() {
-		closeConnections();
+		if (acceptor_ != nullptr) {
+			delete acceptor_;
+			acceptor_ = nullptr;
+		}
+		if (socket_ != nullptr) {
+			delete socket_;
+			socket_ = nullptr;
+		}
 	}
 
 	LCreal NetFDM::getCalibratedAirspeed() const {
@@ -139,219 +253,40 @@ namespace Eaagles {
 
 	int NetFDM::getEngRPM(LCreal* const rpm, const int max) const {
 		for (auto i = 0; i < max; ++i)
-			rpm[i] = throttleCmd * 15000.0;
+			rpm[i] = throttleCmd * 15000.0 * i;
 		return max;
 	}
 
 	//------------------------------------------------------------------------------
 	// dynamics() -- update player's vehicle dynamics
 	//------------------------------------------------------------------------------
-	void NetFDM::dynamics(const LCreal dt) {			// Get our Player (must have one!)
-		Simulation::Player* p = static_cast<Simulation::Player*>(findContainerByType(typeid(Simulation::Player)));
-		if (p == 0) {
-			std::cerr << "no player" << std::endl;
-			return;
-		}
-		
-		if (!socketThread.joinable()) {
-			socketThread = std::thread(&NetFDM::runThread, this);
-		}
-		
+	void NetFDM::dynamics(const LCreal dt) {
 		BaseClass::dynamics(dt);
 	}
-
-
+	
 	//------------------------------------------------------------------------------
 	// reset() -- 
 	//------------------------------------------------------------------------------
 	void NetFDM::reset() {
-		BaseClass::reset();
-		
 		aileronCmd = 0.0;
 		elevatorCmd = 0.0;
 		rudderCmd = 0.0;
 		throttleCmd = 0.0;
-		connected = false;
 		
 		// Get our Player (must have one!)
-		Simulation::Player* p = static_cast<Simulation::Player*>( findContainerByType(typeid(Simulation::Player)) );
-		if (p == 0) return;
+		Simulation::Player* player = static_cast<Simulation::Player*>( findContainerByType(typeid(Simulation::Player)) );
+		if (player == 0) return;
+
+		BaseClass::reset();
 	}	
 
-	//------------------------------------------------------------------------------
-	// Send (transmit) our data buffer; returns true if successful.
-	// 'size' just be less than MAX_SIZE.
-	//------------------------------------------------------------------------------
-	bool NetFDM::sendData(const char* const msg, const unsigned int size) {
-		if (msg != 0 && size > 0 && size < MAX_SIZE) {
-			auto n0 = ::send(clientSock, msg, size, 0);
-			if (n0 > 0) {
-				return true;
-			} 
-			else if( n0 == SOCKET_ERROR )
-				std::cerr << "NetFDM::sendData: " << WSAGetLastError() << std::endl;
-		}
-		else {
-			std::cerr << "NetFDM::sendData(): unable to send data; ";
-			if (msg == 0) std::cerr << "No message buffer.";
-			if (size == 0 || size >= MAX_SIZE) std::cerr << "invalid message size.";
-			std::cerr << std::endl;
-		}
-		return false;
-	}
-
-	//------------------------------------------------------------------------------
-	// Receive a data buffer; returns number of bytes received;
-	// 'maxsize' just be less than MAX_SIZE.
-	//------------------------------------------------------------------------------
-	
-	unsigned int NetFDM::recvData(char* const msg, const unsigned int maxsize) {
-		auto n = 0;
-		if (msg != 0 && maxsize > 0 && maxsize <= MAX_SIZE) {
-      char buffer[MAX_SIZE];
-      auto n0 = recv(clientSock, buffer, MAX_SIZE, 0);
-			if (n0 != SOCKET_ERROR && n0 <= MAX_SIZE) {
-				std::copy_n(buffer, n0, msg);
-				n = n0;
-			}
-			else if( n0 == SOCKET_ERROR )
-				std::cerr << "NetFDM::recvData: " << WSAGetLastError() << std::endl;
-		}
-		else {
-			std::cerr << "NetFDM::recvData(): unable to receive data; ";
-			if (msg == 0) std::cerr << "No message buffer.";
-			if (maxsize == 0 || maxsize >= MAX_SIZE) std::cerr << "invalid max message size.";
-			std::cerr << std::endl;
-		}
-		return n;
-	}
-		
 	void NetFDM::runThread() {
-		WSADATA wsaData;
-		if (WSAStartup(MAKEWORD(1, 1), &wsaData)) {
-			std::cerr << "WSAStartup: " << WSAGetLastError() << std::endl;
-			return;
+		try {
+			do_accept();
+			io_service.run();
 		}
-		listenerSock = socket(AF_INET, SOCK_STREAM, 0);
-		if (listenerSock < 0) {
-			std::cerr << "socket: " << WSAGetLastError() << std::endl;
-			return;
+		catch (std::exception& e) {
+			std::cerr << "Exception: " << e.what() << "\n";
 		}
-		struct sockaddr_in addr;
-		addr.sin_family = AF_INET;
-		addr.sin_port = htons(3001);
-		addr.sin_addr.s_addr = INADDR_ANY;
-		if (bind(listenerSock, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
-			std::cerr << "bind: " << WSAGetLastError() << std::endl;
-			return;
-		}
-
-		listen(listenerSock, 1);
-
-		clientSock = accept(listenerSock, NULL, NULL);
-		if (clientSock < 0) {
-			std::cerr << "accept: " << WSAGetLastError() << std::endl;
-			return;
-		}
-
-		connected = true;
-		char buffer[MAX_SIZE];
-		std::string data;
-		double time, altitudeASL, v_north, v_east, v_down, U, V, W, Roll, Pitch, Yaw, P, Q, R, VelDotX, VelDotY, VelDotZ;
-
-		Simulation::Player* player = static_cast<Simulation::Player*>(findContainerByType(typeid(Simulation::Player)));
-		if (player == 0) {
-			std::cerr << "player: " << std::endl;
-			return;
-		}
-
-		while(connected) {
-			auto n = recvData(buffer, MAX_SIZE);
-			if (n > 0) {
-				data.assign(buffer, n);
-				std::cerr << "RECV: " << data << std::endl;
-				auto string_start = data.find_first_not_of("\r\n", 0);
-				if (string_start == std::string::npos)
-					continue;
-				auto string_end = data.find_first_of("\r\n", string_start);
-				if (string_end == std::string::npos)
-					continue;
-				std::string line = data.substr(string_start, string_end - string_start);
-				if (line.size() == 0)
-					continue;
-
-				line = trim(line);
-
-				std::vector <std::string> tokens = split(line, ',');
-				if ((!is_number(tokens[0])) ||
-					(!is_number(tokens[1])) ||
-					(!is_number(tokens[2])) ||
-					(!is_number(tokens[3])) ||
-					(!is_number(tokens[4])) ||
-					(!is_number(tokens[5])) ||
-					(!is_number(tokens[6])) ||
-					(!is_number(tokens[7])) ||
-					(!is_number(tokens[8])) ||
-					(!is_number(tokens[9])) ||
-					(!is_number(tokens[10])) ||
-					(!is_number(tokens[11])) ||
-					(!is_number(tokens[12])) ||
-					(!is_number(tokens[13])) ||
-					(!is_number(tokens[14])) ||
-					(!is_number(tokens[15])) ||
-					(!is_number(tokens[16])) ||
-					(!is_number(tokens[17]))) {
-					continue;
-				}
-				else {
-					time = stod(trim(tokens[0]));
-					altitudeASL = stod(trim(tokens[1]));
-					v_north = stod(trim(tokens[2]));
-					v_east = stod(trim(tokens[3]));
-					v_down = stod(trim(tokens[4]));
-					U = stod(trim(tokens[5]));
-					V = stod(trim(tokens[6]));
-					W = stod(trim(tokens[7]));
-					Roll = stod(trim(tokens[8]));
-					Pitch = stod(trim(tokens[9]));
-					Yaw = stod(trim(tokens[10]));
-					P = stod(trim(tokens[11]));
-					Q = stod(trim(tokens[12]));
-					R = stod(trim(tokens[13]));
-					VelDotX = stod(trim(tokens[14]));
-					VelDotY = stod(trim(tokens[15]));
-					VelDotZ = stod(trim(tokens[16]));
-					vcas = stod(trim(tokens[17]));
-					gLoad = time;
-
-					player->setAltitude(Basic::Distance::FT2M * altitudeASL, true);
-					player->setVelocity(static_cast<LCreal>(Basic::Distance::FT2M * v_north), static_cast<LCreal>(Basic::Distance::FT2M * v_east), static_cast<LCreal>(Basic::Distance::FT2M * v_down));
-					player->setVelocityBody(static_cast<LCreal>(Basic::Distance::FT2M * U), static_cast<LCreal>(Basic::Distance::FT2M * V), static_cast<LCreal>(Basic::Distance::FT2M * W));
-					player->setEulerAngles(static_cast<LCreal>(Roll), static_cast<LCreal>(Pitch), static_cast<LCreal>(Yaw));
-					player->setAngularVelocities(static_cast<LCreal>(P), static_cast<LCreal>(Q), static_cast<LCreal>(R));
-					player->setAcceleration(static_cast<LCreal>(Basic::Distance::FT2M * VelDotX), static_cast<LCreal>(Basic::Distance::FT2M * VelDotY), static_cast<LCreal>(Basic::Distance::FT2M * VelDotZ));
-				}
-				std::string commandToSend;
-				commandToSend += std::to_string(aileronCmd) + std::string(",");
-				commandToSend += std::to_string(elevatorCmd) + std::string(",");
-				commandToSend += std::to_string(rudderCmd) + std::string(",");
-				commandToSend += std::to_string(throttleCmd);
-				commandToSend += std::string("\r\n");
-				if ( sendData(commandToSend.c_str(), commandToSend.length()) ){}
-					std::cerr << "SENT: " << commandToSend << std::endl;
-			}
-		}
-	}
-
-	//------------------------------------------------------------------------------
-	// close all network connections
-	//------------------------------------------------------------------------------
-	void NetFDM::closeConnections() {
-		connected = false;
-		socketThread.join();
-		if ( listenerSock )
-			closesocket(listenerSock);
-		if ( clientSock )
-			closesocket(clientSock);
 	}
 } // End Eaagles namespace

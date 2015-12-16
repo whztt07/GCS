@@ -5,8 +5,12 @@
 #ifndef NETFDM
 #define NETFDM
 
+#include <boost/asio.hpp>
+
+#include "Base.h"
+
 #include <openeaagles/simulation/dynamics/AerodynamicsModel.h>
-#include <openeaagles/basic/String.h>
+
 #include <thread>
 #include <array>
 
@@ -16,10 +20,7 @@ namespace Eaagles {
 	DECLARE_SUBCLASS(NetFDM, Simulation::AerodynamicsModel)
 	public:
 		NetFDM();
-
-		static const unsigned int MAX_SIZE = 1024;  // Max buffer size
-		static const unsigned int NUMBER_OF_ENGINES = 4; // How many engines we have.
-
+		
 		// AerodynamicsModel interface
 		virtual LCreal getCalibratedAirspeed() const;
 		virtual LCreal getGload() const;
@@ -35,26 +36,22 @@ namespace Eaagles {
 		// Component interface
 		virtual void reset();
 		
-	protected:
-		// Send (transmit) our data buffer; returns true if successful.
-		// 'size' just be less than MAX_SIZE.
-		virtual bool sendData(const char* const msg, const unsigned int size);
-
-		// Receive a data buffer; returns number of bytes received;
-		// 'maxsize' just be less than MAX_SIZE.
-		virtual unsigned int recvData(char* const msg, const unsigned int maxsize);
-
-		//Closing connections;
-		void closeConnections();
-					
 	private:
+
+		static const unsigned int MAX_SIZE = 1024;
+		char data_[MAX_SIZE];
+
 		void initData();
 		void runThread();
+		void do_accept();
+		void do_read();
+		void do_write();
 
 		std::thread socketThread;
-		bool connected;
-		SOCKET listenerSock, clientSock;
-		
+		boost::asio::io_service io_service;
+		boost::asio::ip::tcp::acceptor* acceptor_;
+		boost::asio::ip::tcp::socket* socket_;
+
 		LCreal vcas;
 		LCreal gLoad;
 		double aileronCmd;
