@@ -2,13 +2,10 @@
 #include <openeaagles/simulation/Simulation.h>
 #include <openeaagles/simulation/AirVehicle.h>
 #include <openeaagles/gui/glut/GlutDisplay.h>
-#include <openeaagles/basic/Identifier.h>
 #include <openeaagles/basic/Boolean.h>
 #include <openeaagles/basic/Pair.h>
 #include <openeaagles/basic/PairStream.h>
-#include <openeaagles/basic/Tables.h>
 #include <openeaagles/basic/Timers.h>
-#include <openeaagles/basic/units/Angles.h>
 #include <openeaagles/basic/units/Times.h>
 
 namespace Eaagles {

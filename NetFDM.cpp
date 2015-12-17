@@ -1,19 +1,12 @@
 #include "NetFDM.h"
-#include "openeaagles/basic/Number.h"
-#include "openeaagles/basic/Tables.h"
 #include "openeaagles/basic/units/Angles.h"
 #include "openeaagles/basic/units/Distances.h"
-#include "openeaagles/basic/Statistic.h"
 #include "openeaagles/simulation/Player.h"
 #include "openeaagles/simulation/Simulation.h"
-#include "openeaagles/basic/List.h"
 #include "openeaagles/basic/PairStream.h"
-#include "openeaagles/basic/String.h"
 #include <string>
 #include <vector>
-#include <algorithm>
 
-using boost::asio::ip::tcp;
 using namespace std;
 
 namespace Eaagles {
@@ -30,45 +23,45 @@ namespace Eaagles {
 	//------------------------------------------------------------------------------
 	// Constructor(s)
 	//------------------------------------------------------------------------------
-	NetFDM::NetFDM() : acceptor_(new boost::asio::ip::tcp::acceptor(io_service, tcp::endpoint(tcp::v4(), 3001))), socket_(new boost::asio::ip::tcp::socket(io_service)) {
+	NetFDM::NetFDM() : acceptor(new boost::asio::ip::tcp::acceptor(io_service, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 3001))), socket(new boost::asio::ip::tcp::socket(io_service)) {
 		STANDARD_CONSTRUCTOR()
 		initData();
 	}
 	
-	std::string& trim_left(std::string& str) {
+	string& trim_left(string& str) {
 		while (str.size() && isspace((unsigned char)str[0])) {
 			str = str.erase(0, 1);
 		}
 		return str;
 	}
 
-	std::string& trim_right(std::string& str) {
+	string& trim_right(string& str) {
 		while (str.size() && isspace((unsigned char)str[str.size() - 1])) {
 			str = str.erase(str.size() - 1, 1);
 		}
 		return str;
 	}
 
-	std::string& trim(std::string& str) {
+	string& trim(string& str) {
 		if (str.size() == 0) return str;
-		std::string temp_str = trim_right(str);
+		string temp_str = trim_right(str);
 		return str = trim_left(temp_str);
 	}
 
-	bool is_number(const std::string& str) {
+	bool is_number(const string& str) {
 		if (str.size())
-			return (str.find_first_not_of("+-.0123456789Ee") == std::string::npos);
+			return (str.find_first_not_of("+-.0123456789Ee") == string::npos);
 		else
 			return false;
 	}
 
-	std::vector <std::string> split(std::string str, char d) {
-		std::vector <std::string> str_array;
+	vector <string> split(string str, char d) {
+		vector <string> str_array;
 		size_t index = 0;
-		std::string temp = "";
+		string temp = "";
 		trim(str);
 		index = str.find(d);
-		while (index != std::string::npos) {
+		while (index != string::npos) {
 			temp = str.substr(0, index);
 			trim(temp);
 			if (temp.size() > 0) str_array.push_back(temp);
@@ -83,30 +76,29 @@ namespace Eaagles {
 	}
 
 	void NetFDM::do_read() {
-		//auto self(shared_from_this());
-		socket_->async_read_some(boost::asio::buffer(data_, MAX_SIZE), [this](boost::system::error_code ec, std::size_t length) {
+		socket->async_read_some(boost::asio::buffer(buffer, MAX_SIZE), [this](boost::system::error_code ec, size_t length) {
 			if (!ec) {
 				Simulation::Player* player = static_cast<Simulation::Player*>(findContainerByType(typeid(Simulation::Player)));
 				if (player == 0) {
-					std::cerr << "No player" << std::endl;
+					cerr << "No player" << endl;
 					return;
 				}
 				if (length > 0 && length <= MAX_SIZE) {
-					std::string data(data_, length);
-					std::cerr << "RECV: " << data << std::endl;
+					string data(buffer, length);
+					cerr << "RECV: " << data << endl;
 					auto string_start = data.find_first_not_of("\r\n", 0);
-					if (string_start == std::string::npos)
+					if (string_start == string::npos)
 						return;
 					auto string_end = data.find_first_of("\r\n", string_start);
-					if (string_end == std::string::npos)
+					if (string_end == string::npos)
 						return;
-					std::string line = data.substr(string_start, string_end - string_start);
+					string line = data.substr(string_start, string_end - string_start);
 					if (line.size() == 0)
 						return;
 
 					line = trim(line);
 
-					std::vector <std::string> tokens = split(line, ',');
+					vector <string> tokens = split(line, ',');
 					if ((!is_number(tokens[0])) ||
 						(!is_number(tokens[1])) ||
 						(!is_number(tokens[2])) ||
@@ -162,15 +154,14 @@ namespace Eaagles {
 	}
 
 	void NetFDM::do_write() {
-		//auto self(shared_from_this());
-		std::string commandToSend;
-		commandToSend += std::to_string(aileronCmd) + std::string(",");
-		commandToSend += std::to_string(elevatorCmd) + std::string(",");
-		commandToSend += std::to_string(rudderCmd) + std::string(",");
-		commandToSend += std::to_string(throttleCmd);
-		commandToSend += std::string("\r\n");
-		std::size_t length = commandToSend.length();
-		boost::asio::async_write(*socket_, boost::asio::buffer(data_, length), [this](boost::system::error_code ec, std::size_t length) {
+		string commandToSend;
+		commandToSend += to_string(aileronCmd) + string(",");
+		commandToSend += to_string(elevatorCmd) + string(",");
+		commandToSend += to_string(rudderCmd) + string(",");
+		commandToSend += to_string(throttleCmd);
+		commandToSend += string("\r\n");
+		size_t length = commandToSend.length();
+		boost::asio::async_write(*socket, boost::asio::buffer(commandToSend.c_str(), length), [this](boost::system::error_code ec, size_t length) {
 			if (!ec) {
 				do_read();
 			}
@@ -178,7 +169,7 @@ namespace Eaagles {
 	}
 
 	void NetFDM::do_accept() {
-		acceptor_->async_accept(*socket_, [this](boost::system::error_code ec) {
+		acceptor->async_accept(*socket, [this](boost::system::error_code ec) {
 			if (!ec) {
 				do_read();
 			}
@@ -186,10 +177,10 @@ namespace Eaagles {
 	}
 
 	void NetFDM::initData() {
-		memset(data_, 0, MAX_SIZE);
+		memset(buffer, 0, MAX_SIZE);
 		vcas = 0.0;
 		gLoad = 0.0;
-		socketThread = std::thread(&NetFDM::runThread, this);
+		socketThread = thread(&NetFDM::runThread, this);
 	}
 
 	//------------------------------------------------------------------------------
@@ -203,16 +194,7 @@ namespace Eaagles {
 	//------------------------------------------------------------------------------
 	// deleteData() -- delete instance of NetFDM, if any
 	//------------------------------------------------------------------------------
-	void NetFDM::deleteData() {
-		if (acceptor_ != nullptr) {
-			delete acceptor_;
-			acceptor_ = nullptr;
-		}
-		if (socket_ != nullptr) {
-			delete socket_;
-			socket_ = nullptr;
-		}
-	}
+	void NetFDM::deleteData() {}
 
 	LCreal NetFDM::getCalibratedAirspeed() const {
 		return vcas;
@@ -285,8 +267,8 @@ namespace Eaagles {
 			do_accept();
 			io_service.run();
 		}
-		catch (std::exception& e) {
-			std::cerr << "Exception: " << e.what() << "\n";
+		catch (exception& e) {
+			cerr << "Exception: " << e.what() << "\n";
 		}
 	}
 } // End Eaagles namespace

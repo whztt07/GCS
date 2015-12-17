@@ -12,6 +12,7 @@
 #include <openeaagles/simulation/dynamics/AerodynamicsModel.h>
 
 #include <thread>
+#include <memory>
 #include <array>
 
 namespace Eaagles {
@@ -39,7 +40,7 @@ namespace Eaagles {
 	private:
 
 		static const unsigned int MAX_SIZE = 1024;
-		char data_[MAX_SIZE];
+		char buffer[MAX_SIZE];
 
 		void initData();
 		void runThread();
@@ -49,8 +50,8 @@ namespace Eaagles {
 
 		std::thread socketThread;
 		boost::asio::io_service io_service;
-		boost::asio::ip::tcp::acceptor* acceptor_;
-		boost::asio::ip::tcp::socket* socket_;
+		std::unique_ptr<boost::asio::ip::tcp::acceptor> acceptor;
+		std::unique_ptr<boost::asio::ip::tcp::socket> socket;
 
 		LCreal vcas;
 		LCreal gLoad;

@@ -1,7 +1,5 @@
 #include "Map.h"
 #include "UpdateMoveCallback.h"
-#include <algorithm>
-#include <memory>
 
 using namespace osg;
 using namespace osgGA;

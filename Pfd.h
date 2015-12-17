@@ -1,10 +1,11 @@
 #ifndef PFD
 #define PFD
 
+#include "SimStation.h"
+
 #include <openeaagles/gui/glut/GlutDisplay.h>
 #include <openeaagles/simulation/Simulation.h>
 #include <openeaagles/simulation/AirVehicle.h>
-#include "SimStation.h"
 
 namespace Eaagles {
 	class Pfd : public Glut::GlutDisplay {
