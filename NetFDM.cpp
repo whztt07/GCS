@@ -83,16 +83,16 @@ namespace Eaagles {
 					cerr << "No player" << endl;
 					return;
 				}
-				if (length > 0 && length <= MAX_SIZE) {
+				if (length > 0 && length < MAX_SIZE) {
 					string data(buffer, length);
 					cerr << "RECV: " << data << endl;
-					auto string_start = data.find_first_not_of("\r\n", 0);
-					if (string_start == string::npos)
+					auto start = data.find_first_not_of("\r\n", 0);
+					if (start == string::npos)
 						return;
-					auto string_end = data.find_first_of("\r\n", string_start);
-					if (string_end == string::npos)
+					auto end = data.find_first_of("\r\n", start);
+					if (end == string::npos)
 						return;
-					string line = data.substr(string_start, string_end - string_start);
+					string line = data.substr(start, end - start);
 					if (line.size() == 0)
 						return;
 
