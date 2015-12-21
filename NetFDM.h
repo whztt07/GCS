@@ -38,7 +38,6 @@ namespace Eaagles {
 		virtual void reset();
 		
 	private:
-
 		static const unsigned int MAX_SIZE = 1024;
 		char buffer[MAX_SIZE];
 

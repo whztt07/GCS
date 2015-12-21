@@ -6,6 +6,7 @@
 #include "openeaagles/basic/PairStream.h"
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -85,14 +86,11 @@ namespace Eaagles {
 				}
 				if (length > 0 && length < MAX_SIZE) {
 					string data(buffer, length);
-					cerr << "RECV: " << data << endl;
-					auto start = data.find_first_not_of("\r\n", 0);
+
+					auto start = data.find_first_not_of(string("\r\n"), 0);
 					if (start == string::npos)
 						return;
-					auto end = data.find_first_of("\r\n", start);
-					if (end == string::npos)
-						return;
-					string line = data.substr(start, end - start);
+					auto line = data.substr(start, length - start);
 					if (line.size() == 0)
 						return;
 
@@ -100,27 +98,30 @@ namespace Eaagles {
 
 					vector <string> tokens = split(line, ',');
 					if ((!is_number(tokens[0])) ||
-						(!is_number(tokens[1])) ||
-						(!is_number(tokens[2])) ||
-						(!is_number(tokens[3])) ||
-						(!is_number(tokens[4])) ||
-						(!is_number(tokens[5])) ||
-						(!is_number(tokens[6])) ||
-						(!is_number(tokens[7])) ||
-						(!is_number(tokens[8])) ||
-						(!is_number(tokens[9])) ||
-						(!is_number(tokens[10])) ||
-						(!is_number(tokens[11])) ||
-						(!is_number(tokens[12])) ||
-						(!is_number(tokens[13])) ||
-						(!is_number(tokens[14])) ||
-						(!is_number(tokens[15])) ||
-						(!is_number(tokens[16])) ||
-						(!is_number(tokens[17]))) {
-						return;
-					}
+							(!is_number(tokens[1])) ||
+							(!is_number(tokens[2])) ||
+							(!is_number(tokens[3])) ||
+							(!is_number(tokens[4])) ||
+							(!is_number(tokens[5])) ||
+							(!is_number(tokens[6])) ||
+							(!is_number(tokens[7])) ||
+							(!is_number(tokens[8])) ||
+							(!is_number(tokens[9])) ||
+							(!is_number(tokens[10])) ||
+							(!is_number(tokens[11])) ||
+							(!is_number(tokens[12])) ||
+							(!is_number(tokens[13])) ||
+							(!is_number(tokens[14])) ||
+							(!is_number(tokens[15])) ||
+							(!is_number(tokens[16])) ||
+							(!is_number(tokens[17])) ||
+							(!is_number(tokens[18])) ||
+							(!is_number(tokens[19])) ||
+							(!is_number(tokens[20])) ||
+							(!is_number(tokens[21]))
+							) { return; }
 					else {
-						auto time = stod(trim(tokens[0]));
+						gLoad = stod(trim(tokens[0]));
 						auto altitudeASL = stod(trim(tokens[1]));
 						auto v_north = stod(trim(tokens[2]));
 						auto v_east = stod(trim(tokens[3]));
@@ -138,7 +139,10 @@ namespace Eaagles {
 						auto VelDotY = stod(trim(tokens[15]));
 						auto VelDotZ = stod(trim(tokens[16]));
 						vcas = stod(trim(tokens[17]));
-						gLoad = time;
+						enginesRPM[0] = stof(trim(tokens[18]));
+						enginesRPM[1] = stof(trim(tokens[19]));
+						enginesRPM[2] = stof(trim(tokens[20]));
+						enginesRPM[3] = stof(trim(tokens[21]));
 
 						player->setAltitude(Basic::Distance::FT2M * altitudeASL, true);
 						player->setVelocity(static_cast<LCreal>(Basic::Distance::FT2M * v_north), static_cast<LCreal>(Basic::Distance::FT2M * v_east), static_cast<LCreal>(Basic::Distance::FT2M * v_down));
@@ -180,6 +184,7 @@ namespace Eaagles {
 		memset(buffer, 0, MAX_SIZE);
 		vcas = 0.0;
 		gLoad = 0.0;
+		enginesRPM = { 0 };
 		socketThread = thread(&NetFDM::runThread, this);
 	}
 
@@ -234,8 +239,7 @@ namespace Eaagles {
 	}
 
 	int NetFDM::getEngRPM(LCreal* const rpm, const int max) const {
-		for (auto i = 0; i < max; ++i)
-			rpm[i] = throttleCmd * 15000.0 * i;
+		copy_n(begin(enginesRPM), NUMBER_OF_ENGINES, rpm);
 		return max;
 	}
 
