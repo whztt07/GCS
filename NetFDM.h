@@ -38,17 +38,17 @@ namespace Eaagles {
 		virtual void reset();
 		
 	private:
-		static const unsigned int MAX_SIZE = 1024;
+		static const unsigned int MAX_SIZE = 256;
 		char buffer[MAX_SIZE];
 
 		void initData();
 		void runThread();
-		void do_accept();
-		void do_read();
-		void do_write();
+		void doAccept();
+		void doRead();
+		void doWrite();
 
 		std::thread socketThread;
-		boost::asio::io_service io_service;
+		boost::asio::io_service ioService;
 		std::unique_ptr<boost::asio::ip::tcp::acceptor> acceptor;
 		std::unique_ptr<boost::asio::ip::tcp::socket> socket;
 

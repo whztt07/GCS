@@ -24,7 +24,7 @@ namespace Eaagles {
 	//------------------------------------------------------------------------------
 	// Constructor(s)
 	//------------------------------------------------------------------------------
-	NetFDM::NetFDM() : acceptor(new boost::asio::ip::tcp::acceptor(io_service, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 3001))), socket(new boost::asio::ip::tcp::socket(io_service)) {
+	NetFDM::NetFDM() : acceptor(new boost::asio::ip::tcp::acceptor(ioService, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 3001))), socket(new boost::asio::ip::tcp::socket(ioService)) {
 		STANDARD_CONSTRUCTOR()
 		initData();
 	}
@@ -76,7 +76,7 @@ namespace Eaagles {
 		return str_array;
 	}
 
-	void NetFDM::do_read() {
+	void NetFDM::doRead() {
 		socket->async_read_some(boost::asio::buffer(buffer, MAX_SIZE), [this](boost::system::error_code ec, size_t length) {
 			if (!ec) {
 				Simulation::Player* player = static_cast<Simulation::Player*>(findContainerByType(typeid(Simulation::Player)));
@@ -151,13 +151,13 @@ namespace Eaagles {
 						player->setAngularVelocities(static_cast<LCreal>(P), static_cast<LCreal>(Q), static_cast<LCreal>(R));
 						player->setAcceleration(static_cast<LCreal>(Basic::Distance::FT2M * VelDotX), static_cast<LCreal>(Basic::Distance::FT2M * VelDotY), static_cast<LCreal>(Basic::Distance::FT2M * VelDotZ));
 					}
-					do_write();
+					doWrite();
 				}
 			}
 		});
 	}
 
-	void NetFDM::do_write() {
+	void NetFDM::doWrite() {
 		string commandToSend;
 		commandToSend += to_string(aileronCmd) + string(",");
 		commandToSend += to_string(elevatorCmd) + string(",");
@@ -167,15 +167,15 @@ namespace Eaagles {
 		size_t length = commandToSend.length();
 		boost::asio::async_write(*socket, boost::asio::buffer(commandToSend.c_str(), length), [this](boost::system::error_code ec, size_t length) {
 			if (!ec) {
-				do_read();
+				doRead();
 			}
 		});
 	}
 
-	void NetFDM::do_accept() {
+	void NetFDM::doAccept() {
 		acceptor->async_accept(*socket, [this](boost::system::error_code ec) {
 			if (!ec) {
-				do_read();
+				doRead();
 			}
 		});
 	}
@@ -268,8 +268,8 @@ namespace Eaagles {
 
 	void NetFDM::runThread() {
 		try {
-			do_accept();
-			io_service.run();
+			doAccept();
+			ioService.run();
 		}
 		catch (exception& e) {
 			cerr << "Exception: " << e.what() << "\n";
