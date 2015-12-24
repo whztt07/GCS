@@ -29,49 +29,52 @@ namespace Eaagles {
 		initData();
 	}
 	
-	string& trim_left(string& str) {
+	wstring& trim_left(wstring& str) {
 		while (str.size() && isspace((unsigned char)str[0])) {
 			str = str.erase(0, 1);
 		}
 		return str;
 	}
 
-	string& trim_right(string& str) {
+	wstring& trim_right(wstring& str) {
 		while (str.size() && isspace((unsigned char)str[str.size() - 1])) {
 			str = str.erase(str.size() - 1, 1);
 		}
 		return str;
 	}
 
-	string& trim(string& str) {
-		if (str.size() == 0) return str;
-		string temp_str = trim_right(str);
+	wstring& trim(wstring& str) {
+		if (str.size() == 0) 
+			return str;
+		wstring temp_str = trim_right(str);
 		return str = trim_left(temp_str);
 	}
 
-	bool is_number(const string& str) {
+	bool is_number(const wstring& str) {
 		if (str.size())
-			return (str.find_first_not_of("+-.0123456789Ee") == string::npos);
+			return (str.find_first_not_of(L"+-.0123456789Ee") == string::npos);
 		else
 			return false;
 	}
 
-	vector <string> split(string str, char d) {
-		vector <string> str_array;
+	vector <wstring> split(wstring str, wchar_t d) {
+		vector <wstring> str_array;
 		size_t index = 0;
-		string temp = "";
+		wstring temp = L"";
 		trim(str);
 		index = str.find(d);
 		while (index != string::npos) {
 			temp = str.substr(0, index);
 			trim(temp);
-			if (temp.size() > 0) str_array.push_back(temp);
+			if (temp.size() > 0) 
+				str_array.push_back(temp);
 			str = str.erase(0, index + 1);
 			index = str.find(d);
 		}
 		if (str.size() > 0) {
 			temp = trim(str);
-			if (temp.size() > 0) str_array.push_back(temp);
+			if (temp.size() > 0) 
+				str_array.push_back(temp);
 		}
 		return str_array;
 	}
@@ -84,88 +87,87 @@ namespace Eaagles {
 					cerr << "No player" << endl;
 					return;
 				}
-				if (length > 0 && length < MAX_SIZE) {
-					string data(buffer, length);
+				
+				wstring data(buffer, length);
 
-					auto start = data.find_first_not_of(string("\r\n"), 0);
-					if (start == string::npos)
-						return;
-					auto line = data.substr(start, length - start);
-					if (line.size() == 0)
-						return;
+				auto start = data.find_first_not_of(L'\0', 0);
+				if (start == string::npos)
+					return;
+				auto end = data.find_first_of(L'x', start);
+				if (end == string::npos)
+					return;
+				auto line = data.substr(start, end - start);
+				if (line.size() == 0)
+					return;
+					
+				vector <wstring> tokens = split(line, L',');
+				if ((!is_number(tokens[0])) ||
+						(!is_number(tokens[1])) ||
+						(!is_number(tokens[2])) ||
+						(!is_number(tokens[3])) ||
+						(!is_number(tokens[4])) ||
+						(!is_number(tokens[5])) ||
+						(!is_number(tokens[6])) ||
+						(!is_number(tokens[7])) ||
+						(!is_number(tokens[8])) ||
+						(!is_number(tokens[9])) ||
+						(!is_number(tokens[10])) ||
+						(!is_number(tokens[11])) ||
+						(!is_number(tokens[12])) ||
+						(!is_number(tokens[13])) ||
+						(!is_number(tokens[14])) ||
+						(!is_number(tokens[15])) ||
+						(!is_number(tokens[16])) ||
+						(!is_number(tokens[17])) ||
+						(!is_number(tokens[18])) ||
+						(!is_number(tokens[19])) ||
+						(!is_number(tokens[20])) ||
+						(!is_number(tokens[21]))
+						) { return; }
+				else {
+					gLoad = stod(trim(tokens[0]));
+					auto altitudeASL = stod(trim(tokens[1]));
+					auto v_north = stod(trim(tokens[2]));
+					auto v_east = stod(trim(tokens[3]));
+					auto v_down = stod(trim(tokens[4]));
+					auto U = stod(trim(tokens[5]));
+					auto V = stod(trim(tokens[6]));
+					auto W = stod(trim(tokens[7]));
+					auto Roll = stod(trim(tokens[8]));
+					auto Pitch = stod(trim(tokens[9]));
+					auto Yaw = stod(trim(tokens[10]));
+					auto P = stod(trim(tokens[11]));
+					auto Q = stod(trim(tokens[12]));
+					auto R = stod(trim(tokens[13]));
+					auto VelDotX = stod(trim(tokens[14]));
+					auto VelDotY = stod(trim(tokens[15]));
+					auto VelDotZ = stod(trim(tokens[16]));
+					vcas = stod(trim(tokens[17]));
+					enginesRPM[0] = stof(trim(tokens[18]));
+					enginesRPM[1] = stof(trim(tokens[19]));
+					enginesRPM[2] = stof(trim(tokens[20]));
+					enginesRPM[3] = stof(trim(tokens[21]));
 
-					line = trim(line);
-
-					vector <string> tokens = split(line, ',');
-					if ((!is_number(tokens[0])) ||
-							(!is_number(tokens[1])) ||
-							(!is_number(tokens[2])) ||
-							(!is_number(tokens[3])) ||
-							(!is_number(tokens[4])) ||
-							(!is_number(tokens[5])) ||
-							(!is_number(tokens[6])) ||
-							(!is_number(tokens[7])) ||
-							(!is_number(tokens[8])) ||
-							(!is_number(tokens[9])) ||
-							(!is_number(tokens[10])) ||
-							(!is_number(tokens[11])) ||
-							(!is_number(tokens[12])) ||
-							(!is_number(tokens[13])) ||
-							(!is_number(tokens[14])) ||
-							(!is_number(tokens[15])) ||
-							(!is_number(tokens[16])) ||
-							(!is_number(tokens[17])) ||
-							(!is_number(tokens[18])) ||
-							(!is_number(tokens[19])) ||
-							(!is_number(tokens[20])) ||
-							(!is_number(tokens[21]))
-							) { return; }
-					else {
-						gLoad = stod(trim(tokens[0]));
-						auto altitudeASL = stod(trim(tokens[1]));
-						auto v_north = stod(trim(tokens[2]));
-						auto v_east = stod(trim(tokens[3]));
-						auto v_down = stod(trim(tokens[4]));
-						auto U = stod(trim(tokens[5]));
-						auto V = stod(trim(tokens[6]));
-						auto W = stod(trim(tokens[7]));
-						auto Roll = stod(trim(tokens[8]));
-						auto Pitch = stod(trim(tokens[9]));
-						auto Yaw = stod(trim(tokens[10]));
-						auto P = stod(trim(tokens[11]));
-						auto Q = stod(trim(tokens[12]));
-						auto R = stod(trim(tokens[13]));
-						auto VelDotX = stod(trim(tokens[14]));
-						auto VelDotY = stod(trim(tokens[15]));
-						auto VelDotZ = stod(trim(tokens[16]));
-						vcas = stod(trim(tokens[17]));
-						enginesRPM[0] = stof(trim(tokens[18]));
-						enginesRPM[1] = stof(trim(tokens[19]));
-						enginesRPM[2] = stof(trim(tokens[20]));
-						enginesRPM[3] = stof(trim(tokens[21]));
-
-						player->setAltitude(Basic::Distance::FT2M * altitudeASL, true);
-						player->setVelocity(static_cast<LCreal>(Basic::Distance::FT2M * v_north), static_cast<LCreal>(Basic::Distance::FT2M * v_east), static_cast<LCreal>(Basic::Distance::FT2M * v_down));
-						player->setVelocityBody(static_cast<LCreal>(Basic::Distance::FT2M * U), static_cast<LCreal>(Basic::Distance::FT2M * V), static_cast<LCreal>(Basic::Distance::FT2M * W));
-						player->setEulerAngles(static_cast<LCreal>(Roll), static_cast<LCreal>(Pitch), static_cast<LCreal>(Yaw));
-						player->setAngularVelocities(static_cast<LCreal>(P), static_cast<LCreal>(Q), static_cast<LCreal>(R));
-						player->setAcceleration(static_cast<LCreal>(Basic::Distance::FT2M * VelDotX), static_cast<LCreal>(Basic::Distance::FT2M * VelDotY), static_cast<LCreal>(Basic::Distance::FT2M * VelDotZ));
-					}
-					doWrite();
+					player->setAltitude(Basic::Distance::FT2M * altitudeASL, true);
+					player->setVelocity(static_cast<LCreal>(Basic::Distance::FT2M * v_north), static_cast<LCreal>(Basic::Distance::FT2M * v_east), static_cast<LCreal>(Basic::Distance::FT2M * v_down));
+					player->setVelocityBody(static_cast<LCreal>(Basic::Distance::FT2M * U), static_cast<LCreal>(Basic::Distance::FT2M * V), static_cast<LCreal>(Basic::Distance::FT2M * W));
+					player->setEulerAngles(static_cast<LCreal>(Roll), static_cast<LCreal>(Pitch), static_cast<LCreal>(Yaw));
+					player->setAngularVelocities(static_cast<LCreal>(P), static_cast<LCreal>(Q), static_cast<LCreal>(R));
+					player->setAcceleration(static_cast<LCreal>(Basic::Distance::FT2M * VelDotX), static_cast<LCreal>(Basic::Distance::FT2M * VelDotY), static_cast<LCreal>(Basic::Distance::FT2M * VelDotZ));
 				}
+				doWrite();
 			}
 		});
 	}
 
 	void NetFDM::doWrite() {
-		string commandToSend;
-		commandToSend += to_string(aileronCmd) + string(",");
-		commandToSend += to_string(elevatorCmd) + string(",");
-		commandToSend += to_string(rudderCmd) + string(",");
-		commandToSend += to_string(throttleCmd);
-		commandToSend += string("\r\n");
-		size_t length = commandToSend.length();
-		boost::asio::async_write(*socket, boost::asio::buffer(commandToSend.c_str(), length), [this](boost::system::error_code ec, size_t length) {
+		wstring commandToSend;
+		commandToSend += to_wstring(aileronCmd) + wstring(L",");
+		commandToSend += to_wstring(elevatorCmd) + wstring(L",");
+		commandToSend += to_wstring(rudderCmd) + wstring(L",");
+		commandToSend += to_wstring(throttleCmd) + wstring(L"x");
+		auto length = commandToSend.length();
+		boost::asio::async_write(*socket, boost::asio::buffer(commandToSend, length), [this](boost::system::error_code ec, size_t length) {
 			if (!ec) {
 				doRead();
 			}
@@ -176,6 +178,7 @@ namespace Eaagles {
 		acceptor->async_accept(*socket, [this](boost::system::error_code ec) {
 			if (!ec) {
 				doRead();
+				doWrite();
 			}
 		});
 	}

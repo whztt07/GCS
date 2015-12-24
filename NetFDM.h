@@ -38,8 +38,8 @@ namespace Eaagles {
 		virtual void reset();
 		
 	private:
-		static const unsigned int MAX_SIZE = 256;
-		char buffer[MAX_SIZE];
+		static const unsigned int MAX_SIZE = 1024;
+		wchar_t buffer[MAX_SIZE];
 
 		void initData();
 		void runThread();
