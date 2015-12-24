@@ -39,7 +39,7 @@ namespace Eaagles {
 		
 	private:
 		static const unsigned int MAX_SIZE = 1024;
-		wchar_t buffer[MAX_SIZE];
+		char buffer[MAX_SIZE];
 
 		void initData();
 		void runThread();

@@ -29,38 +29,38 @@ namespace Eaagles {
 		initData();
 	}
 	
-	wstring& trim_left(wstring& str) {
+	string& trim_left(string& str) {
 		while (str.size() && isspace((unsigned char)str[0])) {
 			str = str.erase(0, 1);
 		}
 		return str;
 	}
 
-	wstring& trim_right(wstring& str) {
+	string& trim_right(string& str) {
 		while (str.size() && isspace((unsigned char)str[str.size() - 1])) {
 			str = str.erase(str.size() - 1, 1);
 		}
 		return str;
 	}
 
-	wstring& trim(wstring& str) {
+	string& trim(string& str) {
 		if (str.size() == 0) 
 			return str;
-		wstring temp_str = trim_right(str);
+		string temp_str = trim_right(str);
 		return str = trim_left(temp_str);
 	}
 
-	bool is_number(const wstring& str) {
+	bool is_number(const string& str) {
 		if (str.size())
-			return (str.find_first_not_of(L"+-.0123456789Ee") == string::npos);
+			return (str.find_first_not_of("+-.0123456789Ee") == string::npos);
 		else
 			return false;
 	}
 
-	vector <wstring> split(wstring str, wchar_t d) {
-		vector <wstring> str_array;
+	vector <string> split(string str, char d) {
+		vector <string> str_array;
 		size_t index = 0;
-		wstring temp = L"";
+		string temp = "";
 		trim(str);
 		index = str.find(d);
 		while (index != string::npos) {
@@ -88,19 +88,20 @@ namespace Eaagles {
 					return;
 				}
 				
-				wstring data(buffer, length);
-
-				auto start = data.find_first_not_of(L'\0', 0);
+				string data(buffer, length);
+				
+				auto start = data.find_first_of('s', 0);
 				if (start == string::npos)
 					return;
-				auto end = data.find_first_of(L'x', start);
+				start++; //skip 's' itself here
+				auto end = data.find_first_of('f', start);
 				if (end == string::npos)
 					return;
 				auto line = data.substr(start, end - start);
 				if (line.size() == 0)
 					return;
 					
-				vector <wstring> tokens = split(line, L',');
+				vector <string> tokens = split(line, L',');
 				if ((!is_number(tokens[0])) ||
 						(!is_number(tokens[1])) ||
 						(!is_number(tokens[2])) ||
@@ -161,13 +162,15 @@ namespace Eaagles {
 	}
 
 	void NetFDM::doWrite() {
-		wstring commandToSend;
-		commandToSend += to_wstring(aileronCmd) + wstring(L",");
-		commandToSend += to_wstring(elevatorCmd) + wstring(L",");
-		commandToSend += to_wstring(rudderCmd) + wstring(L",");
-		commandToSend += to_wstring(throttleCmd) + wstring(L"x");
+		string commandToSend;
+		commandToSend += string("s");
+		commandToSend += to_string(aileronCmd) + string(",");
+		commandToSend += to_string(elevatorCmd) + string(",");
+		commandToSend += to_string(rudderCmd) + string(",");
+		commandToSend += to_string(throttleCmd);
+		commandToSend += string("f");
 		auto length = commandToSend.length();
-		boost::asio::async_write(*socket, boost::asio::buffer(commandToSend, length), [this](boost::system::error_code ec, size_t length) {
+		boost::asio::async_write(*socket, boost::asio::buffer(commandToSend.c_str(), length), [this](boost::system::error_code ec, size_t length) {
 			if (!ec) {
 				doRead();
 			}
